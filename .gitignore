@@ -1,0 +1,5 @@
+# Credenciales de la cuenta de servicio de Firebase
+backend/serviceAccountKey.json
+
+# Clave API de Google
+frontend/src/firebase.js
