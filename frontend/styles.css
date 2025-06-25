@@ -1,0 +1,961 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+/*Estilo textos predeterminado*/
+body {
+    color: #000000;
+    background-color: #2fa831;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+}
+
+.cuerpo{
+    padding-top: 150px; /* Ajusta este valor según la altura del H1 */
+}
+
+/*Estilo de texto formularios*/
+form {
+    position: relative;
+    background-color:rgba(255, 255, 255, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+    z-index: 10;
+    margin-top: 20px;
+    width: 80%;
+}
+
+
+/*Estilo de texto apartado genero*/
+.gender-container {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    margin-bottom: 15px;
+}
+.custom-select {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 85%;
+    border: 1px solid #ccc;
+    font-size: 100%;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: -5%;
+}
+.custom-select:hover {
+    border-color: #2fa831;
+}
+.custom-select:focus {
+    outline: none;
+    border-color: #2fa831;
+    box-shadow: 0 0 5px rgba(47, 168, 49, 0.5);
+}
+.custom-select option {
+    background: white;
+    color: #333;
+    font-size: 100%;
+}
+.custom-select option:checked {
+    background: #2fa831;
+    color: white;
+}
+
+
+/*Estilo contraseñas*/
+input[type="text"], input[type="password"] {
+    width: 80%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    opacity: 1;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #3498db;
+    opacity: 1;
+}
+
+.context {
+    width: 100%;
+    position: relative;
+    top: 50vh;
+    opacity: 1;
+}
+
+
+/*Estilo cabeceras*/
+header {
+    background-color: #025e2890;
+    color: white;
+    padding: 25px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 1;
+    position: relative;
+    margin-top: 100px;
+    margin-bottom: 0px;
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    padding-top: 30px; 
+}
+
+
+/*Estilo botones*/
+button {
+    background-color: #2fa831;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 50;
+}
+button:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+    color: white;
+}
+
+
+/*Estilo fondo*/
+.area {
+    background-color: #2fa831;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+
+}
+
+
+/*animacion pulso cardiaco*/
+.pulsocardiaco-container {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+    background-color: #2fa831;
+    animation: pulsocardiacoLinea 30s linear infinite;;
+
+}
+.pulsocardiaco-container2 {
+    position: fixed;
+    top: 25%;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+    background-color: #2fa831;
+    animation: pulsocardiacoLinea2 30s linear infinite;;
+
+}
+.pulsocardiaco-container3 {
+    position: fixed;
+    top: 75%;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+    background-color: #2fa831;
+    animation: pulsocardiacoLinea3 30s linear infinite;;
+
+}
+/* Línea continua pulso cardiaco */
+.pulsocardiaco-linea {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width:100%;
+    height: 3px;
+    background: white;
+    opacity: 0.3;
+}
+.pulsocardiaco-linea2 {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width:100%;
+    height: 3px;
+    background: white;
+    opacity: 0.3;
+}
+.pulsocardiaco-linea3 {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width:100%;
+    height: 3px;
+    background: white;
+    opacity: 0.3;
+}
+.pulsocardiaco {
+    position: absolute;
+    width: 167px;
+    height: 89px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><polyline points="0,50 30,50 50,10 70,90 90,50 120,50 140,30 160,50 200,50" stroke-opacity="0.3"/></svg>') no-repeat;
+    background-size: contain;
+    animation: pulsocardiaco-onda 10s linear infinite;
+    background-color: #2fa831; 
+    left: -200px;
+}
+
+
+.pulsocardiaco:nth-child(0) { animation-delay: -2s; }
+.pulsocardiaco:nth-child(1) { animation-delay: 0s; }
+.pulsocardiaco:nth-child(2) { animation-delay: 1s; }
+.pulsocardiaco:nth-child(3) { animation-delay: 3s; }
+.pulsocardiaco:nth-child(4) { animation-delay: 6s; }
+.pulsocardiaco:nth-child(5) { animation-delay: 8s; }
+
+
+/* Movimiento de la onda */
+@keyframes pulsocardiaco-onda {
+    0% {
+        transform: translateX(0px);
+    }
+    100% {
+        transform: translateX(130vw);
+    }
+}
+@keyframes pulsocardiaco-onda2 {
+    0% {
+        transform: translateX(0px);
+    }
+    33% {
+        transform: translateX(0px);
+    }
+    100% {
+        transform: translateX(130vw);
+    }
+}
+@keyframes pulsocardiaco-onda3 {
+    0% {
+        transform: translateX(0px);
+    }
+    66% {
+        transform: translateX(0px);
+    }
+    100% {
+        transform: translateX(130vw);
+    }
+}
+
+/* Desvaneciemiento de las lineas */
+@keyframes pulsocardiacoLinea {
+    0% {
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+    }
+    30% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes pulsocardiacoLinea2 {
+    0% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 0;
+    }
+    45% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+@keyframes pulsocardiacoLinea3 {
+    1% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0;
+    }
+    60%{
+        opacity: 0;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+h1 {
+    color: #2fa831;
+    padding: 10px; /* Ajuste de padding */
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Garamond', serif;
+    text-align: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    
+    /* Eliminamos estilos innecesarios */
+    display: block; 
+}
+
+
+
+h2{
+    margin-left: -100%;
+}
+
+h2:last-of-type{
+    animation: aparecer 7s infinite;
+}
+.span {
+    animation: deslizarse 7s infinite;
+    display: inline-block;
+}
+
+.movimiento{
+    animation: deslizarsenurse 7s infinite;
+    display: inline-block;
+}
+
+/*Movimientos del titulo*/
+@keyframes deslizarsenurse {
+    0% { margin-left:50%; }
+    20% { margin-left:50%; }
+    35% { margin-left:45%; }
+    100% { margin-left:45%; }
+}
+@keyframes deslizarse {
+    0% { margin-left:50%; }
+    20% { margin-left:50%; }
+    35% { margin-left:55%; }
+    100% { margin-left:55%; }
+}
+@keyframes aparecer {
+    0% {opacity:0;}
+    20% {opacity:1;}
+    80% {opacity:1;}
+    100% {opacity:0}
+}
+
+h3, h4 {
+    color: #2fa831;
+    text-align: center;
+    border-top: #ccc;
+    opacity: 0.7;
+    margin-Top: 128px;
+    position: relative;
+    z-Index: 10;
+    background-Color: white;
+    width:100%;
+}
+  
+p{
+    font-size:12px;
+    color:#999;
+    margin-top:20px;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Ajusta la altura según necesites */
+    background-color: white; /* Fondo blanco */
+    border-top: 2px solid #ddd; /* Línea superior */
+    display: flex;
+    justify-content: space-around; /* Espaciado uniforme entre los ítems */
+    align-items: center;
+    z-index: 1000; /* Asegura que esté siempre arriba */
+    color: #2fa831;
+}
+
+.footer button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: black; /* Color del texto */
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.footer button:hover {
+    color: #2fa831; /* Cambia el color al pasar el mouse */
+}
+
+
+
+/*Estilo botones*/
+.button2 {
+    background-color:rgba(255, 255, 255, 0.7);;
+    color: #2fa831;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 50;
+    margin-left: 70%;
+    width: 25%;
+    z-index: 150;
+}
+.button2:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+    color: white;
+    z-index: 50;
+}
+
+/*Estilo de imagenes*/
+.container {
+    text-align: center;
+    z-index: 30;
+    margin-top: 0%;
+    padding: 10px;
+}
+.image-container {
+    padding: 0px;
+    position: relative;
+    display: inline-block;
+    z-index: 30;
+    cursor: pointer;
+    left: 100%;
+    width: 110%;
+}
+.robbery-image {
+    border-radius: 8px;
+    z-index: 30;
+}
+  
+/*Estilo bocadillos de dialogo*/
+.speech-bubble {
+    position: absolute;
+    bottom: 60%;
+    /*left: 70%*/
+    padding: 10px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border-radius: 15px;
+    font-size: 80%;
+    font-weight: bold;
+    /*width: 30%;*/
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(-20px); /* Para que no se superponga con la imagen */
+    z-index: 100;
+    text-align: center;
+    min-height: 10%;
+    width: 150%;
+    height:80%;
+    top: 20%;
+    left:110%;
+    min-Width:50px;
+    max-Width: 400px;
+    min-Height:50px;
+    max-Height:220px;
+}
+  
+.speech-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: 15px;
+    left: -9px;
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    transform: rotate(45deg);
+    z-index:-10;
+}  
+
+/* Estilos generales para los inputs */
+input[type="date"],
+input[type="number"] {
+  width: 80%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type="date"]:hover,
+input[type="number"]:hover {
+  border-color: #007bff;
+}
+
+input[type="date"]:focus,
+input[type="number"]:focus {
+  border-color: #007bff;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+input[type="date"] {
+  position: relative;
+  appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.5);
+  transition: filter 0.3s ease-in-out;
+}
+
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+}
+
+/*Estilo de gráficas*/
+.graficas {
+    margin-Top:10px;
+    position: relative;
+    z-Index:10; 
+    background-Color:transparent;
+    width:80%;
+    left:10%;
+    margin-top:5%;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 100%; /* Ocupa más espacio en pantallas pequeñas */
+        font-size: 10px;
+    }
+
+    .image-container {
+        left: 0%; /* Centra la imagen */
+        width: 100%; 
+        text-align: center;
+    }
+
+    .speech-bubble {
+        width: 350%;
+        left: 110%;
+        top: 10%;
+        height: 5000px;
+
+    }
+
+    form {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 10px;
+    }
+
+    input {
+        width: 5px;
+    }
+
+    button {
+        width: 60px;
+        font-size: 10px;
+    }
+}
+
+.calendar-container {
+    display: flex;
+    justify-content: center;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente si el contenedor tiene altura suficiente */
+    width: 100%;              /* Usa todo el ancho disponible */
+    margin-top: 80px;         /* Espacio superior */
+    max-height: 450px;
+    z-index: 1000;
+}
+
+.react-calendar {
+    width: 50% !important;  /* Ajusta el tamaño del calendario */
+    max-width: 90%;           /* Evita que sea demasiado grande en pantallas pequeñas */
+    font-size: 1.2rem;        /* Aumenta el tamaño del texto*/
+    background-color: white !important; 
+    
+}
+
+/* Cambia el color del mes y año en la cabecera */
+.react-calendar__navigation button {
+    color: black !important;
+    font-weight: bold;
+}
+
+/* Cambia el color de los días de la semana (Lunes, Martes, etc.) */
+.react-calendar__month-view__weekdays {
+    color: black !important;
+    font-weight: bold;
+}
+
+/* Cambia el color de los días numerados */
+.react-calendar__tile {
+    color: black !important;
+    font-weight: bold;
+}
+
+
+
+.react-calendar__month-view__days__day {
+    color: black !important;
+    font-weight: bold;
+}
+
+/* Días normales del calendario */
+.react-calendar__tile {
+    color: black !important;
+    font-weight: bold;
+}
+
+/* Días con arritmia: fondo rojo y texto negro */
+.marked-date {
+    background-color: red !important; /* Fondo rojo */
+    color: black !important; /* Texto negro */
+    font-weight: bold;
+}
+
+/* Ajuste para que el texto "Arritmia registrada este día" también sea negro */
+.marked-date .calendar-note {
+    color: black !important;
+    font-size: 0.8rem; /* Ajusta el tamaño del texto si es necesario */
+    text-align: center;
+}
+
+/* Estilo de cartas */
+h5 {
+    color: #2fa831;
+    text-align: center;
+    border-top: #ccc;
+    opacity: 1;
+    position: relative;
+    z-index: 10;
+    background-color: white;
+    width: 100%;
+}
+
+/* Contenedor de las tarjetas */
+.cardcontainer {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se ajusten en pantallas pequeñas */
+    justify-content: center; /* Centra las tarjetas horizontalmente */
+    padding: 20px;
+    gap: 50px;
+    margin-Bottom:50px;
+}
+
+/*Estilo de imagenes*/
+.cardimagespeech {
+    text-align: center;
+    z-index: 30;
+    margin-top: 0%;
+    padding: 10px;
+
+    position: relative;
+    left: -5%;
+    width: 20%;
+    height: auto;
+}
+
+.cardimage{
+    padding: 0px;
+    position: relative;
+    display: inline-block;
+    z-index: 30;
+    cursor: pointer;
+    width: 50%; 
+    height: auto;
+}
+.cardrobbery-image {
+    border-radius: 8px;
+    z-index: 30;
+}
+  
+/*Estilo bocadillos de dialogo*/
+.cardspeech-bubble {
+    position: absolute;
+    bottom: 60%;
+    padding: 10px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border-radius: 15px;
+    font-size: 80%;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(-20px); /* Para que no se superponga con la imagen */
+    z-index: 100;
+    text-align: center;
+    min-height: 10%;
+    min-Width:50px;
+    max-Width: 400px;
+    min-Height:50px;
+    max-Height:220px;
+
+    top:12%;
+    left: 75%;
+    width: 55%;
+    height: 25%;
+}
+  
+.cardspeech-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: 15px;
+    left: -9px;
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    transform: rotate(45deg);
+    z-index:-10;
+}  
+
+/* Media query para móviles */
+@media screen and (max-width: 768px) {
+    .cardcontainer {
+        display: flex;
+        flex-direction: column; /* Cambia la dirección a vertical */
+    }
+
+    .cardimagespeech {
+        order: -1; /* Mueve la imagen al inicio en móviles */
+        width: 40%;
+        text-align: center;
+        margin-bottom: 20px;
+        left: 10%;
+    }
+
+    .cardimage {
+        width: 80%; /* Aumenta el tamaño en móvil */
+        max-width: 350px;
+    }
+
+    .cardspeech-bubble{
+        width: 80%;
+        left: 100%;
+        top: 10%;
+        height: 130px; /* Ajusta la altura automáticamente */
+    }
+}
+
+
+/* Estilo de cada tarjeta */
+.card {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px; /* Ancho fijo */
+    height: 400px; /* Altura fija */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; /* Evita que el contenido se desborde fuera */
+    z-index: 100;
+}
+
+/* Contenido de la tarjeta */
+.card-content {
+    flex-grow: 1; /* Hace que el contenido ocupe el espacio disponible */
+    overflow-y: auto; /* Habilita la barra de desplazamiento vertical */
+    max-height: 250px; /* Limita la altura del contenido para activar el scroll */
+    padding-right: 10px; /* Espacio para la barra de desplazamiento */
+    color: black;
+}
+
+/* Personalización del scrollbar */
+.card-content::-webkit-scrollbar {
+    width: 6px; /* Grosor de la barra */
+}
+
+.card-content::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Color de la barra */
+    border-radius: 3px; /* Bordes redondeados */
+}
+
+/* Estilo del título dentro de la tarjeta */
+.card h2 {
+    font-size: 20px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+/* Estilo del enlace en la tarjeta */
+.card a {
+    display: inline-block;
+    text-align: center;
+    background-color: #2fa831;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Estilo cuando el enlace es hover */
+.card a:hover {
+    background-color: #248b26;
+}
+
+/* Estilo para calendario */
+.react-calendar {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Evita el desbordamiento */
+  }
+  
+  /* Título del mes y año */
+  .react-calendar__navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .react-calendar__navigation button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #2e7d32;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .react-calendar__navigation button:hover {
+    background-color: #e8f5e9;
+    border-radius: 10px;
+  }
+  
+  /* Días del calendario */
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #555;
+    font-size: 0.75rem;
+  }
+  
+  .react-calendar__tile {
+    padding: 10px 0;
+    background: none;
+    border: none;
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 50%;
+  }
+  
+  .react-calendar__tile:enabled:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Día actual */
+  .react-calendar__tile--now {
+    background: #dcedc8;
+    border-radius: 50%;
+    font-weight: bold;
+    color: #2e7d32;
+  }
+  
+  /* Día marcado (con arritmia) */
+  .marked-date {
+    background-color: #c8e6c9 !important;
+    color: #1b5e20 !important;
+    border-radius: 50%;
+    font-weight: bold;
+  }
+  
+  /* Desactivar rangos y selección */
+  .react-calendar__tile--rangeStart,
+  .react-calendar__tile--rangeEnd,
+  .react-calendar__tile--rangeBothEnds {
+    background: transparent !important;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .react-calendar {
+      width: 100%;
+      padding: 10px;
+    }
+  }
+  
+
+.marked-date {
+    background-color: #d4f8d4 !important; /* fondo verde claro */
+    border-radius: 50%; /* para hacer el círculo */
+    color: green !important; /* texto en verde */
+    font-weight: bold;
+  }
+  
+
+
+
+  .confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+}
