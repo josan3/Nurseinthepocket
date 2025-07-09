@@ -15,6 +15,31 @@ const InicioSesion = () => {
   const [resetCorreo, setResetCorreo] = useState("");
   const navigate = useNavigate(); 
 
+const registro_usuario = async (idusuario) => {   
+  try {             
+    const response = await fetch("http://localhost:8801/registrousuario", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: idusuario }),
+    });                      
+
+    const data = await response.json();                      
+
+    if (response.ok) {
+      setSuccess("Registro de acceso registrado");
+      setError("");
+    } else {
+      setError(data.error || "Error al registrar la registro de acceso");
+      setSuccess("");
+    }
+  } catch (error) {
+    setError("Error de conexión con el servidor");
+    setSuccess("");
+  }
+};
+
 const handleGoogleSignIn = async (e) => {
   e.preventDefault(); // Evita recargar la página
 
@@ -57,6 +82,7 @@ const handleGoogleSignIn = async (e) => {
       } else if (data.result.cuerpo_medico === 1) {
         setTimeout(() => navigate(`/cuerpomedico`), 1000);
       } else {
+        await registro_usuario(data.result.id);
         setTimeout(() => navigate(`/home`), 1000);
       }
     } else {
@@ -78,7 +104,7 @@ const handleGoogleSignIn = async (e) => {
     const user = userCredential.user;
     const token = await user.getIdToken();
 
-    // 🧠 2. Enviar el token al backend si necesitas validar o usarlo allá
+    //Enviar el token al backend si necesitas validar o usarlo allá
     const response = await fetch("http://localhost:8801/login", {
       method: "POST",
       headers: {
@@ -108,6 +134,7 @@ const handleGoogleSignIn = async (e) => {
       } else if (data.result.cuerpo_medico === 1) {
         setTimeout(() => navigate(`/cuerpomedico`), 1000);
       } else {
+        await registro_usuario(data.result.id);
         setTimeout(() => navigate(`/home`), 1000);
       }
     } else {

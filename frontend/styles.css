@@ -1,21 +1,31 @@
 * {
     margin: 0px;
     padding: 0px;
+    
 }
 
+@font-face {
+  font-family: 'Judson';
+  src: url('./src/assets/Judson-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /*Estilo textos predeterminado*/
 body {
     color: #000000;
     background-color: #2fa831;
-    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     opacity: 1;
+    font-family: 'Judson';
 }
+
+
 
 .cuerpo{
     padding-top: 150px; /* Ajusta este valor según la altura del H1 */
+    
 }
 
 /*Estilo de texto formularios*/
@@ -124,6 +134,7 @@ button {
     border-radius: 5px;
     padding: 10px;
     z-index: 50;
+    font-family: 'Judson';
 }
 button:hover {
     background-color: #2980b9;
@@ -319,7 +330,7 @@ h1 {
     left: 0;
     width: 100%;
     background-color: white;
-    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    z-index: 100000; /* Asegura que esté encima de otros elementos */
     
     /* Eliminamos estilos innecesarios */
     display: block; 
@@ -374,6 +385,7 @@ h3, h4 {
     z-Index: 10;
     background-Color: white;
     width:100%;
+    font-family: 'Judson';
 }
   
 p{
@@ -382,19 +394,18 @@ p{
     margin-top:20px;
 }
 
-
 .footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 60px; /* Ajusta la altura según necesites */
-    background-color: white; /* Fondo blanco */
-    border-top: 2px solid #ddd; /* Línea superior */
+    height: 60px;
+    background-color: white;
+    border-top: 2px solid #ddd;
     display: flex;
-    justify-content: space-around; /* Espaciado uniforme entre los ítems */
+    justify-content: space-around;
     align-items: center;
-    z-index: 1000; /* Asegura que esté siempre arriba */
+    z-index: 1000;
     color: #2fa831;
 }
 
@@ -403,17 +414,225 @@ p{
     border: none;
     font-size: 16px;
     cursor: pointer;
-    color: black; /* Color del texto */
+    color: black;
     padding: 10px;
     transition: color 0.3s;
 }
 
 .footer button:hover {
-    color: #2fa831; /* Cambia el color al pasar el mouse */
+    color: #2fa831;
+}
+
+.button-label {
+    display: none;
+}
+
+@media (max-width: 768px) {
+.edit-options{
+    position: "absolute";
+    width: "100px";
+    bottom: "60px";
+    left: "70%";
+    transform: "translateX(-50%)";
+    background-Color: "white";
+    border: "1px solid #ccc";
+    border-Radius: "5px";
+    padding: "10px";
+    z-Index: 10000;
+}
+}    
+
+
+/* Estilos para escritorio */
+@media (min-width: 768px) {
+    .edit-options{
+        position: "fixed";
+        width: "150px";
+        height: "100px";
+        bottom: "60px";
+        left: "60%";
+        top: "75%";
+        transform: "translateX(-50%)";
+        background-color: "white";
+        border: "1px solid #ccc";
+        border-radius: "5px";
+        padding: "10px";
+        z-Index: 10000000;
+    }
+    header{
+        background-color: #025e2890;
+        color: white;
+        left: 0px;
+        padding: 25px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        z-index: 1;
+        position: relative;
+        margin-top: 100px;
+        margin-bottom: 0px;
+        display: flex; 
+        justify-content: center;
+        align-items: center; 
+        padding-top: 30px; 
+
+    }
+
+    .button-label {
+        display: inline;
+        font-size: 14px;
+        color: black;
+    }
+
+    .barra{       
+        left: 0px;
+        bottom: auto;
+        width: 220px;
+        height: 673px;
+        border-top: none;
+        flex-direction: column;
+        background-color: #ffffff;
+        z-index: 1000; 
+        position: fixed;
+    }
+    .barra2{       
+        margin-top: -500px;
+        left: 0px;
+        bottom: auto;
+        width: 225px;
+        height: 700px;
+        border-top: none;
+        flex-direction: column;
+        background-color: #328e34;
+        z-index: 1000; 
+        position: fixed;
+    }
+    .barra3{       
+        margin-top: -300px;
+        left: 0px;
+        bottom: auto;
+        width: 220px;
+        height: 500px;
+        border-top: none;
+        flex-direction: column;
+        background-color: #ffffff;
+        z-index: 1000; 
+        position: fixed;
+    }
+
+    .footer {
+        top: 130px;
+        left: 10px;
+        bottom: auto;
+        width: 200px;
+        height: 50%;
+        border-top: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        background-color: #ffffff;
+    }
+
+    .footer button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 8px 12px;
+        font-size: 16px;
+    }
+
+    /*Estilo de imagenes*/
+    .container {
+        text-align: center;
+        z-index: 30;
+        margin-left: 20%;
+        width: 60%;
+        max-height: 75px;
+    }
+    .robot-container {
+        padding: 0px;
+        position: relative;
+        display: inline-block;
+        z-index: 30;
+        cursor: pointer;
+        left: 0%;
+        width: 30%;
+
+    }
+    img{
+        margin-top: -60%;
+        max-width: 200px;
+    }
+    .robbery-image {
+        border-radius: 8px;
+        z-index: 30;
+    }
+    
+    /*Estilo bocadillos de dialogo*/
+    .speech-bubble {
+        margin-top: -100%;
+        margin-left: 100%;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        border-radius: 15px;
+        font-size: 100%;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transform: translateY(-20px); /* Para que no se superponga con la imagen */
+        z-index: 100;
+        width: 180%;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .speech-bubble::after {
+        content: "";
+        position: absolute;
+        bottom: 15px;
+        left: -9px;
+        width: 20px;
+        height: 20px;
+        background-color: #ffffff;
+        transform: rotate(45deg);
+        z-index:-10;
+    }
 }
 
 
+/*
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; 
+    background-color: white; 
+    border-top: 2px solid #ddd; 
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    z-index: 1000; 
+    color: #2fa831;
+}
 
+.footer button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: black; 
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.footer button:hover {
+    color: #2fa831; 
+}*/
+
+
+@media (max-width: 768px) {
 /*Estilo botones*/
 .button2 {
     background-color:rgba(255, 255, 255, 0.7);;
@@ -436,66 +655,64 @@ p{
 }
 
 /*Estilo de imagenes*/
-.container {
-    text-align: center;
-    z-index: 30;
-    margin-top: 0%;
-    padding: 10px;
-}
-.image-container {
-    padding: 0px;
-    position: relative;
-    display: inline-block;
-    z-index: 30;
-    cursor: pointer;
-    left: 100%;
-    width: 110%;
-}
-.robbery-image {
-    border-radius: 8px;
-    z-index: 30;
-}
-  
-/*Estilo bocadillos de dialogo*/
-.speech-bubble {
-    position: absolute;
-    bottom: 60%;
-    /*left: 70%*/
-    padding: 10px;
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    border-radius: 15px;
-    font-size: 80%;
-    font-weight: bold;
-    /*width: 30%;*/
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transform: translateY(-20px); /* Para que no se superponga con la imagen */
-    z-index: 100;
-    text-align: center;
-    min-height: 10%;
-    width: 150%;
-    height:80%;
-    top: 20%;
-    left:110%;
-    min-Width:50px;
-    max-Width: 400px;
-    min-Height:50px;
-    max-Height:220px;
-}
-  
-.speech-bubble::after {
-    content: "";
-    position: absolute;
-    bottom: 15px;
-    left: -9px;
-    width: 20px;
-    height: 20px;
-    background-color: #ffffff;
-    transform: rotate(45deg);
-    z-index:-10;
-}  
+    .container {
+        text-align: center;
+        z-index: 30;
+        margin-left: -25%;
+        width: 60%;
+        max-height: 75px;
+    }
+    .robot-container {
+        padding: 0px;
+        position: relative;
+        display: inline-block;
+        z-index: 30;
+        cursor: pointer;
+        left: 0%;
+        width: 30%;
 
+    }
+    img{
+        margin-top: -60%;
+        max-width: 150px;
+    }
+    .robbery-image {
+        border-radius: 8px;
+        z-index: 30;
+    }
+    
+    /*Estilo bocadillos de dialogo*/
+    .speech-bubble {
+        margin-top: -200%;
+        margin-left: 150%;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        border-radius: 15px;
+        font-size: 150%;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transform: translateY(-20px); /* Para que no se superponga con la imagen */
+        z-index: 100;
+        min-height: 10%;
+        max-width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+  
+    .speech-bubble::after {
+        content: "";
+        position: absolute;
+        bottom: 15px;
+        left: -9px;
+        width: 20px;
+        height: 20px;
+        background-color: #ffffff;
+        transform: rotate(45deg);
+        z-index:-10;
+    }  
+}
 /* Estilos generales para los inputs */
 input[type="date"],
 input[type="number"] {
@@ -925,7 +1142,7 @@ h5 {
 
 
 
-  .confirmation-modal {
+.confirmation-modal {
     position: fixed;
     top: 0;
     left: 0;

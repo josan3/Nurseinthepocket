@@ -33,7 +33,8 @@ const Administracion = () => {
 
     const buttons = [
         { label: "Información usuarios", key: "pacientes" },
-        { label: "Información medicamentos", key: "medicamentos" }
+        { label: "Información medicamentos", key: "medicamentos" },
+        { label: "Historial uso de pacientes", key: "historial" }
     ];
 
     const handleOptionClick = (vistaSeleccionada) => {
@@ -97,10 +98,38 @@ const Administracion = () => {
             }
         };
 
+        const getHistorial = async () => {
+            try {
+                const response = await fetch("http://localhost:8801/gethistorial", {
+                method: "GET",
+                });
+
+                const data4 = await response.json();
+
+                console.log("Hola", data4)
+
+                if (response.ok) {
+                setLista(data4.data);
+                setResultadosFiltrados(data4.data);
+                setSuccess("Datos obtenidos");
+                setError("");
+                } else {
+                setError(data4.error || "Error al obtener datos");
+                setSuccess("");
+                }
+            } catch (error) {
+                setError("Error de conexión con el servidor");
+                setSuccess("");
+            }
+        };
+
         if (vista === "medicamentos") {
             getMedicamentos();
-        } else {
+        } else if (vista === "pacientes") {
             getNombres();
+        }
+        else {
+            getHistorial();
         }
     }, [vista]);
 
@@ -130,7 +159,7 @@ const Administracion = () => {
             if (medicamentoNombre && !resultados.some(m => m.nombre === medicamentoNombre)) {
                 setMedicamentoNombre(null);
             }
-        } else {
+        } else if (vista === "pacientes"){
             const resultados = Array.isArray(lista)
                 ? lista.filter((paciente) =>
                       `${paciente.nombre} ${paciente.apellido1} ${paciente.apellido2}`
@@ -140,7 +169,18 @@ const Administracion = () => {
                 : [];
 
             setResultadosFiltrados(resultados);
-        }
+        }else if (vista === "historial") {
+        // Filtro específico para historial
+        const resultados = Array.isArray(lista)
+            ? lista.filter((item) =>
+                `${item.nombre || ""} ${item.apellido1 || ""} ${item.apellido2 || ""} ${item.correo || ""} ${item.fecha || ""}`
+                    .toLowerCase()
+                    .includes(busqueda.toLowerCase())
+            )
+            : [];
+        setResultadosFiltrados(resultados);
+    }
+
     }, [busqueda, lista, vista]);
 
     const handleEnviarNombre = async () => {
@@ -1032,6 +1072,41 @@ const Administracion = () => {
                         </div>
                     </div>
                 )}
+
+                {/* Vista del historial */}
+                {vista === "historial" && (
+                    <div style={{ marginTop: "20px", backgroundColor: "#f9f9f9", padding: "15px", borderRadius: "8px" }}>
+                        <h3 style={{ color: "#333" }}>Historial de uso de pacientes</h3>
+                        {resultadosFiltrados.length > 0 ? (
+                            <table style={{ width: "100%", borderCollapse: "collapse", backgroundColor: "#fff" }}>
+                                <thead>
+                                    <tr style={{ backgroundColor: "#e0e0e0" }}>
+                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Nombre</th>
+                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Primer Apellido</th>
+                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Segundo Apellido</th>
+                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Correo</th>
+                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Hora</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {resultadosFiltrados.map((item, idx) => (
+                                        <tr key={idx}>
+                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.nombre || "-"}</td>
+                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.apellido1 || "-"}</td>
+                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.apellido2 || "-"}</td>
+                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.correo || "-"}</td>
+                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.hora || "-"}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p style={{ color: "#888" }}>No hay historial disponible.</p>
+                        )}
+                    </div>
+                )
+                }
+
             </div>
         </div>
     );

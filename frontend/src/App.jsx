@@ -89,7 +89,7 @@ function App() {
     <div className='area'>
       <h1>
         <h2>
-          <div class="movimiento">
+          <div class="movimiento" style={{fontfamily: 'Garamond'}}>
           NURSE&nbsp;&nbsp;
             <img src={logo} alt="Robot" className="robot" style={{minWidth: "30px" ,width: "3%", height: "auto" }} />
           </div>

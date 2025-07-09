@@ -11,33 +11,33 @@ const Inicio = () => {
     
 
     const buttons = [
-        { path: "/informacion", label: "Obtener información", icon: (
+        { path: "/informacion", label: "Obtener información", nombre: "Obtener información", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="16" x2="12" y2="12" />
                 <line x1="12" y1="8" x2="12" y2="8" />
             </svg>
         ) },
-        { path: "/correo", label: "Correo asociación", icon: (
+        { path: "/correo", label: "Correo asociación",  nombre: "Enviar correo", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
                 <path d="M22 6l-10 7L2 6" />
             </svg>
         ) },
-        { path: "/home", label: "Inicio", icon: (
+        { path: "/home", label: "Inicio", nombre: "Inicio", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 9l9-7 9 7" />
                 <path d="M9 22V12h6v10" />
                 <path d="M21 22H3" />
             </svg>
         ) },
-        { label: "Editar parámetros", icon: (
+        { label: "Editar parámetros", nombre: "Añadir parámetro", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 20h9" />
                 <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
             </svg>
         ) },
-        { path: "/configuracion", label: "Ajustes de usuario", icon: (
+        { path: "/configuracion",label: "Ajustes de usuario", nombre: "Editar datos personales", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="3" />
                 <path d="M19.4 15a2 2 0 0 0 .5 2.1l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a2 2 0 0 0-2.1-.5 2 2 0 0 0-1.2 1.8V22a2 2 0 0 1-4 0v-.5a2 2 0 0 0-1.2-1.8 2 2 0 0 0-2.1.5l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a2 2 0 0 0 .5-2.1 2 2 0 0 0-1.8-1.2H2a2 2 0 0 1 0-4h.5a2 2 0 0 0 1.8-1.2 2 2 0 0 0-.5-2.1l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a2 2 0 0 0 2.1.5 2 2 0 0 0 1.2-1.8V2a2 2 0 0 1 4 0v.5a2 2 0 0 0 1.2 1.8 2 2 0 0 0 2.1-.5l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a2 2 0 0 0-.5 2.1 2 2 0 0 0 1.8 1.2H22a2 2 0 0 1 0 4h-.5a2 2 0 0 0-1.8 1.2z" />
@@ -124,18 +124,22 @@ const Inicio = () => {
 
     return (
         <div>
-            <header>Menu principal</header>
+            <header>Inicio</header>
 
             <div className="cuerpo">
-                <div className="container" style={{marginTop: "-150px",top: "50%", maxWidth: "90%" }}>
-                    <div className="image-container" style={{ cursor: "pointer", left: "-10%" }}>
-                        <img src={robotsaludando} alt="Robot" className="robot" style={{ width: "15%", height: "auto" }} />
-                        <div className="speech-bubble" style={{ height: "60%", top: "15%", left: "63%", maxWidth: "100px", minHeight: "50px", maxHeight: "80px" }}>{mensaje}</div>
+                <div className="container">
+                    <div className="robot-container">
+                        <img src={robotsaludando} alt="Robot" className="robot" />
+                        <div className="speech-bubble" style={{ maxHeight:"100px"}}>{mensaje}</div>
                     </div>
                 </div>
             </div>
 
+            <div className="barra">.</div>
+            <div className="barra2">.</div>
+            <div className="barra3">.</div>
             <div className="footer">
+                
                 {buttons.map((btn, index) => (
                     <div key={index} className="button-container">
                         <button
@@ -147,39 +151,36 @@ const Inicio = () => {
                                 }
                             }}
                             style={{
+
                                 display: "inline-block",
                                 padding: "10px",
                                 position: "relative",
                                 color: btn.path === "/home" ? "#2fa831" : "black",
                                 cursor: btn.path === "/home" ? "default" : "pointer",
+                                transition: "transform 0.5s",
                             }}
                             disabled={btn.path === "/home"}
                         >
-                            {btn.icon}
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                {btn.icon}
+                                <span className="button-label" style={
+                                    btn.nombre === "Inicio"
+                                    ? { color: "#2fa831", fontWeight: "bold" }
+                                    : {}
+                                }>{btn.nombre}</span>
+                            </div>
                         </button>
                         {btn.label === "Editar parámetros" && showEditOptions && (
                             <div
                                 className="edit-options"
-                                style={{
-                                    position: "absolute",
-                                    width: "200px",
-                                    bottom: "60px", // Ajusta la distancia desde el botón hacia arriba
-                                    left: "70%", // Centra el contenedor respecto al botón
-                                    transform: "translateX(-50%)", // Ajusta para que quede centrado
-                                    backgroundColor: "white",
-                                    border: "1px solid #ccc",
-                                    borderRadius: "5px",
-                                    padding: "10px",
-                                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Añade sombra para mejor visibilidad
-                                    zIndex: 10, // Asegúrate de que esté encima de otros elementos
-                                }}
+                                style={{left: "10%"}}
                             >
-                                <button onClick={() => handleOptionClick("/frecuencia")} style={{ display: "block", marginBottom: "5px" }}>
+                                <button onClick={() => handleOptionClick("/frecuencia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
-                                        width="24"
-                                        height="24"
+                                        width="15"
+                                        height="15"
                                         fill="none"
                                         stroke="currentColor"
                                         strokeWidth="2"
@@ -192,26 +193,26 @@ const Inicio = () => {
                                     &nbsp; &nbsp; Frecuencia
                                 </button>
 
-                                <button onClick={() => handleOptionClick("/peso")} style={{ display: "block", marginBottom: "5px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <button onClick={() => handleOptionClick("/peso")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                                     <circle cx="12" cy="10" r="3"/>
                                     <path d="M12 10v2"/>
                                     </svg>
                                     &nbsp; &nbsp; Peso
                                 </button>
-                                <button onClick={() => handleOptionClick("/arritmia")} style={{ display: "block", marginBottom: "5px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <button onClick={() => handleOptionClick("/arritmia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
                                     </svg>
                                     &nbsp; &nbsp; Arritmia
                                 </button>
-                                <button onClick={() => handleOptionClick("/tension")} style={{ display: "block" }}>
+                                <button onClick={() => handleOptionClick("/tension")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                 <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
-                                            width="24"
-                                            height="24"
+                                            width="15"
+                                             height="15"
                                             fill="none"
                                             stroke="currentColor"
                                             stroke-width="2"
@@ -233,12 +234,12 @@ const Inicio = () => {
 
                                 &nbsp; &nbsp; Tensión
                                 </button>
-                                <button onClick={() => handleOptionClick("/medicacion")} style={{ display: "block", marginBottom: "5px" }}>
+                                <button onClick={() => handleOptionClick("/medicacion")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
-                                        width="24"
-                                        height="24"
+                                        width="15"
+                                        height="15"
                                         fill="none"
                                         stroke="currentColor"
                                         strokeWidth="2"
@@ -251,11 +252,11 @@ const Inicio = () => {
                                     </svg>
                                 &nbsp; &nbsp; Medicación
                                 </button>
-                                <button onClick={() => handleOptionClick("/tomas")} style={{ display: "block", marginBottom: "5px" }}>
+                                <button onClick={() => handleOptionClick("/tomas")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
+                                    width="15" 
+                                    height="15"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     stroke="currentColor"
@@ -269,8 +270,11 @@ const Inicio = () => {
                                     <line x1="3" y1="10" x2="21" y2="10"></line>
                                 </svg>
                                 &nbsp;&nbsp;Tomas
+                                
                             </button>
+                            
                             </div>
+                            
                         )}
                     </div>
                 ))}

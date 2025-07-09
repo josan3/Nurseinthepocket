@@ -42,6 +42,8 @@ const editarUsuarioRouter = require('./routes/editarusuario.js');
 const getCorreoRouter = require('./routes/getCorreo.js');
 const getUsuariosCentroRouter = require('./routes/getusuariocentro.js');
 const eliminarTomaRouter = require('./routes/eliminarmedicamentopaciente.js');
+const registrousuarioRouter = require('./routes/registrousuario.js');
+const historialRouter = require('./routes/historial.js');
 
 const app = express();
 app.use(express.json());  // Middleware para manejar JSON
@@ -142,6 +144,8 @@ app.use('/editarusuario', editarUsuarioRouter);
 app.use('/getcorreo', getCorreoRouter);
 app.use('/getusuariocentro', getUsuariosCentroRouter);
 app.use('/deletetoma', eliminarTomaRouter);
+app.use('/registrousuario', registrousuarioRouter);
+app.use("/gethistorial", historialRouter);
 
 app.get('/', (req, res)=> {
     return res.json("From Backend Side");

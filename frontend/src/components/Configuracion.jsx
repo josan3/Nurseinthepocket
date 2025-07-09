@@ -163,12 +163,9 @@ const Configuracion = () => {
                             placeholder="Ingrese su nombre"
                             value={correo}
                             onChange={(e) => handleInputChange("correo", e.target.value)}
-                            disabled={editableField !== "correo"} // Solo editable si es el campo seleccionado
+                            disabled// Solo editable si es el campo seleccionado
                         />
-                        <FaEdit
-                            style={{ marginLeft: "10px", cursor: "pointer" }}
-                            onClick={() => handleEditClick1("correo")}
-                        />
+                        
                     </div>
                 </div>
                 <div>

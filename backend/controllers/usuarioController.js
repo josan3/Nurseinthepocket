@@ -1,5 +1,5 @@
 const { application } = require('express');
-const {crearUsuario, crearUsuarioGoogle, encontrarUsuarioporCorreo, getCorreo, actualizar, actualizarGoogle, getUsuarioporId, actualizarUsuarioporId, getNombreUsuarioporId, getListaUsuarios, editarUsuarioporId, eliminarUsuarioporId, getListaUsuariosCentro} = require('../models/usuarioModel');
+const {obtenerHistorial, setRegistroUsuarioAcceso, crearUsuario, crearUsuarioGoogle, encontrarUsuarioporCorreo, getCorreo, actualizar, actualizarGoogle, getUsuarioporId, actualizarUsuarioporId, getNombreUsuarioporId, getListaUsuarios, editarUsuarioporId, eliminarUsuarioporId, getListaUsuariosCentro} = require('../models/usuarioModel');
 const bcrypt = require ('bcryptjs');
 const {getDatosPacienteporId, setPacienteporId } = require('../models/pacientesModel');
 const util = require("util");
@@ -641,7 +641,62 @@ const getUsuariosporCentro = (req, res) => {
   });
 };
 
+/**
+ * Consulta la lista de usuarios en la base de datos.
+ * 
+ * @param {Object} req - El objeto de solicitud (Request).
+ * @param {Object} res - El objeto de respuesta (Response).
+ * @returns {void}
+ * 
+ * @precondición exista el centro pasado por parámetros.
+ * @postcondición Se consulta la lista de usuarios y se retorna un mensaje con los datos. Si ocurre un error, se devuelve el código de error correspondiente.
+ */
+const registroUsuarioAcceso = async (req, res) => {
+  const { id } = req.body;
 
+  // Validación básica de entrada
+  if (!id) {
+    return res.status(400).json({ error: "Faltan parámetros para registrar los datos" });
+  }
 
+  try {
+    const result = await setRegistroUsuarioAcceso(id);
 
-module.exports = { inicioSesionUsuario, actualizarUsuarioGoogle, inicioSesionUsuarioGoogle, obtenerCorreo, registroUsuario, registroUsuarioGoogle, actualizarUsuario, setUsuario, getUsuario, getNombreUsuario, getUsuarios, eliminarusuario , crearUsuarioAdmin, verificarRolAdmin, editarUsuario, getUsuariosporCentro};
+    return res.status(200).json({
+      message: "Datos obtenidos con éxito",
+      data: result,
+    });
+  } catch (err) {
+    return res.status(500).json({ error: "Error al consultar la base de datos" });
+  }
+};
+
+/**
+ * Consulta la lista de usuarios en la base de datos.
+ * 
+ * @param {Object} req - El objeto de solicitud (Request).
+ * @param {Object} res - El objeto de respuesta (Response).
+ * @returns {void}
+ * 
+ * @precondición exista el centro pasado por parámetros.
+ * @postcondición Se consulta la lista de usuarios y se retorna un mensaje con los datos. Si ocurre un error, se devuelve el código de error correspondiente.
+ */
+const historialAcceso = (req, res) => {
+  obtenerHistorial((err, result) => {
+    if (err) {
+      console.error("Error SQL:", err);
+      return res.status(500).json({ error: "Error al consultar la base de datos" });
+    }
+
+    if (!result || result.length === 0) {
+      return res.status(404).json({ error: "No se encontraron registros" });
+    }
+
+    return res.status(200).json({
+      message: "Datos obtenidos con éxito",
+      data: result,
+    });
+  });
+};
+
+module.exports = {historialAcceso, registroUsuarioAcceso, inicioSesionUsuario, actualizarUsuarioGoogle, inicioSesionUsuarioGoogle, obtenerCorreo, registroUsuario, registroUsuarioGoogle, actualizarUsuario, setUsuario, getUsuario, getNombreUsuario, getUsuarios, eliminarusuario , crearUsuarioAdmin, verificarRolAdmin, editarUsuario, getUsuariosporCentro};

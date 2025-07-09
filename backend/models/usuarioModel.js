@@ -372,6 +372,40 @@ const getListaUsuariosCentro = (centro, callback) => {
   });
 };
 
+const setRegistroUsuarioAcceso = async (id) => {
+  const sql = "INSERT INTO registro_usuarios (id_usuario) VALUES (?)";
+
+  return new Promise((resolve, reject) => {
+    db.query(sql, [id], (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve({ result: true });
+    });
+  });
+};
+
+const obtenerHistorial = (callback) => {
+  const sql = `
+    SELECT 
+      u.nombre,
+      u.apellido1,
+      u.apellido2,
+      u.correo,
+      r.hora
+    FROM 
+      registro_usuarios r
+    JOIN 
+      usuario u ON r.id_usuario = u.id
+    ORDER BY 
+      r.hora DESC
+  `;
+
+  db.query(sql, (err, result) => {
+    if (err) return callback(err, null);
+    return callback(null, result);
+  });
+};
 
 
-module.exports = {crearUsuario, actualizarGoogle, encontrarUsuarioporCorreo, getUsuarioporId, actualizarUsuarioporId, actualizar, getNombreUsuarioporId, getIdporNombreUsuario, getListaUsuarios, editarUsuarioporId, eliminarUsuarioporId, getCorreo, getListaUsuariosCentro, crearUsuarioGoogle};
+module.exports = {obtenerHistorial, setRegistroUsuarioAcceso, crearUsuario, actualizarGoogle, encontrarUsuarioporCorreo, getUsuarioporId, actualizarUsuarioporId, actualizar, getNombreUsuarioporId, getIdporNombreUsuario, getListaUsuarios, editarUsuarioporId, eliminarUsuarioporId, getCorreo, getListaUsuariosCentro, crearUsuarioGoogle};
