@@ -73,7 +73,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8801/getusernames",
+					"raw": "http://host.docker.internal:8801/getusernames",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -144,7 +144,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8801/getmedicamentos",
+					"raw": "http://192.168.1.37:8801/getmedicamentos",
 					"protocol": "http",
 					"host": [
 						"localhost"
