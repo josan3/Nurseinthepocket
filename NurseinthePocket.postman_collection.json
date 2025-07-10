@@ -10,49 +10,483 @@
 	"item": [
 		{
 			"name": "getUsernames",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the presence of 'message' and 'data' fields in the response\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.all.keys('message', 'data');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the structure of the objects within the 'data' array\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;\r",
+							"\r",
+							"    responseData.data.forEach(function(user) {\r",
+							"        pm.expect(user).to.be.an('object');\r",
+							"        pm.expect(user).to.have.all.keys('nombre', 'apellido1', 'apellido2', 'id', 'fecha_nacimiento', 'cuerpo_medico');\r",
+							"        pm.expect(user.nombre).to.be.a('string');\r",
+							"        pm.expect(user.apellido1).to.be.a('string');\r",
+							"        pm.expect(user.apellido2).to.be.a('string');\r",
+							"        pm.expect(user.id).to.be.a('number');\r",
+							"        pm.expect(user.fecha_nacimiento).to.be.a('string');\r",
+							"        pm.expect(user.cuerpo_medico).to.be.a('number');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Fecha_nacimiento must be in a valid date format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;\r",
+							"    \r",
+							"    responseData.data.forEach(function(item) {\r",
+							"        pm.expect(item.fecha_nacimiento).to.match(/^\\d{4}-\\d{2}-\\d{2}$/, \"Fecha_nacimiento should be in YYYY-MM-DD format\");\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8801/getusernames",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8801",
+					"path": [
+						"getusernames"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "getMedicamentos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has required fields: message and data\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.all.keys('message', 'data');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Data is an array containing at least one object\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;\r",
+							"    responseData.data.forEach(item => {\r",
+							"        pm.expect(item).to.be.an('object');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the schema of the objects within the data array\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.be.an('array');\r",
+							"\r",
+							"    responseData.data.forEach(function(item) {\r",
+							"        pm.expect(item).to.be.an('object');\r",
+							"        pm.expect(item).to.have.property('nombre').that.is.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8801/getmedicamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8801",
+					"path": [
+						"getmedicamentos"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "getHistorial",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has required fields: message and data\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.all.keys('message', 'data');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the schema of the objects in the data array\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.be.an('array');\r",
+							"\r",
+							"    responseData.data.forEach(function(item) {\r",
+							"        pm.expect(item).to.be.an('object');\r",
+							"        pm.expect(item).to.have.all.keys('nombre', 'apellido1', 'apellido2', 'correo', 'hora');\r",
+							"        pm.expect(item.nombre).to.be.a('string');\r",
+							"        pm.expect(item.apellido1).to.be.a('string');\r",
+							"        pm.expect(item.apellido2).to.be.a('string');\r",
+							"        pm.expect(item.correo).to.be.a('string').that.matches(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, \"Correo must be a valid email format\");\r",
+							"        pm.expect(item.hora).to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Email is in a valid format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;\r",
+							"    \r",
+							"    responseData.data.forEach(function(item) {\r",
+							"        pm.expect(item.correo).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, \"Email format is invalid\");\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8801/gethistorial",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8801",
+					"path": [
+						"gethistorial"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "getPaciente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has required fields: message, data, id\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.all.keys('message', 'data', 'id');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the structure of the data object\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.exist.and.to.be.an('object');\r",
+							"\r",
+							"    pm.expect(responseData.data.usuario).to.exist.and.to.be.an('array');\r",
+							"    pm.expect(responseData.data.paciente).to.exist.and.to.be.an('array');\r",
+							"    pm.expect(responseData.data.tension).to.exist.and.to.be.an('array');\r",
+							"    pm.expect(responseData.data.frecuencia).to.exist.and.to.be.an('array');\r",
+							"    pm.expect(responseData.data.peso).to.exist.and.to.be.an('array');\r",
+							"    pm.expect(responseData.data.arritmia).to.exist.and.to.be.an('array');\r",
+							"\r",
+							"    responseData.data.usuario.forEach(function(usuario) {\r",
+							"        pm.expect(usuario).to.be.an('object');\r",
+							"        pm.expect(usuario.nombre).to.exist.and.to.be.a('string');\r",
+							"        pm.expect(usuario.apellido1).to.exist.and.to.be.a('string');\r",
+							"        pm.expect(usuario.apellido2).to.exist.and.to.be.a('string');\r",
+							"        pm.expect(usuario.correo).to.exist.and.to.be.a('string');\r",
+							"        pm.expect(usuario.centro).to.exist.and.to.be.a('string');\r",
+							"        pm.expect(usuario.cuerpo_medico).to.exist.and.to.be.a('number');\r",
+							"    });\r",
+							"\r",
+							"    responseData.data.paciente.forEach(function(paciente) {\r",
+							"        pm.expect(paciente).to.be.an('object');\r",
+							"        pm.expect(paciente.altura).to.exist.and.to.be.a('number');\r",
+							"        pm.expect(paciente.genero).to.exist.and.to.be.a('number');\r",
+							"        pm.expect(paciente.habitos_toxicos).to.exist.and.to.be.a('string');\r",
+							"        pm.expect(paciente.fecha_nacimiento).to.exist.and.to.be.a('string');\r",
+							"        pm.expect(paciente.exploraciones).to.satisfy(function(value) {\r",
+							"            return value === null || typeof value === 'object';\r",
+							"        });\r",
+							"    });\r",
+							"\r",
+							"    responseData.data.tension.forEach(function(tension) {\r",
+							"        pm.expect(tension).to.be.an('object');\r",
+							"        pm.expect(tension.tension_maxima).to.exist.and.to.be.a('number');\r",
+							"        pm.expect(tension.tension_minima).to.exist.and.to.be.a('number');\r",
+							"    });\r",
+							"\r",
+							"    responseData.data.frecuencia.forEach(function(frecuencia) {\r",
+							"        pm.expect(frecuencia).to.be.an('object');\r",
+							"        pm.expect(frecuencia.frecuencia_cardiaca).to.exist.and.to.be.a('number');\r",
+							"    });\r",
+							"\r",
+							"    responseData.data.peso.forEach(function(peso) {\r",
+							"        pm.expect(peso).to.be.an('object');\r",
+							"        pm.expect(peso.peso).to.exist.and.to.be.a('number');\r",
+							"    });\r",
+							"\r",
+							"    responseData.data.arritmia.forEach(function(arritmia) {\r",
+							"        pm.expect(arritmia).to.be.an('object');\r",
+							"        pm.expect(arritmia.fecha_registro).to.exist.and.to.be.a('string');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate that 'fecha_nacimiento' is in a valid date format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    const fechaNacimiento = responseData.data.paciente[0].fecha_nacimiento;\r",
+							"\r",
+							"    // Regular expression to validate date in YYYY-MM-DD format\r",
+							"    const dateFormat = /^\\d{4}-\\d{2}-\\d{2}$/;\r",
+							"\r",
+							"    pm.expect(fechaNacimiento).to.match(dateFormat, \"Fecha de nacimiento is not in the valid format YYYY-MM-DD\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [
+					{
+						"key": "nombre",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Jose Antonio\",\r\n  \"apellido1\": \"Montes\",\r\n  \"apellido2\": \"Solano\",\r\n  \"fecha_nacimiento\": \"2003-02-24\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8801/getpaciente",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8801",
+					"path": [
+						"getpaciente"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "Jose Antonio",
+							"disabled": true
+						},
+						{
+							"key": "apellido1",
+							"value": "Montes",
+							"disabled": true
+						},
+						{
+							"key": "apellido2",
+							"value": "Solano",
+							"disabled": true
+						},
+						{
+							"key": "fecha_nacimiento",
+							"value": "2003-02-24",
+							"disabled": true
+						}
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "setMedicamento",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has required fields: message and data\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.all.keys('message', 'data');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the schema of the data object\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.have.all.keys('nombre');\r",
+							"    pm.expect(responseData.data.nombre).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Nombre must be a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.be.an('object').that.has.property('nombre');\r",
+							"    pm.expect(responseData.data.nombre).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"nombre\": \"Aspirina\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8801/setmedicamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8801",
+					"path": [
+						"setmedicamentos"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "deleteMedicamentos",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"nombre\": \"Aspirina\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8801/deletemedicamentos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8801",
+					"path": [
+						"deletemedicamentos"
+					]
+				}
 			},
 			"response": []
 		},
