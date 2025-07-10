@@ -1,11 +1,10 @@
-import logo from '../src/assets/logo.png'; // Asegúrate de que la ruta sea correcta
-
+import logo from '../src/assets/logo.png';
 self.addEventListener("push", function (event) {
     const data = event.data.json();
   
     const options = {
       body: data.body,
-      icon: logo, // o la ruta a tu icono, como '/logo.png'
+      icon: logo, 
     };
   
     event.waitUntil(

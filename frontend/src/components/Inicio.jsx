@@ -129,15 +129,15 @@ const Inicio = () => {
             <div className="cuerpo">
                 <div className="container">
                     <div className="robot-container">
-                        <img src={robotsaludando} alt="Robot" className="robot" />
-                        <div className="speech-bubble" style={{ maxHeight:"100px"}}>{mensaje}</div>
+                        <img src={robotsaludando} alt="Robot" className="robot"/>
+                        <div className="speech-bubble" style={{ maxHeight:"200px"}}>{mensaje}</div>
                     </div>
                 </div>
             </div>
 
-            <div className="barra">.</div>
-            <div className="barra2">.</div>
-            <div className="barra3">.</div>
+            <div className="barra"></div>
+            <div className="barra2"></div>
+            <div className="barra3"></div>
             <div className="footer">
                 
                 {buttons.map((btn, index) => (

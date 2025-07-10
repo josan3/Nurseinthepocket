@@ -168,12 +168,9 @@ const handleResetPassword = async () => {
   return (
     <div>
       <div>
-        
-          <header>
-          Iniciar Sesión
-          </header>
+        <header>Iniciar Sesión</header>
        
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{top: '-120px'}}>
           <div>
             <label>Correo:</label> <br></br>
             <input
@@ -220,58 +217,54 @@ const handleResetPassword = async () => {
         </form>
 
         {/* Modal para recuperación de contraseña */}
-{showModal && (
-  <div style={{
-    position: "fixed",
-    top: 0, left: 0, right: 0, bottom: 0,
-    background: "rgba(0,0,0,0.4)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 1000
-  }}>
-    <div style={{
-      width: "400px", // tamaño fijo o usa "minWidth", "maxWidth"
-      background: "white",
-      padding: "40px",
-      borderRadius: "8px",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-      display: "flex",
-      flexDirection: "column",
-      gap: "20px"
-    }}>
-      <h3 style={{ margin: 0 }}>Recuperar contraseña</h3>
-      <input
-        type="email"
-        placeholder="Introduce tu correo"
-        value={resetCorreo}
-        onChange={e => setResetCorreo(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "10px",
-          fontSize: "16px",
-          border: "1px solid #ccc",
-          borderRadius: "4px"
-        }}
-      />
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
-        <button onClick={handleResetPassword}>
-          Enviar
-        </button>
-        <button
-          onClick={() => { setShowModal(false); setResetCorreo(""); }}
-          style={{ background: "#ccc" }}
-        >
-          Cancelar
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-
-        
-        
+        {showModal && (
+          <div style={{
+            position: "fixed",
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: "rgba(0,0,0,0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000
+          }}>
+            <div style={{
+              width: "400px", // tamaño fijo o usa "minWidth", "maxWidth"
+              background: "white",
+              padding: "40px",
+              borderRadius: "8px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px"
+            }}>
+              <h3 style={{ margin: 0 }}>Recuperar contraseña</h3>
+              <input
+                type="email"
+                placeholder="Introduce tu correo"
+                value={resetCorreo}
+                onChange={e => setResetCorreo(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  fontSize: "16px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px"
+                }}
+              />
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+                <button onClick={handleResetPassword}>
+                  Enviar
+                </button>
+                <button
+                  onClick={() => { setShowModal(false); setResetCorreo(""); }}
+                  style={{ background: "#ccc" }}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

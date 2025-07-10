@@ -12,7 +12,7 @@ const Datos = () => {
   const id = localStorage.getItem("id");
   const navigate = useNavigate(); 
 
-  const mensaje = `${id} Necesito que rellenes el cuestionario debajo de mí para saber más sobre tí`;
+  const mensaje = `Necesito que rellenes el cuestionario debajo de mí para saber más sobre tí`;
   
 
   const handleSubmit = async (e) => {
@@ -49,61 +49,64 @@ const Datos = () => {
 
   return (
     <div>
-      <div>
-          <header>¡Bienvenido!</header>
-        <div className="container" style={{width: "20%", height: "auto" }}>
-          <div className="image-container" style={{ cursor: "pointer", left: "150%", width: "110%", }}>
-            <img src={robothablando} alt="Robot" className="robot" style={{ width: "80%", height: "auto" }} />
-            <div className="speech-bubble" style={{width: "150%", height:"60%", top: "10%", left:"110%", minWidth:"50px",maxWidth: "150px", minHeight:"50px", maxHeight:"80px"}}>{mensaje}</div>
-          </div>
-        </div>
-   
-      </div>   
-        
-            <form onSubmit={handleSubmit}>
-              <div style={{marginBottom:"2%"}}>
-                <label>Altura:</label><br />
-                <input
-                  type="number"
-                  placeholder="Ingrese su altura en cms"
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                />
-              </div>
-              <div className="gender-container">
-                <label>Género:</label><br />
-                <select className="custom-select" value={gender} onChange={(e) => setGender(e.target.value)}>
-                  <option value="1">Masculino</option>
-                  <option value="2">Femenino</option>
-                  <option value="3">Otro</option>
-                </select>
-              </div>
+      <header>¡Bienvenido!</header>
 
-              <div style={{marginBottom:"2%"}}>
-                <label>Habitos toxicos:</label><br />
-                <input
-                  type="text"
-                  placeholder="Indicame si tiene habitos toxicos (fuma, alchol,...)"
-                  value={toxichabits}
-                  onChange={(e) => setToxichab(e.target.value)}
-                />
-              </div>
-              <div style={{marginBottom:"3%"}}>
-                  <label>Fecha de nacimiento:</label><br />
-                  <input
-                    type="date"
-                    placeholder="Indica su fecha de nacimiento"
-                    value={birthdate}
-                    onChange={(e) => setBirthdate(e.target.value)}
-                  />
-              </div>
-              <button type="submit">
-                Enviar</button>
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                {success && <p style={{ color: "green" }}>{success}</p>}
-      
-            </form>
-     </div> 
+      <div className="cuerpo">
+        <div className="container">
+          <div className="robot-container">
+            <img src={robothablando} alt="Robot" className="robot"/>
+            <div className="speech-bubble" style={{ maxHeight:"100px"}}>{mensaje}</div>
+          </div>
+        </div>   
+        
+        <form onSubmit={handleSubmit}>
+          <div style={{marginBottom:"2%"}}>
+            <label>Altura:</label><br />
+            <input
+              type="number"
+              placeholder="Ingrese su altura en cms"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+            />
+            </div>
+
+            <div className="gender-container">
+              <label>Género:</label><br />
+              <select className="custom-select" value={gender} onChange={(e) => setGender(e.target.value)}>
+                <option value="1">Masculino</option>
+                <option value="2">Femenino</option>
+                <option value="3">Otro</option>
+              </select>
+            </div>
+
+            <div style={{marginBottom:"2%"}}>
+              <label>Habitos toxicos:</label><br />
+              <input
+                type="text"
+                placeholder="Indicame si tiene habitos toxicos (fuma, alchol,...)"
+                value={toxichabits}
+                onChange={(e) => setToxichab(e.target.value)}
+              />
+            </div>
+
+            <div style={{marginBottom:"3%"}}>
+              <label>Fecha de nacimiento:</label><br />
+              <input
+                type="date"
+                placeholder="Indica su fecha de nacimiento"
+                value={birthdate}
+                onChange={(e) => setBirthdate(e.target.value)}
+              />
+            </div>
+
+            <button type="submit">
+              Enviar</button>
+              {error && <p style={{ color: "red" }}>{error}</p>}
+              {success && <p style={{ color: "green" }}>{success}</p>}
+              
+          </form>
+      </div>
+    </div> 
   );
 };
 

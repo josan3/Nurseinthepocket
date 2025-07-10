@@ -41,10 +41,8 @@ function App() {
           applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY)
         });
   
-        // Ahora la variable 'subscription' está definida
         console.log('Suscripción exitosa:', subscription);
   
-        // Envía la suscripción al backend
         await fetch('http://localhost:8801/subscripciones', {
           method: 'POST',
           headers: {
@@ -89,7 +87,7 @@ function App() {
     <div className='area'>
       <h1>
         <h2>
-          <div class="movimiento" style={{fontfamily: 'Garamond'}}>
+          <div class="movimiento" style={{ fontfamily: 'Judson'}  }>
           NURSE&nbsp;&nbsp;
             <img src={logo} alt="Robot" className="robot" style={{minWidth: "30px" ,width: "3%", height: "auto" }} />
           </div>

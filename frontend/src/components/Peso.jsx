@@ -76,8 +76,6 @@ const Peso = () => {
             });
         
             const data = await response.json();
-            console.log("Respuesta del servidor:", response);
-            console.log("Datos recibidossssss:", data);
         
             if (response.ok) {
                 setSuccess("Peso registrado");

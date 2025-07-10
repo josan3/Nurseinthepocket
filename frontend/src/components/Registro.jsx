@@ -122,7 +122,7 @@ const Registro = () => {
     <div>
       <div>
         <header>Registrarse</header>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{top: '-120px'}}>
           <div >
             <label>Correo:</label><br />
             <input
