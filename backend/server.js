@@ -152,6 +152,6 @@ app.get('/', (req, res)=> {
 });
 
 // Puerto del servidor
-app.listen(8801, () => {
+app.listen(8801, '0.0.0.0', () => {
   console.log('Servidor backend corriendo en http://localhost:8801');
 });

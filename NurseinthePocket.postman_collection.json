@@ -73,10 +73,13 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://host.docker.internal:8801/getusernames",
+					"raw": "http://192.168.1.37:8801/getusernames",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"192",
+						"168",
+						"1",
+						"37"
 					],
 					"port": "8801",
 					"path": [
@@ -147,7 +150,10 @@
 					"raw": "http://192.168.1.37:8801/getmedicamentos",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"192",
+						"168",
+						"1",
+						"37"
 					],
 					"port": "8801",
 					"path": [
@@ -221,10 +227,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8801/gethistorial",
+					"raw": "http://192.168.1.37:8801/gethistorial",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"192",
+						"168",
+						"1",
+						"37"
 					],
 					"port": "8801",
 					"path": [
@@ -352,10 +361,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8801/getpaciente",
+					"raw": "http://192.168.1.37:8801/getpaciente",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"192",
+						"168",
+						"1",
+						"37"
 					],
 					"port": "8801",
 					"path": [
@@ -449,10 +461,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8801/setmedicamentos",
+					"raw": "http://192.168.1.37:8801/setmedicamentos",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"192",
+						"168",
+						"1",
+						"37"
 					],
 					"port": "8801",
 					"path": [
@@ -477,24 +492,19 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8801/deletemedicamentos",
+					"raw": "http://192.168.1.37:8801/deletemedicamentos",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"192",
+						"168",
+						"1",
+						"37"
 					],
 					"port": "8801",
 					"path": [
 						"deletemedicamentos"
 					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "New Request",
-			"request": {
-				"method": "GET",
-				"header": []
 			},
 			"response": []
 		}
