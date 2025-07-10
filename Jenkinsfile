@@ -5,33 +5,23 @@ pipeline {
         nodejs 'NodeJS_18' 
     }
 
-    environment {
-        COLLECTION_URL = credentials('POSTMAN_COLLECTION_URL')
-    }
-
     stages {
         stage('Clonar repositorio') {
             steps {
-                git 'https://github.com/tu-usuario/tu-repo.git'
+                git "${REPO_URL}"
             }
         }
 
         stage('Instalar dependencias') {
             steps {
                 sh 'npm install'
-                sh 'npm install -g newman' 
-            }
-        }
-
-        stage('Descargar colección Postman') {
-            steps {
-                sh 'curl -o collection.json "$COLLECTION_URL"'
+                sh 'npm install -g newman'
             }
         }
 
         stage('Ejecutar pruebas con Newman') {
             steps {
-                sh 'newman run collection.json' 
+                sh 'newman run NurseinthePocket.postman_collection.json'
             }
         }
     }

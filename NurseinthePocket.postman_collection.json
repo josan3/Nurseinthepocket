@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "40de33bb-2c20-46e3-a81c-48d7c5e43b98",
+		"name": "NurseinthePocket",
+		"description": "Pruebas API Network de mi TFG",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46659862",
+		"_collection_link": "https://joseantonio-3820195.postman.co/workspace/330d8f21-f70c-4ed2-84c6-b9cbfa365d20/collection/46659862-40de33bb-2c20-46e3-a81c-48d7c5e43b98?action=share&source=collection_link&creator=46659862"
+	},
+	"item": [
+		{
+			"name": "getUsernames",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "getMedicamentos",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "getHistorial",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "getPaciente",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "setMedicamento",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "deleteMedicamentos",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
