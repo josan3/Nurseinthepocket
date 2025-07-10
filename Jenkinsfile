@@ -5,6 +5,10 @@ pipeline {
         nodejs 'NodeJS_18' 
     }
 
+    environment {
+        REPO_URL = 'https://github.com/josan3/Nurseinthepocket.git'  // Define la URL aquí
+    }
+
     stages {
         stage('Clonar repositorio') {
             steps {
