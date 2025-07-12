@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import cara from "../assets/cara.png"; 
 
 const Administracion = () => {
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Administracion = () => {
     const [id, setId] = useState([]);
     const [crearNuevo, setCrearNuevo] = useState(false);
     const [correo, setAntiguoCorreo] = useState("");
+    const [nuevoMedicamento, setNuevoMedicamento] = useState({ nombre: "" });
     const [nuevoUsuario, setNuevoUsuario] = useState({
         nombre: "",
         password: "",
@@ -32,15 +34,82 @@ const Administracion = () => {
 
 
     const buttons = [
-        { label: "Información usuarios", key: "pacientes" },
-        { label: "Información medicamentos", key: "medicamentos" },
-        { label: "Historial uso de pacientes", key: "historial" }
+        { label: "Información usuarios", 
+            key: "pacientes",
+            icon: (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    >
+                    <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+            )
+         },
+        { label: "Información medicamentos",
+            key: "medicamentos",
+            icon: (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    >
+                    <rect
+                        x="3"
+                        y="8"
+                        width="18"
+                        height="8"
+                        rx="4"
+                        transform="rotate(-45 12 12)"
+                    />
+                    <line x1="10" y1="10" x2="14" y2="15" />
+                </svg>
+            )
+        },
+        { label: "Historial uso de pacientes",
+            key: "historial",
+            icon: (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    >
+                    <path d="M3 3v5h5" />
+                    <path d="M3.05 13a9 9 0 1 0 .5-4.5L3 8" />
+                    <path d="M12 7v5l3 3" />
+                </svg>
+            )
+        }
     ];
 
     const handleOptionClick = (vistaSeleccionada) => {
         setVista(vistaSeleccionada);
         localStorage.setItem('vista', vistaSeleccionada);
     };
+
+    const cancelar = () => {
+        window.location.reload();
+    }
 
 
     useEffect(() => {
@@ -239,7 +308,7 @@ const Administracion = () => {
     }
 
     const handleCrearMedicamento = async () => {
-        if (!busqueda) {
+        if (!nuevoMedicamento.nombre.trim()) {
             setError("Por favor, introduce un medicamento");
             return;
         }
@@ -251,7 +320,7 @@ const Administracion = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    nombre: busqueda,
+                    nombre: nuevoMedicamento.nombre,
                 }),
             });
 
@@ -308,7 +377,6 @@ const Administracion = () => {
 
     const handleEditarUsuario = async () => {
         try {
-            console.log("datos: ", id);
             const response = await fetch("http://localhost:8801/editarusuario", {
                 method: "POST",
                 headers: {
@@ -431,40 +499,57 @@ const Administracion = () => {
     return (
         <div>
             <header>Administración</header>
+            <div className="cuerpo">
 
-            <div
-                style={{
-                    marginLeft: "10px",
-                    marginRight: "10px",
-                    marginBottom: "100px",
-                    position: "relative",
-                    zIndex: "100",
-                }}
-            >
+            <div className="barra" style={{top: "400px"}} ></div>
+            <div className="barra2" style={{top: "400px"}}></div>
+            <div className="barra3" style={{top: "426px"}}></div>
+            <div className="footer">
+                {buttons.map((btn) => (
+                    <button
+                        key={btn.key} 
+                        className="button-container"
+                        onClick={() => handleOptionClick(btn.key)}
+                        style={{
 
-                <div className="footer">
-                    {buttons.map((btn) => (
-                        <button
-                            key={btn.key}
-                            onClick={() => handleOptionClick(btn.key)}
-                            style={{
-                                color: vista === btn.key ? "green" : "black", 
+                                display: "inline-block",
+                                padding: "20px",
+                                position: "relative",
+                                transition: "transform 0.5s"
+ 
                             }}
-                        >
-                            {btn.label}
-                        </button>
-                    ))}
-                </div>
+                    >
+                         <div style={{ display: "flex", alignItems: "center"}}>
+                                {btn.icon}
+                                <span className="button-label" style={
+                                    btn.label === "" 
+                                    ? { color: "#2fa831", fontWeight: "bold" }
+                                    : {}
+                                }>{btn.label}</span>
+                            </div>
+                    </button>
+                ))}
+            </div>
 
-                {/* Vista de Pacientes */}
-                {vista === "pacientes" && (
-                    <div>
+            {/* Vista de Pacientes */}
+            {vista === "pacientes" && (
+                    <div 
+                        style={{
+                            position: "absolute",
+                            top: "30%", 
+                            left: "20%",
+                            zIndex: 1000000,
+                            width: "75%",
+                            borderRadius: "20px",
+                            backgroundColor: "white",
+                            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                            padding: "10px"
+                        }}>
                         {/* Buscador */}
                         <div
                             style={{
                                 padding: "10px",
                                 width: "98.4%",
-                                marginTop: "20px",
                                 backgroundColor: "white",
                             }}
                         >
@@ -483,7 +568,6 @@ const Administracion = () => {
                                     fontSize: "16px",
                                 }}
                             />
-
 
                             <button
                                 onClick={() => setCrearNuevo(!crearNuevo)}
@@ -631,90 +715,110 @@ const Administracion = () => {
                         </div>
 
                         {crearNuevo && (
-    <div style={{ marginTop: "20px", fontFamily: "'Arial', sans-serif" }}>
-        <h3 style={{ textAlign: "center", color: "#333" }}>Nuevo usuario</h3>
-        <table
-            style={{
-                width: "100%",
-                backgroundColor: "#f9f9f9",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-                padding: "20px",
-                marginBottom: "20px"
-            }}
-        >
-            <thead>
-                <tr style={{ backgroundColor: "#f1f1f1" }}>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Nombre</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Apellido 1</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Apellido 2</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Contraseña</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Fecha Nac.</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Género</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Correo</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Centro</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Cuerpo Médico</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Hábitos</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Altura</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Observaciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.nombre} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, nombre: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.apellido1} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, apellido1: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.apellido2} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, apellido2: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.password} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, password: e.target.value })} /></td>
-                    <td><input type="date" style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.fecha_nacimiento} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, fecha_nacimiento: formatDate(e.target.value) })} /></td>
-                    <td>
-                        <select style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.genero} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, genero: parseInt(e.target.value) })}>
-                            <option value={1}>Masculino</option>
-                            <option value={2}>Femenino</option>
-                            <option value={3}>Otro</option>
-                        </select>
-                    </td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.correo} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, correo: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.centro} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, centro: e.target.value })} /></td>
-                    <td>
-                        <select style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.cuerpo_medico} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, cuerpo_medico: parseInt(e.target.value) })}>
-                            <option value={1}>Sí</option>
-                            <option value={0}>No</option>
-                        </select>
-                    </td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.habitos_toxicos} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, habitos_toxicos: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.altura} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, altura: e.target.value })} /></td>
-                    <td><textarea style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.observaciones} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, observaciones: e.target.value })} /></td>
-                </tr>
-            </tbody>
-        </table>
+                            <div className="confirmation-modal">
+                                <div className="modal-content" style={{width: "90%"}}>
+                                <img src={cara} alt="Robot" className="robot" style={{ marginTop: "10px" ,width: "5%", height: "auto" }} />
+                                <p></p>
+                                <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px" }}>Nuevo usuario</h3>
+                                <table
+                                    style={{
+                                        width: "100%",
+                                        backgroundColor: "#f9f9f9",
+                                        borderRadius: "8px",
+                                        padding: "20px",
+                                        marginBottom: "20px"
+                                    }}
+                                >
+                                    <thead>
+                                        <tr style={{ backgroundColor: "#f1f1f1" }}>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Nombre</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Apellido 1</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Apellido 2</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Contraseña</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Fecha Nac.</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Género</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Correo</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Centro</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Cuerpo Médico</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Hábitos</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Altura</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Observaciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.nombre} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, nombre: e.target.value })} /></td>
+                                            <td><input style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.apellido1} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, apellido1: e.target.value })} /></td>
+                                            <td><input style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.apellido2} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, apellido2: e.target.value })} /></td>
+                                            <td><input style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.password} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, password: e.target.value })} /></td>
+                                            <td><input type="date" style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.fecha_nacimiento} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, fecha_nacimiento: formatDate(e.target.value) })} /></td>
+                                            <td>
+                                                <select style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.genero} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, genero: parseInt(e.target.value) })}>
+                                                    <option value={1}>Masculino</option>
+                                                    <option value={2}>Femenino</option>
+                                                    <option value={3}>Otro</option>
+                                                </select>
+                                            </td>
+                                            <td><input style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.correo} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, correo: e.target.value })} /></td>
+                                            <td><input style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.centro} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, centro: e.target.value })} /></td>
+                                            <td>
+                                                <select style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.cuerpo_medico} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, cuerpo_medico: parseInt(e.target.value) })}>
+                                                    <option value={1}>Sí</option>
+                                                    <option value={0}>No</option>
+                                                </select>
+                                            </td>
+                                            <td><input style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.habitos_toxicos} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, habitos_toxicos: e.target.value })} /></td>
+                                            <td><input style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.altura} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, altura: e.target.value })} /></td>
+                                            <td><textarea style={{ width: "80%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.observaciones} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, observaciones: e.target.value })} /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-        <div style={{ textAlign: "center" }}>
-            <button
-                onClick={handleCrearUsuario}
-                style={{
-                    backgroundColor: "#28a745",
-                    color: "white",
-                    padding: "12px 20px",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: "16px",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-                }}
-            >
-                Guardar usuario
-            </button>
-        </div>
-    </div>
-)}
+                                <div style={{ textAlign: "center" }}>
+                                    <button
+                                        onClick={handleCrearUsuario}
+                                        style={{
+                                            backgroundColor: "#28a745",
+                                            color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                        }}
+                                    >
+                                        Guardar usuario
+                                    </button>
+                                    <button
+                                        onClick={() => setCrearNuevo(false)}
+                                        style={{
+                                            backgroundColor: "#cf0606ff",
+                                            color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                        }}
+                                    >
+                                        Cancelar
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                        )}
 
 
 
                         {/* Tabla de Pacientes */}
                         {data && (
-                            <div style={{ padding: "10px", backgroundColor: "#f9f9f9" }}>
-                                <h3 style={{ fontSize: "1.5rem", color: "#333", marginBottom: "20px" }}>Datos del usuario</h3>
+                            <div className="confirmation-modal">
+                                <div className="modal-content" style={{width: "90%"}}>
+                                <img src={cara} alt="Robot" className="robot" style={{ marginTop: "10px" ,width: "5%", height: "auto" }} />
+                                <p></p>
+                                <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px" }}>Datos del usuario</h3>
                                 <table
                                     border="1"
                                     style={{
@@ -925,21 +1029,33 @@ const Administracion = () => {
                                         </tr>
                                     </tbody>
                                 </table>
+
+                                <button
+                                        onClick={cancelar}
+                                        style={{
+                                            backgroundColor: "#28a745",
+                                            color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                        }}
+                                    >
+                                        Cancelar
+                                    </button>
                                 <button
                                     onClick={handleEditarUsuario}
                                     style={{
                                         backgroundColor: "#28a745",
-                                        color: "#fff",
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        padding: "12px 18px",
-                                        cursor: "pointer",
-                                        fontSize: "16px",
-                                        fontWeight: "600",
-                                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                                        transition: "background-color 0.3s ease, transform 0.2s ease",
-                                        marginTop: "20px", // Ajustado para un mejor espaciado
-                                        marginLeft: "40%",
+                                        color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                                     }}
                                     onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
                                     onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
@@ -951,17 +1067,14 @@ const Administracion = () => {
                                     <button
                                         onClick={handleEliminarUsuario}
                                         style={{
-                                            marginLeft: "15px",
-                                            padding: "12px 20px",
-                                            backgroundColor: "#dc3545",
+                                            backgroundColor: "#28a745",
                                             color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
                                             border: "none",
-                                            borderRadius: "8px",
-                                            fontSize: "16px",
-                                            fontWeight: "600",
                                             cursor: "pointer",
-                                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                                            transition: "background-color 0.3s ease, transform 0.2s ease",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                                         }}
 
                                         onMouseEnter={(e) => e.target.style.backgroundColor = "#c82333"}
@@ -970,8 +1083,8 @@ const Administracion = () => {
                                         Eliminar usuario
                                     </button>
                                 )}
-
                             </div>
+                        </div>
                         )}
 
                     </div>
@@ -983,10 +1096,15 @@ const Administracion = () => {
                         {/* Buscador */}
                         <div
                             style={{
-                                padding: "10px",
-                                width: "98%",
-                                marginTop: "20px",
-                                backgroundColor: "white",
+                            position: "absolute",
+                            top: "30%", 
+                            left: "20%",
+                            zIndex: 1000000,
+                            width: "75%",
+                            borderRadius: "20px",
+                            backgroundColor: "white",
+                            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                            padding: "10px"
                             }}
                         >
                             <input
@@ -1004,12 +1122,12 @@ const Administracion = () => {
                                     fontSize: "16px",
                                 }}
                             />
+                            
                             <button
-                                onClick={handleCrearMedicamento}
-                                disabled={!busqueda}
+                                onClick={() => setCrearNuevo(!crearNuevo)}
                                 style={{
                                     padding: "10px 20px",
-                                    backgroundColor: busqueda ? "#2fa831" : "#ccc",
+                                    backgroundColor: "#2fa831",
                                     color: "white",
                                     border: "none",
                                     borderRadius: "5px",
@@ -1018,6 +1136,84 @@ const Administracion = () => {
                             >
                                 Crear medicamento
                             </button>
+
+                            {crearNuevo && (
+                                <div className="confirmation-modal">
+                                    <div className="modal-content" style={{width: "90%"}}>
+                                        <img src={cara} alt="Robot" className="robot" style={{ marginTop: "10px" ,width: "5%", height: "auto" }} />
+                                        <p></p>
+                                        <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px" }}>Nuevo medicamento</h3>
+                                        <table
+                                            style={{
+                                                width: "100%",
+                                                backgroundColor: "#f9f9f9",
+                                                borderRadius: "8px",
+                                                padding: "20px",
+                                                marginBottom: "20px"
+                                            }}
+                                        >
+                                            <thead>
+                                                <tr style={{ backgroundColor: "#f1f1f1" }}>
+                                                    <th style={{ padding: "10px", textAlign: "left" }}>Nombre del medicamento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input
+                                                            style={{
+                                                                width: "90%",
+                                                                padding: "8px",
+                                                                borderRadius: "4px",
+                                                                border: "1px solid #ccc"
+                                                            }}
+                                                            value={nuevoMedicamento.nombre}
+                                                            onChange={(e) =>
+                                                                setNuevoMedicamento({
+                                                                    ...nuevoMedicamento,
+                                                                    nombre: e.target.value
+                                                                })
+                                                            }
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <button
+                                            onClick={handleCrearMedicamento}
+                                            style={{
+                                                backgroundColor: "#28a745",
+                                                color: "white",
+                                                padding: "12px 20px",
+                                                borderRadius: "5px",
+                                                border: "none",
+                                                cursor: "pointer",
+                                                fontSize: "16px",
+                                                marginRight: "10px",
+                                            }}
+                                        >
+                                            Guardar medicamento
+                                        </button>
+                                        <button
+                                            onClick={() => setCrearNuevo(false)}
+                                            style={{
+                                                backgroundColor: "#cf0606ff",
+                                                color: "white",
+                                                padding: "12px 20px",
+                                                borderRadius: "5px",
+                                                border: "none",
+                                                cursor: "pointer",
+                                                fontSize: "16px"
+                                            }}
+                                        >
+                                            Cancelar
+                                        </button>
+
+                                    </div>
+                                </div>
+                            )}
+
 
                             <button
                                 onClick={handleEliminarMedicamento}
@@ -1074,40 +1270,60 @@ const Administracion = () => {
                 )}
 
                 {/* Vista del historial */}
-                {vista === "historial" && (
-                    <div style={{ marginTop: "20px", backgroundColor: "#f9f9f9", padding: "15px", borderRadius: "8px" }}>
-                        <h3 style={{ color: "#333" }}>Historial de uso de pacientes</h3>
-                        {resultadosFiltrados.length > 0 ? (
-                            <table style={{ width: "100%", borderCollapse: "collapse", backgroundColor: "#fff" }}>
-                                <thead>
-                                    <tr style={{ backgroundColor: "#e0e0e0" }}>
-                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Nombre</th>
-                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Primer Apellido</th>
-                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Segundo Apellido</th>
-                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Correo</th>
-                                        <th style={{ padding: "8px", border: "1px solid #ccc" }}>Hora</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {resultadosFiltrados.map((item, idx) => (
-                                        <tr key={idx}>
-                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.nombre || "-"}</td>
-                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.apellido1 || "-"}</td>
-                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.apellido2 || "-"}</td>
-                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.correo || "-"}</td>
-                                            <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.hora || "-"}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        ) : (
-                            <p style={{ color: "#888" }}>No hay historial disponible.</p>
-                        )}
-                    </div>
-                )
-                }
+{vista === "historial" && (
+    <div 
+        style={{
+            position: "absolute",
+            top: "30%", 
+            left: "20%",
+            zIndex: 100,
+            width: "75%",
+            borderRadius: "20px",
+            backgroundColor: "white",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+            padding: "10px",
+            paddingBottom: "30px",
+            height: "55%",
+        }}>
+        <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "10px", marginBottom: "30px" }}>
+            Historial de uso de pacientes
+        </h3>
+
+        {resultadosFiltrados.length > 0 ? (
+            <div style={{ maxHeight: "350px", overflowY: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", backgroundColor: "#fff" }}>
+                    <thead style={{ position: "sticky", top: 0, backgroundColor: "#e0e0e0", zIndex: 1 }}>
+                        <tr>
+                            <th style={{ padding: "8px", border: "1px solid #ccc" }}>Nombre</th>
+                            <th style={{ padding: "8px", border: "1px solid #ccc" }}>Primer Apellido</th>
+                            <th style={{ padding: "8px", border: "1px solid #ccc" }}>Segundo Apellido</th>
+                            <th style={{ padding: "8px", border: "1px solid #ccc" }}>Correo</th>
+                            <th style={{ padding: "8px", border: "1px solid #ccc" }}>Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {resultadosFiltrados.map((item, idx) => (
+                            <tr key={idx}>
+                                <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.nombre || "-"}</td>
+                                <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.apellido1 || "-"}</td>
+                                <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.apellido2 || "-"}</td>
+                                <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.correo || "-"}</td>
+                                <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.hora || "-"}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        ) : (
+            <p style={{ color: "#888" }}>No hay historial disponible.</p>
+        )}
+    </div>
+)}
+
 
             </div>
+
+                <div style={{height: "400px"}}></div>
         </div>
     );
 };

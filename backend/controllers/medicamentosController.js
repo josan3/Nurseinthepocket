@@ -319,7 +319,7 @@ const getListaToma = (req, res) => {
  * @postcondición Si el parámetro `id_toma` es inválido o nulo, se devuelve un error 400. Si se elimina el medicamento correctamente, se devuelve un código 201 con los datos obtenidos.
  */
 const eliminarMedicamentoPaciente = (req, res) => {
-  console.log("Datos recibidos del frontend:", req.body);
+
   const {id_toma} = req.body;
 
   if (!id_toma) {
@@ -327,7 +327,7 @@ const eliminarMedicamentoPaciente = (req, res) => {
   }
   eliminarMedicamentoPorIdToma(id_toma, (err, result) => {
     if (err) {
-      return res.status(500).json({ error: 'Error al acceder a la base de datos' });
+      return res.status(500).json({ error: 'Error al acceder a la base de datos'. err });
     }
     if (!result) {
       return res.status(400).json({ error: 'Error al eliminar los datos de la base de datos' });

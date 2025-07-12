@@ -224,19 +224,22 @@ const eliminarTomaporId = (id_paciente, medicamento, fecha, hora, callback) => {
   `;
 
   db.query(sqlBuscarMedicamento, [medicamento], (err, result) => {
-    if (err) {
-      return callback(err, null);
-    }
-
-    if (result.length === 0) {
-      return callback(new Error('Medicamento no encontrado'), null);
-    }
+    if (err) return callback(err, null);
+    if (result.length === 0) return callback(new Error('Medicamento no encontrado'), null);
 
     const idMedicamento = result[0].id;
-    const [day, month, year] = fecha.split('/');
-    const formattedFecha = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
-    // Ahora, eliminamos el registro de historial_toma
+    // Aseguramos que la fecha esté en formato YYYY-MM-DD
+    let formattedFecha = fecha;
+    if (fecha.includes('/')) {
+      try {
+        const [day, month, year] = fecha.split('/');
+        formattedFecha = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      } catch (e) {
+        return callback(new Error('Formato de fecha inválido'), null);
+      }
+    }
+
     const sqlEliminar = `
       DELETE FROM historial_toma
       WHERE id_toma IN (
@@ -244,19 +247,13 @@ const eliminarTomaporId = (id_paciente, medicamento, fecha, hora, callback) => {
         FROM toma_medicamento tm
         JOIN toma_horas th ON tm.id = th.id_toma
         WHERE tm.id_paciente = ? AND tm.id_medicamento = ? AND th.hora = ? AND EXISTS (
-          SELECT 1
-          FROM medicamento m
-          WHERE m.id = tm.id_medicamento
+          SELECT 1 FROM medicamento m WHERE m.id = tm.id_medicamento
         )
       ) AND fecha = ?;
     `;
 
-    // Ejecutamos la consulta de eliminación
     db.query(sqlEliminar, [id_paciente, idMedicamento, hora, formattedFecha], (err, result) => {
-      if (err) {
-        return callback(err, null);
-      }
-
+      if (err) return callback(err, null);
       if (result.affectedRows === 0) {
         return callback(new Error('No se encontró registro para eliminar'), null);
       }
@@ -267,11 +264,12 @@ const eliminarTomaporId = (id_paciente, medicamento, fecha, hora, callback) => {
 };
 
 
+
 const eliminarMedicamentoPorIdToma = (id_toma, callback) => {
   const sql = `
-      DELETE FROM toma_horas WHERE id_toma = ?;
-      DELETE FROM toma_medicamento WHERE id = ?;
-      DELETE FROM historial_toma WHERE id_toma = ?;
+    DELETE FROM historial_toma WHERE id_toma = ?;
+    DELETE FROM toma_horas WHERE id_toma = ?;
+    DELETE FROM toma_medicamento WHERE id = ?;
   `;
 
   db.query(sql, [id_toma, id_toma, id_toma], (err, result) => {
@@ -282,6 +280,7 @@ const eliminarMedicamentoPorIdToma = (id_toma, callback) => {
       }
   });
 };
+
 
 
 

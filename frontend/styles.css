@@ -34,12 +34,12 @@ form {
     background-color:rgba(255, 255, 255, 0.7);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     margin: auto;
     z-index: 10;
     margin-top: 20px;
     width: 80%;
+    box-shadow: none;
 }
 
 
@@ -408,6 +408,7 @@ p{
 }
 
 .footer button {
+    position: relative;
     background: none;
     border: none;
     font-size: 16px;
@@ -456,7 +457,7 @@ p{
         z-index: 50;
     }
     .edit-options{
-        position: "fixed";
+        position: "absolute";
         width: "150px";
         height: "100px";
         bottom: "60px";
@@ -493,6 +494,7 @@ p{
         font-size: 14px;
         color: black;
     }
+
 
     .barra{       
         left: 0px;
@@ -608,7 +610,7 @@ p{
     .speech-bubble::after {
         content: "";
         position: absolute;
-        bottom: 15px;
+        bottom: 100px;
         left: -9px;
         width: 20px;
         height: 20px;
@@ -620,7 +622,9 @@ p{
 
 
 @media (max-width: 768px) {
-
+    .button-container {
+        position: relative;
+    }
     form{
         margin-top: 40%;
         margin-bottom: 5%;
@@ -707,7 +711,7 @@ p{
     .speech-bubble::after {
         content: "";
         position: absolute;
-        bottom: 15px;
+        top: 100px;
         left: -9px;
         width: 20px;
         height: 20px;
@@ -716,17 +720,12 @@ p{
         z-index:-10;
     }  
     .edit-options{
-    position: "absolute";
-    width: "100px";
-    bottom: "60px";
-    left: "70%";
-    transform: "translateX(-50%)";
-    background-Color: "white";
-    border: "1px solid #ccc";
-    border-Radius: "5px";
-    padding: "10px";
-    z-Index: 10000;
-}
+        position: "relative";
+        z-Index: 10000000000;
+        background-color: white;
+        margin-top: -560%;
+        width: 125%;
+    }
 }
 
 
@@ -808,6 +807,7 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
         flex-direction: column;
         align-items: center;
         font-size: 10px;
+        box-shadow: none;
     }
 
     input {
@@ -966,7 +966,7 @@ h5 {
 .cardspeech-bubble::after {
     content: "";
     position: absolute;
-    bottom: 15px;
+    bottom: 1000px;
     left: -9px;
     width: 20px;
     height: 20px;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js"
@@ -14,6 +14,20 @@ const InicioSesion = () => {
   const [showModal, setShowModal] = useState(false);
   const [resetCorreo, setResetCorreo] = useState("");
   const navigate = useNavigate(); 
+useEffect(() => {
+  const loginAndGetToken = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, "prueba2@gmail.com", "prueba2");
+      const user = userCredential.user;
+      const token = await user.getIdToken();
+      console.log("token", token);
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+    }
+  };
+
+  loginAndGetToken();
+}, []);
 
 const registro_usuario = async (idusuario) => {   
   try {             
@@ -103,6 +117,7 @@ const handleGoogleSignIn = async (e) => {
     const userCredential = await signInWithEmailAndPassword(auth, correo, password);
     const user = userCredential.user;
     const token = await user.getIdToken();
+    console.log ("token", token)
 
     //Enviar el token al backend si necesitas validar o usarlo allá
     const response = await fetch("http://localhost:8801/login", {
@@ -190,14 +205,14 @@ const handleResetPassword = async () => {
             />
           </div>
           <div>
-          <button type="submit" style={{marginRight: '10px' }}>Iniciar sesion</button>
-         <button 
+          <button type="submit" style={{marginRight: '10px'}}>Iniciar sesion</button>
+         <button style={{marginLeft: '10px' }}
             onClick={handleGoogleSignIn}
           >
             <img 
               src={google} 
               alt="Google logo" 
-              style={{ width: '15px', height: '15px', marginRight: '10px' }}
+              style={{ width: '15px', height: '15px', marginRight: '10px'}}
             />
             Iniciar sesión con Google
           </button>

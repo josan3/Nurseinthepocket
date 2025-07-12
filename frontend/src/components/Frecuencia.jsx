@@ -13,6 +13,7 @@ const Frecuencia = () => {
     const id = localStorage.getItem("id");
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
 
+    
     const handleOptionClick = (path) => {
         navigate(path); // Redirige a la ruta seleccionada
     };
@@ -21,44 +22,42 @@ const Frecuencia = () => {
         setShowEditOptions(!showEditOptions); // Alterna la visibilidad de las opciones de editar
     };
 
-
-
     const [hovered, setHovered] = useState(null);
         
     const buttons = [
-        { path: "/informacion", label: "Obtener información", icon: (
+        { path: "/informacion", label: "Obtener información", nombre: "Obtener información", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="16" x2="12" y2="12" />
                 <line x1="12" y1="8" x2="12" y2="8" />
             </svg>
         ) },
-        { path: "/correo", label: "Correo asociación", icon: (
+        { path: "/correo", label: "Correo asociación",  nombre: "Enviar correo", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
                 <path d="M22 6l-10 7L2 6" />
             </svg>
         ) },
-        { path: "/home", label: "Inicio", icon: (
+        { path: "/home", label: "Inicio", nombre: "Inicio", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 9l9-7 9 7" />
                 <path d="M9 22V12h6v10" />
                 <path d="M21 22H3" />
             </svg>
         ) },
-        { label: "Editar parámetros", icon: (
+        { label: "Editar parámetros", nombre: "Añadir parámetro", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 20h9" />
                 <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
             </svg>
         ) },
-        { path: "/configuracion", label: "Ajustes de usuario", icon: (
+        { path: "/configuracion",label: "Ajustes de usuario", nombre: "Editar datos personales", icon: (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="3" />
                 <path d="M19.4 15a2 2 0 0 0 .5 2.1l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a2 2 0 0 0-2.1-.5 2 2 0 0 0-1.2 1.8V22a2 2 0 0 1-4 0v-.5a2 2 0 0 0-1.2-1.8 2 2 0 0 0-2.1.5l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a2 2 0 0 0 .5-2.1 2 2 0 0 0-1.8-1.2H2a2 2 0 0 1 0-4h.5a2 2 0 0 0 1.8-1.2 2 2 0 0 0-.5-2.1l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a2 2 0 0 0 2.1.5 2 2 0 0 0 1.2-1.8V2a2 2 0 0 1 4 0v.5a2 2 0 0 0 1.2 1.8 2 2 0 0 0 2.1-.5l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a2 2 0 0 0-.5 2.1 2 2 0 0 0 1.8 1.2H22a2 2 0 0 1 0 4h-.5a2 2 0 0 0-1.8 1.2z" />
             </svg>
 
-        ) }
+        ) },
     ];
 
     const handleSubmit = async (e) => {
@@ -124,122 +123,134 @@ const Frecuencia = () => {
 
     return (
         <div>
-            <header>Historial de frecuencia cardiaca</header>
+        <header>Historial de frecuencia cardiaca</header>
 
-            <div className="container" style={{ width: "20%", height: "auto" }}>
-                <div className="image-container">
-                    <img src={robot} alt="Robot" className="robot" style={{ width: "80%", height: "auto" }} />
-                    <div className="speech-bubble">{mensaje}
-                        <div style={{ marginTop: "20px" }}>
-                            <form onSubmit={handleSubmit} style={{ marginTop: "20px", backgroundColor: "transparent", top: "-30px" }}>
-                                <label>Ingresa la nueva frecuencia cardiaca:</label>
-                                <input 
-                                    type="number"  
-                                    value={valor} 
-                                    onChange={(e) => setValor(e.target.value)} 
-                                    placeholder="Ingreselo aqui"
-                                    style={{ marginTop: "10px"}}
-                                    required
-                                />
-                                <button type="submit" style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
-                                {error && <p style={{ color: "red" }}>{error}</p>}
-                            </form>
-                        </div>
-                    </div>
+        <div className="cuerpo">
+            <div className="container">
+            <div className="robothablando-container" style={{ marginBottom: "600px" }}>
+                <img src={robot} alt="Robot" className="robotquieto" />
+                <div 
+                className="speech-bubble" 
+                style={{ 
+                    marginTop: "-350px",
+                    height: "auto", 
+                    padding: "15px",  
+                    boxSizing: "border-box",
+                    minWidth: "170px",
+                    display: "flex",
+                    flexDirection: "column",
+                }}
+                >
+                <div>{mensaje}</div> 
+                
+                <form 
+                    onSubmit={handleSubmit} 
+                    style={{  
+                    backgroundColor: "transparent", 
+                    marginTop: "-20px",
+                    marginLeft: "-5px"
+            
+                    }}
+                >
+                    <label>Ingresa la nueva frecuencia cardiaca:</label>
+                    <input
+                    type="number"
+                    value={valor}
+                    onChange={(e) => setValor(e.target.value)}
+                    placeholder="Ingreselo aqui"
+                    style={{ marginTop: "10px", display: "block", width: "85%" }}
+                    required
+                    />
+                    <button 
+                    type="submit" 
+                    style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}
+                    >
+                    Enviar
+                    </button>
+                    {error && <p style={{ color: "red" }}>{error}</p>}
+                </form>
                 </div>
             </div>
-
-            <div className="graficas" style={{ marginBottom: "60px" }}> 
-                <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={data}> 
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis 
-                            stroke="#FFFFFF"
-                            dataKey="fecha" 
-                            tick={{ fontSize: 16, fontWeight: 'bold' }} 
-                        />
-                        <YAxis 
-                            domain={["auto", "auto"]} 
-                            tick={{ fontSize: 16, fontWeight: 'bold' }}  
-                            stroke="#FFFFFF"
-                        />
-                        <Tooltip />
-                        <Line
-                            type="monotone" 
-                            dataKey="frecuencia" 
-                            stroke="#4A90E2" 
-                            strokeWidth={4}  
-                            dot={{ r: 6 }} 
-                            name="Frecuencia"
-                        />                    
-                    </LineChart>
-                </ResponsiveContainer>
             </div>
 
+
+            <div className="barra" ></div>
+            <div className="barra2"></div>
+            <div className="barra3"></div>
             <div className="footer">
+                
                 {buttons.map((btn, index) => (
                     <div key={index} className="button-container">
+                        <button
+                            onClick={() => {
+                                if (btn.label === "Editar parámetros") {
+                                    handleEditClick();
+                                } else if (btn.path) {
+                                    navigate(btn.path);
+                                }
+                            }}
+                            style={{
 
+                                display: "inline-block",
+                                padding: "10px",
+                                position: "relative",
+                                transition: "transform 0.5s",
+ 
+                            }}
+                            disabled={btn.path === "/frecuencia"}
+                        >
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                {btn.icon}
+                                <span className="button-label" style={
+                                    btn.nombre === "" 
+                                    ? { color: "#2fa831", fontWeight: "bold" }
+                                    : {}
+                                }>{btn.nombre}</span>
+                            </div>
+                        </button>
                         {btn.label === "Editar parámetros" && showEditOptions && (
                             <div
                                 className="edit-options"
-                                style={{
-                                    position: "absolute",
-                                    width: "200px",
-                                    bottom: "60px", // Ajusta la distancia desde el botón hacia arriba
-                                    left: "70%", // Centra el contenedor respecto al botón
-                                    transform: "translateX(-50%)", // Ajusta para que quede centrado
-                                    backgroundColor: "white",
-                                    border: "1px solid #ccc",
-                                    borderRadius: "5px",
-                                    padding: "10px",
-                                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Añade sombra para mejor visibilidad
-                                    zIndex: 10, // Asegúrate de que esté encima de otros elementos
-                                }}
-                            >
-                                <button 
-                                path="/frecuencia"
-                                onClick={() => handleOptionClick("/frecuencia")} style={{ display: "block", marginBottom: "5px", color: "#2fa831" }}>
-                                    
+                                style={{left: "10%",
+                                }}>   
+                                <button onClick={() => handleOptionClick("/frecuencia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px", color: "#2fa831" }}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
-                                        width="24"
-                                        height="24"
+                                        width="15"
+                                        height="15"
                                         fill="none"
-                                        stroke="currentColor"
+                                        stroke="#2fa831"
                                         strokeWidth="2"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        
                                     >
                                         <path d="M2 12h4l3 6 5-12 3 6h5" />
                                         <circle cx="20" cy="12" r="2" />
-                                        
                                     </svg>
                                     &nbsp; &nbsp; Frecuencia
                                 </button>
 
-                                <button onClick={() => handleOptionClick("/peso")} style={{ display: "block", marginBottom: "5px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <button onClick={() => handleOptionClick("/peso")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                                     <circle cx="12" cy="10" r="3"/>
                                     <path d="M12 10v2"/>
                                     </svg>
                                     &nbsp; &nbsp; Peso
                                 </button>
-                                <button onClick={() => handleOptionClick("/arritmia")} style={{ display: "block", marginBottom: "5px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <button onClick={() => handleOptionClick("/arritmia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
                                     </svg>
                                     &nbsp; &nbsp; Arritmia
                                 </button>
-                                <button onClick={() => handleOptionClick("/tension")} style={{ display: "block" }}>
+                                <button onClick={() => handleOptionClick("/tension")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                 <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
-                                            width="24"
-                                            height="24"
+                                            width="15"
+                                             height="15"
                                             fill="none"
                                             stroke="currentColor"
                                             stroke-width="2"
@@ -261,12 +272,12 @@ const Frecuencia = () => {
 
                                 &nbsp; &nbsp; Tensión
                                 </button>
-                                <button onClick={() => handleOptionClick("/medicacion")} style={{ display: "block", marginBottom: "5px" }}>
+                                <button onClick={() => handleOptionClick("/medicacion")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
-                                        width="24"
-                                        height="24"
+                                        width="15"
+                                        height="15"
                                         fill="none"
                                         stroke="currentColor"
                                         strokeWidth="2"
@@ -279,11 +290,11 @@ const Frecuencia = () => {
                                     </svg>
                                 &nbsp; &nbsp; Medicación
                                 </button>
-                                <button onClick={() => handleOptionClick("/tomas")} style={{ display: "block", marginBottom: "5px" }}>
+                                <button onClick={() => handleOptionClick("/tomas")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
+                                    width="15" 
+                                    height="15"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     stroke="currentColor"
@@ -297,31 +308,31 @@ const Frecuencia = () => {
                                     <line x1="3" y1="10" x2="21" y2="10"></line>
                                 </svg>
                                 &nbsp;&nbsp;Tomas
-                                </button>
+                                
+                            </button>
+                            
                             </div>
+                            
                         )}
-
-                        <button
-                            onClick={() => {
-                                if (btn.label === "Editar parámetros") {
-                                    handleEditClick();
-                                } else if (btn.path) {
-                                    navigate(btn.path);
-                                }
-                            }}
-                            style={{
-                                display: "inline-block",
-                                padding: "10px",
-                                position: "relative",
-                            }}
-                            disabled={btn.path === "/frecuencia"}
-                        >
-                            {btn.icon}
-                        </button>
-                        
-                       
                     </div>
                 ))}
+            </div>
+
+                <div style={{ backgroundColor: "white", position: "relative", zIndex: "100", width: "75%", left: "19%", borderRadius: "10px"  }}>
+                <div className="graficas" style={{ marginTop: "280px"}}>
+                        <ResponsiveContainer width="100%" height={380}>
+                        <LineChart data={data}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis stroke="#2fa831" dataKey="fecha" tick={{ fontSize: 16, fontWeight: "bold" }} />
+                            <YAxis domain={["auto", "auto"]} tick={{ fontSize: 16, fontWeight: "bold" }} stroke="#2fa831" />
+                            <Tooltip />
+                            <Line type="monotone" dataKey="frecuencia" stroke="#4A90E2" strokeWidth={4} dot={{ r: 6 }} name="Frecuencia" />
+                        </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+                
+            
             </div>
         </div>
     );

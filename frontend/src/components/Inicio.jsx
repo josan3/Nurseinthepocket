@@ -158,6 +158,7 @@ const Inicio = () => {
                                 color: btn.path === "/home" ? "#2fa831" : "black",
                                 cursor: btn.path === "/home" ? "default" : "pointer",
                                 transition: "transform 0.5s",
+ 
                             }}
                             disabled={btn.path === "/home"}
                         >
@@ -173,8 +174,8 @@ const Inicio = () => {
                         {btn.label === "Editar parámetros" && showEditOptions && (
                             <div
                                 className="edit-options"
-                                style={{left: "10%"}}
-                            >
+                                style={{left: "10%",
+                                }}>   
                                 <button onClick={() => handleOptionClick("/frecuencia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"

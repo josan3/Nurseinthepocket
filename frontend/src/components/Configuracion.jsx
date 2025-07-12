@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit } from "react-icons/fa"; // Importa el ícono de lápiz
+import robot from "../assets/normal.png";
 
 const Configuracion = () => {
     const id = localStorage.getItem("id");
@@ -16,6 +17,7 @@ const Configuracion = () => {
     const [success, setSuccess] = useState("");
     const [editableField, setEditableField] = useState(null); // Estado para controlar qué campo es editable
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
+    const mensaje = `¿Desea modificar algún dato personal?`;
 
     const navigate = useNavigate();
 
@@ -26,40 +28,41 @@ const Configuracion = () => {
 
     const [hovered, setHovered] = useState(null);
     
-        const buttons = [
-            { path: "/informacion", label: "Obtener información", icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="16" x2="12" y2="12" />
-                    <line x1="12" y1="8" x2="12" y2="8" />
-                </svg>
-            ) },
-            { path: "/correo", label: "Correo asociación", icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
-                    <path d="M22 6l-10 7L2 6" />
-                </svg>
-            ) },
-            { path: "/home", label: "Inicio", icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 9l9-7 9 7" />
-                    <path d="M9 22V12h6v10" />
-                    <path d="M21 22H3" />
-                </svg>
-            ) },
-            { label: "Editar parámetros", icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 20h9" />
-                    <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                </svg>
-            ) },
-            { path: "/configuracion", label: "Ajustes de usuario", icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="3" />
-                    <path d="M19.4 15a2 2 0 0 0 .5 2.1l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a2 2 0 0 0-2.1-.5 2 2 0 0 0-1.2 1.8V22a2 2 0 0 1-4 0v-.5a2 2 0 0 0-1.2-1.8 2 2 0 0 0-2.1.5l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a2 2 0 0 0 .5-2.1 2 2 0 0 0-1.8-1.2H2a2 2 0 0 1 0-4h.5a2 2 0 0 0 1.8-1.2 2 2 0 0 0-.5-2.1l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a2 2 0 0 0 2.1.5 2 2 0 0 0 1.2-1.8V2a2 2 0 0 1 4 0v.5a2 2 0 0 0 1.2 1.8 2 2 0 0 0 2.1-.5l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a2 2 0 0 0-.5 2.1 2 2 0 0 0 1.8 1.2H22a2 2 0 0 1 0 4h-.5a2 2 0 0 0-1.8 1.2z" />
-                </svg>
-            ) }
-        ];
+    const buttons = [
+        { path: "/informacion", label: "Obtener información", nombre: "Obtener información", icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12" y2="8" />
+            </svg>
+        ) },
+        { path: "/correo", label: "Correo asociación",  nombre: "Enviar correo", icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+                <path d="M22 6l-10 7L2 6" />
+            </svg>
+        ) },
+        { path: "/home", label: "Inicio", nombre: "Inicio", icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 9l9-7 9 7" />
+                <path d="M9 22V12h6v10" />
+                <path d="M21 22H3" />
+            </svg>
+        ) },
+        { label: "Editar parámetros", nombre: "Añadir parámetro", icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+            </svg>
+        ) },
+        { path: "/configuracion",label: "Ajustes de usuario", nombre: "Editar datos personales", icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a2 2 0 0 0 .5 2.1l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a2 2 0 0 0-2.1-.5 2 2 0 0 0-1.2 1.8V22a2 2 0 0 1-4 0v-.5a2 2 0 0 0-1.2-1.8 2 2 0 0 0-2.1.5l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a2 2 0 0 0 .5-2.1 2 2 0 0 0-1.8-1.2H2a2 2 0 0 1 0-4h.5a2 2 0 0 0 1.8-1.2 2 2 0 0 0-.5-2.1l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a2 2 0 0 0 2.1.5 2 2 0 0 0 1.2-1.8V2a2 2 0 0 1 4 0v.5a2 2 0 0 0 1.2 1.8 2 2 0 0 0 2.1-.5l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a2 2 0 0 0-.5 2.1 2 2 0 0 0 1.8 1.2H22a2 2 0 0 1 0 4h-.5a2 2 0 0 0-1.8 1.2z" />
+            </svg>
+
+        ) },
+    ];
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -153,181 +156,190 @@ const Configuracion = () => {
 
     return (
         <div>
-            <header>Configuración</header>
-            <form onSubmit={handleSubmit} style={{marginBottom: "100px"}}>
-                <div>
-                    <label>Correo:</label><br />
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                            type="text"
-                            placeholder="Ingrese su nombre"
-                            value={correo}
-                            onChange={(e) => handleInputChange("correo", e.target.value)}
-                            disabled// Solo editable si es el campo seleccionado
-                        />
-                        
+            <header style={{marginBottom: "50px"}}>Configuración</header>
+  
+            <div className="cuerpo">
+            
+                <div className="container" >
+                    <div className="robothablando-container">
+                        <img src={robot} alt="Robot" className="robotquieto" />
+                        <div className="speech-bubble" style={{maxHeight:"250px"}}>
+                            {mensaje}
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>Nombre:</label><br />
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                            type="text"
-                            placeholder="Ingrese su nombre"
-                            value={nombre}
-                            onChange={(e) => handleInputChange("nombre", e.target.value)}
-                            disabled={editableField !== "nombre"} // Solo editable si es el campo seleccionado
-                        />
-                        <FaEdit
-                            style={{ marginLeft: "10px", cursor: "pointer" }}
-                            onClick={() => handleEditClick1("nombre")}
-                        />
+            
+
+            <div style={{marginTop: "15%", backgroundColor: "white", position: "relative", zIndex: "100", width: "75%", left: "35%", borderRadius: "10px"  }}>
+                <form onSubmit={handleSubmit} style={{marginBottom: "100px"}}>
+                    <div>
+                        <label>Correo:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                type="text"
+                                placeholder="Ingrese su nombre"
+                                value={correo}
+                                onChange={(e) => handleInputChange("correo", e.target.value)}
+                                disabled
+                            />
+                            
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>Primer apellido:</label><br />
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                            type="text"
-                            placeholder="Ingrese su primer apellido"
-                            value={apellido1}
-                            onChange={(e) => handleInputChange("apellido1", e.target.value)}
-                            disabled={editableField !== "apellido1"} // Solo editable si es el campo seleccionado
-                        />
-                        <FaEdit
-                            style={{ marginLeft: "10px", cursor: "pointer" }}
-                            onClick={() => handleEditClick1("apellido1")}
-                        />
+                    <div>
+                        <label>Nombre:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                type="text"
+                                placeholder="Ingrese su nombre"
+                                value={nombre}
+                                onChange={(e) => handleInputChange("nombre", e.target.value)}
+                                disabled={editableField !== "nombre"} // Solo editable si es el campo seleccionado
+                            />
+                            <FaEdit
+                                style={{ marginLeft: "10px", cursor: "pointer" }}
+                                onClick={() => handleEditClick1("nombre")}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>Segundo apellido:</label><br />
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                            type="text"
-                            placeholder="Ingrese su segundo apellido"
-                            value={apellido2}
-                            onChange={(e) => handleInputChange("apellido2", e.target.value)}
-                            disabled={editableField !== "apellido2"} // Solo editable si es el campo seleccionado
-                        />
-                        <FaEdit
-                            style={{ marginLeft: "10px", cursor: "pointer" }}
-                            onClick={() => handleEditClick1("apellido2")}
-                        />
+                    <div>
+                        <label>Primer apellido:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                type="text"
+                                placeholder="Ingrese su primer apellido"
+                                value={apellido1}
+                                onChange={(e) => handleInputChange("apellido1", e.target.value)}
+                                disabled={editableField !== "apellido1"} // Solo editable si es el campo seleccionado
+                            />
+                            <FaEdit
+                                style={{ marginLeft: "10px", cursor: "pointer" }}
+                                onClick={() => handleEditClick1("apellido1")}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>Centro:</label><br />
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                            type="text"
-                            placeholder="Ingrese su centro médico"
-                            value={centro}
-                            onChange={(e) => handleInputChange("centro", e.target.value)}
-                            disabled={editableField !== "centro"} // Solo editable si es el campo seleccionado
-                        />
-                        <FaEdit
-                            style={{ marginLeft: "10px", cursor: "pointer" }}
-                            onClick={() => handleEditClick1("centro")}
-                        />
+                    <div>
+                        <label>Segundo apellido:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                type="text"
+                                placeholder="Ingrese su segundo apellido"
+                                value={apellido2}
+                                onChange={(e) => handleInputChange("apellido2", e.target.value)}
+                                disabled={editableField !== "apellido2"} // Solo editable si es el campo seleccionado
+                            />
+                            <FaEdit
+                                style={{ marginLeft: "10px", cursor: "pointer" }}
+                                onClick={() => handleEditClick1("apellido2")}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>Altura:</label><br />
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                            type="text"
-                            placeholder="Ingrese altura"
-                            value={altura}
-                            onChange={(e) => handleInputChange("altura", e.target.value)}
-                            disabled={editableField !== "altura"} // Solo editable si es el campo seleccionado
-                        />
-                        <FaEdit
-                            style={{ marginLeft: "10px", cursor: "pointer" }}
-                            onClick={() => handleEditClick1("altura")}
-                        />
+                    <div>
+                        <label>Centro:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                type="text"
+                                placeholder="Ingrese su centro médico"
+                                value={centro}
+                                onChange={(e) => handleInputChange("centro", e.target.value)}
+                                disabled
+                            />
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>Hábitos tóxicos:</label><br />
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                            type="text"
-                            placeholder="Ingrese hábitos tóxicos"
-                            value={habitos_toxicos}
-                            onChange={(e) => handleInputChange("habito_toxicos", e.target.value)}
-                            disabled={editableField !== "habito_toxicos"} 
-                        />
-                        <FaEdit
-                            style={{ marginLeft: "10px", cursor: "pointer" }}
-                            onClick={() => handleEditClick1("habito_toxicos")}
-                        />
+                    <div>
+                        <label>Altura:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                type="text"
+                                placeholder="Ingrese altura"
+                                value={altura}
+                                onChange={(e) => handleInputChange("altura", e.target.value)}
+                                disabled={editableField !== "altura"} // Solo editable si es el campo seleccionado
+                            />
+                            <FaEdit
+                                style={{ marginLeft: "10px", cursor: "pointer" }}
+                                onClick={() => handleEditClick1("altura")}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label>Fecha Nacimiento:</label><br />
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                            type="text"
-                            placeholder="Ingrese su fecha de nacimiento"
-                            value={formatDate(fechnacimiento)}
-                            disabled
-                        />
+                    <div>
+                        <label>Hábitos tóxicos:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                type="text"
+                                placeholder="Ingrese hábitos tóxicos"
+                                value={habitos_toxicos}
+                                onChange={(e) => handleInputChange("habito_toxicos", e.target.value)}
+                                disabled={editableField !== "habito_toxicos"} 
+                            />
+                            <FaEdit
+                                style={{ marginLeft: "10px", cursor: "pointer" }}
+                                onClick={() => handleEditClick1("habito_toxicos")}
+                            />
+                        </div>
                     </div>
-                </div>
-                <button type="submit">Guardar cambios</button>
-                {error && <p style={{ color: "red" }}>{error}</p>}
-            </form>
-           
-                <div className="footer">
-                    {buttons.map((btn, index) => (
-                        <div key={index} className="button-container">
-                            <button
-                                onClick={() => {
-                                    if (btn.path !== "/configuracion") navigate(btn.path);
-                                    if (btn.label === "Editar parámetros") {
-                                        handleEditClick();
-                                    } else if (btn.path) {
-                                        navigate(btn.path);
-                                    }
-                                }}
-                                style={{
-                                    display: "inline-block",
-                                    padding: "10px",
-                                    position: "relative",
-                                    color: btn.path === "/configuracion" ? "#2fa831" : "black", // Ajusta el color correctamente
-                                    cursor: btn.path === "/configuracion" ? "default" : "pointer", // Cambia el cursor si está deshabilitado
-                                }}
-                                disabled={btn.path === "/configuracion"} // Deshabilita el botón si es "Ajustes de usuario"
-                            >
+                    <div>
+                        <label>Fecha Nacimiento:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                type="text"
+                                placeholder="Ingrese su fecha de nacimiento"
+                                value={formatDate(fechnacimiento)}
+                                disabled
+                            />
+                        </div>
+                    </div>
+                    <button type="submit">Guardar cambios</button>
+                    {error && <p style={{ color: "red" }}>{error}</p>}
+                </form>
+           </div>
+
+<div style={{ height: "5px" }} />
+            
+            <div className="barra"style={{ height: "10%" }}></div>
+            <div className="barra2" style={{ height: "1000%", top: "-200px" }}></div>
+            <div className="barra3" style={{ top: "426px"}}></div>
+            <div className="footer" >
+                
+                {buttons.map((btn, index) => (
+                    <div key={index} className="button-container">
+                        <button
+                            onClick={() => {
+                                if (btn.label === "Editar parámetros") {
+                                    handleEditClick();
+                                } else if (btn.path) {
+                                    navigate(btn.path);
+                                }
+                            }}
+                            style={{
+
+                                display: "inline-block",
+                                padding: "10px",
+                                position: "relative",
+                                color: btn.path === "/configuracion" ? "#2fa831" : "black",
+                                cursor: btn.path === "/configuracion" ? "default" : "pointer",
+                                transition: "transform 0.5s",
+                            }}
+                            disabled={btn.path === "/configuracion"}
+                        >
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                                 {btn.icon}
-                            </button>
-                            <div className="tooltip-container">
-                                {hovered === index && <span className="tooltip">{btn.label}</span>}
+                                <span className="button-label" style={
+                                    btn.nombre === "Editar datos personales"
+                                    ? { color: "#2fa831", fontWeight: "bold" }
+                                    : {}
+                                }>{btn.nombre}</span>
                             </div>
-                            {btn.label === "Editar parámetros" && showEditOptions && (
+                        </button>
+                        {btn.label === "Editar parámetros" && showEditOptions && (
                             <div
                                 className="edit-options"
-                                style={{
-                                    position: "absolute",
-                                    width: "200px",
-                                    bottom: "60px", // Ajusta la distancia desde el botón hacia arriba
-                                    left: "70%", // Centra el contenedor respecto al botón
-                                    transform: "translateX(-50%)", // Ajusta para que quede centrado
-                                    backgroundColor: "white",
-                                    border: "1px solid #ccc",
-                                    borderRadius: "5px",
-                                    padding: "10px",
-                                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Añade sombra para mejor visibilidad
-                                    zIndex: 10, // Asegúrate de que esté encima de otros elementos
-                                }}
+                                style={{left: "10%"}}
                             >
-                                <button onClick={() => handleOptionClick("/frecuencia")} style={{ display: "block", marginBottom: "5px" }}>
+                                <button onClick={() => handleOptionClick("/frecuencia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
-                                        width="24"
-                                        height="24"
+                                        width="15"
+                                        height="15"
                                         fill="none"
                                         stroke="currentColor"
                                         strokeWidth="2"
@@ -340,26 +352,26 @@ const Configuracion = () => {
                                     &nbsp; &nbsp; Frecuencia
                                 </button>
 
-                                <button onClick={() => handleOptionClick("/peso")} style={{ display: "block", marginBottom: "5px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <button onClick={() => handleOptionClick("/peso")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                                     <circle cx="12" cy="10" r="3"/>
                                     <path d="M12 10v2"/>
                                     </svg>
                                     &nbsp; &nbsp; Peso
                                 </button>
-                                <button onClick={() => handleOptionClick("/arritmia")} style={{ display: "block", marginBottom: "5px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <button onClick={() => handleOptionClick("/arritmia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
                                     </svg>
                                     &nbsp; &nbsp; Arritmia
                                 </button>
-                                <button onClick={() => handleOptionClick("/tension")} style={{ display: "block" }}>
+                                <button onClick={() => handleOptionClick("/tension")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                 <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
-                                            width="24"
-                                            height="24"
+                                            width="15"
+                                             height="15"
                                             fill="none"
                                             stroke="currentColor"
                                             stroke-width="2"
@@ -381,12 +393,12 @@ const Configuracion = () => {
 
                                 &nbsp; &nbsp; Tensión
                                 </button>
-                                <button onClick={() => handleOptionClick("/medicacion")} style={{ display: "block", marginBottom: "5px" }}>
+                                <button onClick={() => handleOptionClick("/medicacion")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
-                                        width="24"
-                                        height="24"
+                                        width="15"
+                                        height="15"
                                         fill="none"
                                         stroke="currentColor"
                                         strokeWidth="2"
@@ -399,11 +411,11 @@ const Configuracion = () => {
                                     </svg>
                                 &nbsp; &nbsp; Medicación
                                 </button>
-                                <button onClick={() => handleOptionClick("/tomas")} style={{ display: "block", marginBottom: "5px" }}>
+                                <button onClick={() => handleOptionClick("/tomas")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
+                                    width="15" 
+                                    height="15"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     stroke="currentColor"
@@ -417,12 +429,18 @@ const Configuracion = () => {
                                     <line x1="3" y1="10" x2="21" y2="10"></line>
                                 </svg>
                                 &nbsp;&nbsp;Tomas
+                                
                             </button>
+                            
                             </div>
+                            
                         )}
-                        </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
+
+        </div>
+        </div>
+        </div>
         </div>
     );
 };

@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Bar, Scatter   } from "recharts";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-
-
+import cara from "../assets/cara.png"; 
 
 const CuerpoMedico = () => {
     const navigate = useNavigate();
@@ -16,6 +15,7 @@ const CuerpoMedico = () => {
     const [vista, setVista] = useState(localStorage.getItem('vista') || 'pacientes');
     const [error, setError] = useState([]);
     const [success, setSuccess] = useState([]);
+    const [paciente, setPaciente] = useState([]);
     const [graficaMostrada, setGraficaMostrada] = useState(null);
     const [id, setId] = useState([]);
     const [frecuencia, setFrecuencia] = useState([]);
@@ -23,6 +23,7 @@ const CuerpoMedico = () => {
     const [arritmia, setArritmia] = useState([]);
     const [tension, setTension] = useState([]);
     const [peso, setPeso] = useState([]);
+    const [correo, setAntiguoCorreo] = useState("");
     const [crearNuevo, setCrearNuevo] = useState(false);
     const centro = localStorage.getItem("centro");
     const [nuevoUsuario, setNuevoUsuario] = useState({
@@ -39,6 +40,10 @@ const CuerpoMedico = () => {
         altura: "",
         observaciones: ""
     });
+
+    const cancelar = () => {
+        window.location.reload();
+    }
 
     const icons = [
         `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -83,8 +88,16 @@ const CuerpoMedico = () => {
             <path d="M12 10v2"/>
         </svg>`,
     ];
+
+    function sumarUnDia(fechaString) {
+        const fecha = new Date(fechaString);
+        fecha.setDate(fecha.getDate() + 1);
+        return fecha.toISOString().split("T")[0]; // Devuelve en formato YYYY-MM-DD
+    }
+
       
-    const handleClick = async (index) => {
+    const handleClick = async (index, nombre) => {
+        setPaciente(nombre)
         if (index === 0) {
           try {
             await obtenerTension(id); // ← le pasas el id
@@ -148,7 +161,6 @@ const CuerpoMedico = () => {
             }
         }
       };
-      
 
     const obtenerTension = async (id) => {
 
@@ -377,7 +389,7 @@ const CuerpoMedico = () => {
 
             const data1 = await response.json();
             setId(data1.id);
-            console.log(data1)
+            setAntiguoCorreo(data1.data.usuario[0].correo);
 
             data1.data.paciente[0].nombre = nombreSeleccionado.nombre;
             data1.data.paciente[0].apellido1 = nombreSeleccionado.apellido1;
@@ -410,7 +422,6 @@ const CuerpoMedico = () => {
 
     const handleEditarUsuario = async () => {
         try {
-            console.log("datos: ", id);
             const response = await fetch("http://localhost:8801/editarusuario", {
                 method: "POST",
                 headers: {
@@ -418,6 +429,7 @@ const CuerpoMedico = () => {
                 },
                 body: JSON.stringify({
                     id: id, 
+                    antiguocorreo: correo,
                     updatedData: {
                         nombre: data.paciente[0].nombre,
                         apellido1: data.paciente[0].apellido1,
@@ -441,6 +453,7 @@ const CuerpoMedico = () => {
                 setError("");
                 window.location.reload();
             } else {
+                console.log(result.error)
                 setError(result.error || "Error al editar el usuario");
                 setSuccess("");
             }
@@ -522,6 +535,718 @@ const CuerpoMedico = () => {
         <div>
             <header>Cuerpo Médico</header>
 
+            <div className="cuerpo">
+
+            <div className="barra" style={{top: "400px"}} ></div>
+            <div className="barra2" style={{top: "400px"}}></div>
+            <div className="barra3" style={{top: "426px"}}></div>
+            <div className="footer">
+                {buttons.map((btn) => (
+                    <button
+                        key={btn.key} 
+                        className="button-container"
+                        onClick={() => handleOptionClick(btn.key)}
+                        style={{
+
+                                display: "inline-block",
+                                padding: "20px",
+                                position: "relative",
+                                transition: "transform 0.5s"
+ 
+                            }}
+                    >
+                         <div style={{ display: "flex", alignItems: "center"}}>
+                                {btn.icon}
+                                <span className="button-label" style={
+                                    btn.label === "" 
+                                    ? { color: "#2fa831", fontWeight: "bold" }
+                                    : {}
+                                }>{btn.label}</span>
+                            </div>
+                    </button>
+                ))}
+            </div>
+
+            {crearNuevo && (
+                             <div className="confirmation-modal">
+                                    <div className="modal-content" style={{width: "90%", zIndex: "100000"}}>
+                                    <img src={cara} alt="Robot" className="robot" style={{ marginTop: "10px" ,width: "5%", height: "auto" }} />
+                                    <p></p>
+                                    <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px" }}>Nuevo usuario</h3>
+                                    <table
+                                        style={{
+                                            width: "100%",
+                                            backgroundColor: "#f9f9f9",
+                                            borderRadius: "8px",
+                                            padding: "20px",
+                                            marginBottom: "20px"
+                                    }}>
+                                    <thead>
+                                        <tr style={{ backgroundColor: "#f1f1f1" }}>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Nombre</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Apellido 1</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Apellido 2</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Contraseña</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Fecha Nac.</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Género</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Centro</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Cuerpo Médico</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Hábitos</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Altura</th>
+                                            <th style={{ padding: "10px", textAlign: "left" }}>Observaciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.nombre} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, nombre: e.target.value })} /></td>
+                                            <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.apellido1} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, apellido1: e.target.value })} /></td>
+                                            <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.apellido2} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, apellido2: e.target.value })} /></td>
+                                            <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.password} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, password: e.target.value })} /></td>
+                                            <td><input type="date" style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.fecha_nacimiento} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, fecha_nacimiento: formatDate(e.target.value) })} /></td>
+                                            <td>
+                                                <select style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.genero} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, genero: parseInt(e.target.value) })}>
+                                                    <option value={1}>Masculino</option>
+                                                    <option value={2}>Femenino</option>
+                                                    <option value={3}>Otro</option>
+                                                </select>
+                                            </td>
+                                            <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.correo} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, correo: e.target.value })} /></td>
+                                            <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.centro}/></td>
+                                            <td>
+                                                <select style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.cuerpo_medico}>
+                                                    <option value={0}>No</option>
+                                                </select>
+                                            </td>
+                                            <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.habitos_toxicos} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, habitos_toxicos: e.target.value })} /></td>
+                                            <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.altura} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, altura: e.target.value })} /></td>
+                                            <td><textarea style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.observaciones} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, observaciones: e.target.value })} /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div style={{ textAlign: "center" }}>
+                                    <button
+                                        onClick={handleCrearUsuario}
+                                        style={{
+                                            backgroundColor: "#28a745",
+                                            color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                        }}
+                                    >
+                                        Crear usuario
+                                    </button>
+                                    <button
+                                        onClick={() => setCrearNuevo(false)}
+                                        style={{
+                                            backgroundColor: "#cf0606ff",
+                                            color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                        }}
+                                    >
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                            </div>
+                        )}
+
+                        {/* Tabla de Pacientes */}
+                        {data && (
+                        <div className="confirmation-modal">
+                            <div className="modal-content" style={{ width: "90%", height: "70%", marginTop: "105px" }}>
+                            <img src={cara} alt="Robot" className="robot" style={{ width: "5%", height: "auto", marginTop: "5px" }} />
+                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "5px" }}>Editar paciente</h3>
+
+                            <table
+                                style={{
+                                width: "100%",
+                                backgroundColor: "#f9f9f9",
+                                borderRadius: "8px",
+                                padding: "20px",
+                                marginBottom: "20px",
+                                }}
+                            >
+                                {/* Fila de encabezado 1 */}
+                                <thead>
+                                <tr style={{ textAlign: "left" }}>
+                                    <th>Nombre</th>
+                                    <th>Primer apellido</th>
+                                    <th>Segundo apellido</th>
+                                    <th>F. Nacimiento</th>
+                                    <th>H. tóxicos</th>
+                                    <th>Género</th>
+                                    <th>Centro</th>
+                                </tr>
+                                </thead>
+
+                                {/* Fila de inputs 1 */}
+                                <tbody>
+                                <tr>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={data.paciente[0].nombre}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], nombre: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative",  top: "5px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={data.paciente[0].apellido1}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], apellido1: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative",  top: "5px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={data.paciente[0].apellido2}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], apellido2: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative",  top: "5px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="date"
+                                        value={sumarUnDia(formatDate(data.paciente[0].fecha_nacimiento))}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], fecha_nacimiento: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "100%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={data.paciente[0].habitos_toxicos}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], habitos_toxicos: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative",  top: "5px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <select
+                                        value={data.paciente[0].genero}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], genero: parseInt(e.target.value) }],
+                                        })
+                                        }
+                                        style={{width: "100%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px"}}
+                                    >
+                                        <option value="1">Masculino</option>
+                                        <option value="2">Femenino</option>
+                                        <option value="3">Otro</option>
+                                    </select>
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={data.usuario[0].centro}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            usuario: [{ ...data.usuario[0], centro: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative",  top: "5px"}}
+                                    />
+                                    </td>
+                                </tr>
+
+                                {/* Fila de encabezado 2 */}
+                                <tr style={{position: "relative",  top: "30px"}}>
+                                    <th>Correo</th>
+                                    <th>Cuerpo Médico</th>
+                                    <th colSpan="3">Parámetros médicos</th>
+                                    <th>Altura</th>
+                                    <th colSpan="2">Observaciones</th>
+                                </tr>
+
+                                {/* Fila de inputs 2 */}
+                                <tr>
+                                    <td>
+                                    <input
+                                        type="email"
+                                        value={data.usuario[0].correo}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            usuario: [{ ...data.usuario[0], correo: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "0px", marginRight: "60px", position: "relative", top: "-30px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <select
+                                        value={data.usuario[0].cuerpo_medico}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            usuario: [{ ...data.usuario[0], cuerpo_medico: parseInt(e.target.value) }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative", top: "-30px"}}
+                                    >
+                                        <option value="1">Sí</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                    </td>
+                                    <td colSpan="3">
+                                        <div style={{ height: "20px" }}></div>
+                                        <div
+                                            className="grid grid-cols-3 gap-4 p-4"
+                                            style={{ marginBottom: "10px", width: "100%" }}
+                                        >
+                                            {["Tensión", "Medicación", "Frecuencia", "Arritmia", "Peso"].map((texto, i) => (
+                                            <button
+                                                key={i}
+                                                type="button"
+                                                onClick={() =>
+                                                handleClick(
+                                                    i,
+                                                    `${data.paciente[0].nombre} ${data.paciente[0].apellido1} ${data.paciente[0].apellido2}`
+                                                )
+                                                }
+                                                className="flex flex-col items-center p-3 bg-blue-100 hover:bg-blue-200 rounded-xl shadow-md transition"
+                                                style={{ minWidth: "80px" }}
+                                            >
+                                                <span
+                                                className="text-blue-700 mb-1"
+                                                dangerouslySetInnerHTML={{ __html: icons[i] || "" }}
+                                                />
+                                                <span className="text-sm font-medium text-center">{texto}</span>
+                                            </button>
+                                            ))}
+                                        </div>
+                                        </td>
+
+                                    <td>
+                                    <input
+                                        type="number"
+                                        value={data.paciente[0].altura}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], altura: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative", top: "-30px"}}
+                                    />
+                                    </td>
+                                    <td colSpan="2">
+                                    <textarea
+                                        value={data.paciente[0].exploraciones}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], exploraciones: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "100%", height: "20px", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative", top: "-30px"}}
+                                    />
+                                    </td>
+                                    
+                                </tr>
+                                </tbody>
+                            </table>
+
+                                {graficaMostrada === "frecuencia" && (
+                                    <div className="confirmation-modal">
+                                        <div className="modal-content" style={{ width: "90%", height: "70%", marginTop: "105px"}}>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px", fontSize: "40px" }}>Frecuencia Cardiaca</h3>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "10px" }}>{paciente}</h3>
+                                            <div className="graficas" style={{ marginBottom: "60px" }}>
+                                                <ResponsiveContainer width="100%" height={300}>
+                                                    <LineChart data={frecuencia}>
+                                                    <CartesianGrid strokeDasharray="3 3" />
+                                                    <XAxis
+                                                        stroke="#2fa831"
+                                                        dataKey="fecha"
+                                                        tick={{ fontSize: 16, fontWeight: "bold" }}
+                                                    />
+                                                    <YAxis
+                                                        domain={["auto", "auto"]}
+                                                        tick={{ fontSize: 16, fontWeight: "bold" }}
+                                                        stroke="#2fa831"
+                                                    />
+                                                    <Tooltip />
+                                                    <Line
+                                                        type="monotone"
+                                                        dataKey="frecuencia"
+                                                        stroke="#4A90E2"
+                                                        strokeWidth={4}
+                                                        dot={{ r: 6 }}
+                                                        name="Frecuencia"
+                                                    />
+                                                    </LineChart>
+                                                </ResponsiveContainer>
+                                            </div>
+                                             <button
+                                                onClick={() => setGraficaMostrada(null)}
+                                                style={{
+                                                        position: "relative",
+                                                        top: "-80px", 
+                                                        backgroundColor: "#28a745",
+                                                        color: "white",
+                                                        padding: "12px 20px",
+                                                        borderRadius: "5px",
+                                                        border: "none",
+                                                        cursor: "pointer",
+                                                        fontSize: "16px",
+                                                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                                    }}
+                                                onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
+                                                onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
+                                            >
+                                                Volver 
+                                            </button>
+                                         </div>
+                                    </div>
+                                )}
+
+                                {graficaMostrada === "medicacion" && (
+                                <div className="confirmation-modal">
+                                        <div className="modal-content" style={{ width: "90%", height: "70%", marginTop: "105px"}}>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px", fontSize: "40px" }}>Tomas medicación</h3>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "10px" }}>{paciente}</h3>
+                                            <div
+                                                className="calendar-container"
+                                                style={{ marginBottom: "100px", position: "relative", zIndex: "100", marginTop: "-10px", transform: "scale(0.9)",  }}
+                                            >
+                                                <Calendar
+                                                tileDisabled={() => true}
+                                                tileClassName={({ date }) =>
+                                                    medicacion.some((m) => new Date(m.fecha).toDateString() === date.toDateString())
+                                                    ? "marked-date"
+                                                    : null
+                                                }
+                                                tileContent={({ date }) =>
+                                                    medicacion.some((m) => new Date(m.fecha).toDateString() === date.toDateString()) ? (
+                                                    <div
+                                                        className="calendar-note"
+                                                        style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                                                    >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24"
+                                                            width="24"
+                                                            height="24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="2"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                        >
+                                                            <rect x="3" y="8" width="18" height="8" rx="4" transform="rotate(-45 12 12)" />
+                                                            <line x1="10" y1="10" x2="14" y2="15" />
+                                                            <rect x="8" y="12" width="7" height="8" rx="2" transform="rotate(45 12 12)" fill="currentColor"/>
+                                                        </svg>
+                                                    </div>
+                                                    ) : null
+                                                }
+                                                selectRange={false}
+                                                />
+                                            </div>
+                                            <button
+                                                onClick={() => setGraficaMostrada(null)}
+                                                style={{
+                                                        position: "relative",
+                                                        top: "-125px", 
+                                                        backgroundColor: "#28a745",
+                                                        color: "white",
+                                                        padding: "12px 20px",
+                                                        borderRadius: "5px",
+                                                        border: "none",
+                                                        cursor: "pointer",
+                                                        fontSize: "16px",
+                                                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                                    }}
+                                                onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
+                                                onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
+                                            >
+                                                Volver 
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+
+                                {graficaMostrada === "tension" && (
+                                    <div className="confirmation-modal">
+                                        <div className="modal-content" style={{ width: "90%", height: "70%", marginTop: "105px"}}>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px", fontSize: "40px" }}>Tensión Cardiaca</h3>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "10px" }}>{paciente}</h3>
+                                                <div className="graficas" style={{ marginBottom: "100px" }}>
+                                                    <ResponsiveContainer width="100%" height={300}>
+                                                        <ComposedChart data={tension}>
+                                                            <CartesianGrid strokeDasharray="3 3" />
+                                                            <XAxis stroke="#28a745" dataKey="fecha" tick={{ fontSize: 16, fontWeight: 'bold' }} />
+                                                            <YAxis domain={["auto", "auto"]} tick={{ fontSize: 16, fontWeight: 'bold' }} stroke="#28a745" />
+                                                            <Tooltip />
+
+                                                            {/* Barra para la diferencia entre tensiones */}
+                                                            <Bar dataKey="tension_min" fill="transparent" barSize={8} name="" stackId="tension" />
+                                                            <Bar dataKey="tension_maxima" fill="blue" barSize={8} name="Diferencia entre máxima y mínima"  stackId="tension" />
+
+                                                            {/* Punto en tensión máxima */}
+                                                            <Scatter 
+                                                                dataKey="tension_max" 
+                                                                fill="blue" // Color de los puntos
+                                                                name="Tensión Máxima"
+                                                            />
+                                                            
+                                                            {/* Punto en tensión mínima */}
+                                                            <Scatter 
+                                                                dataKey="tension_min" 
+                                                                fill="blue" // Color de los puntos
+                                                                name="Tensión Mínima"
+                                                            />
+
+                                                            {/* Línea de tensión media */}
+                                                            <Line 
+                                                                type="monotone" 
+                                                                dataKey="tension_med" 
+                                                                stroke="#4A90E2" 
+                                                                strokeWidth={4} 
+                                                                dot={{ r: 6 }} 
+                                                                strokeDasharray="5 5" 
+                                                                name="Tensión Media" 
+                                                            />
+                                                        </ComposedChart>
+                                                    </ResponsiveContainer>
+                                                </div>
+                                    
+                                            <button
+                                                onClick={() => setGraficaMostrada(null)}
+                                                style={{
+                                                        position: "relative",
+                                                        top: "-120px", 
+                                                        backgroundColor: "#28a745",
+                                                        color: "white",
+                                                        padding: "12px 20px",
+                                                        borderRadius: "5px",
+                                                        border: "none",
+                                                        cursor: "pointer",
+                                                        fontSize: "16px",
+                                                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                                    }}
+                                                onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
+                                                onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
+                                            >
+                                                Volver 
+                                            </button>
+                                         </div>
+                                    </div>
+                                )}
+
+                                {graficaMostrada === "arritmia" && (
+                                <div className="confirmation-modal">
+                                        <div className="modal-content" style={{ width: "90%", height: "70%", marginTop: "105px"}}>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px", fontSize: "40px" }}>Arritmias</h3>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "10px" }}>{paciente}</h3>
+                                            <div
+                                                className="calendar-container"
+                                                style={{ marginBottom: "100px", position: "relative", zIndex: "100", marginTop: "-10px", transform: "scale(0.9)",  }}
+                                            >
+                                    <Calendar
+                                    tileDisabled={() => true}
+                                    tileClassName={({ date }) =>
+                                        arritmia.some((a) => new Date(a.fecha).toDateString() === date.toDateString())
+                                        ? "marked-date"
+                                        : null
+                                    }
+                                    tileContent={({ date }) =>
+                                        arritmia.some((a) => new Date(a.fecha).toDateString() === date.toDateString()) ? (
+                                        <div
+                                            className="calendar-note"
+                                            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+                                            </svg>
+                                        </div>
+                                        ) : null
+                                    }
+                                    selectRange={false}
+                                    />
+                                </div>
+                                            <button
+                                                onClick={() => setGraficaMostrada(null)}
+                                                style={{
+                                                        position: "relative",
+                                                        top: "-125px", 
+                                                        backgroundColor: "#28a745",
+                                                        color: "white",
+                                                        padding: "12px 20px",
+                                                        borderRadius: "5px",
+                                                        border: "none",
+                                                        cursor: "pointer",
+                                                        fontSize: "16px",
+                                                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                                    }}
+                                                onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
+                                                onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
+                                            >
+                                                Volver 
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {graficaMostrada === "peso" && (
+                                    <div className="confirmation-modal">
+                                        <div className="modal-content" style={{ width: "90%", height: "70%", marginTop: "105px"}}>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px", fontSize: "40px" }}>Tensión Cardiaca</h3>
+                                            <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "10px" }}>{paciente}</h3>
+                                                <div className="graficas" style={{ marginBottom: "60px" }}> 
+                                                    <ResponsiveContainer width="100%" height={300}>
+                                                        <LineChart data={peso}> 
+                                                            <CartesianGrid strokeDasharray="3 3" />
+                                                            <XAxis 
+                                                                stroke="#28a745"
+                                                                dataKey="fecha" 
+                                                                tick={{ fontSize: 16, fontWeight: 'bold' }} 
+                                                            />
+                                                            <YAxis 
+                                                                domain={["auto", "auto"]} 
+                                                                tick={{ fontSize: 16, fontWeight: 'bold' }}  
+                                                                stroke="#28a745"
+                                                            />
+                                                            <Tooltip />
+                                                            <Line 
+                                                                type="monotone" 
+                                                                dataKey="peso" 
+                                                                stroke="#4A90E2" 
+                                                                strokeWidth={4}  
+                                                                dot={{ r: 6 }} 
+                                                            />
+                                                        </LineChart>
+                                                    </ResponsiveContainer>
+                                                </div>
+                                            <button
+                                                onClick={() => setGraficaMostrada(null)}
+                                                style={{
+                                                        position: "relative",
+                                                        top: "-80px", 
+                                                        backgroundColor: "#28a745",
+                                                        color: "white",
+                                                        padding: "12px 20px",
+                                                        borderRadius: "5px",
+                                                        border: "none",
+                                                        cursor: "pointer",
+                                                        fontSize: "16px",
+                                                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                                    }}
+                                                onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
+                                                onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
+                                            >
+                                                Volver 
+                                            </button>
+                                         </div>
+                                    </div>
+                                )}
+                                
+                                <button
+                                    onClick={handleEditarUsuario}
+                                    style={{
+                                            position: "relative",
+                                            top: "-60px", 
+                                            backgroundColor: "#28a745",
+                                            color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                        }}
+                                    onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
+                                    onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
+                                >
+                                    Guardar 
+                                </button>
+
+                                <button
+                                    onClick={cancelar}
+                                    style={{
+                                            position: "relative",
+                                            top: "-60px", 
+                                            backgroundColor: "#28a745",
+                                            color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                        }}
+                                    onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
+                                    onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
+                                >
+                                    Cancelar 
+                                </button>
+
+                                {nombreSeleccionado && (
+                                    <button
+                                        onClick={handleEliminarUsuario}
+                                        style={{
+                                            position: "relative",
+                                            top: "-60px", 
+                                            backgroundColor: "#f80000ff",
+                                            color: "white",
+                                            padding: "12px 20px",
+                                            borderRadius: "5px",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            fontSize: "16px",
+                                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                        }}
+                                        onMouseEnter={(e) => e.target.style.backgroundColor = "#c82333"}
+                                        onMouseLeave={(e) => e.target.style.backgroundColor = "#dc3545"}
+                                    >
+                                        Eliminar usuario
+                                    </button>
+                                )}
+                                </div>
+                            </div>
+                        )}
+            
             <div
                 style={{
                     marginLeft: "10px",
@@ -531,7 +1256,18 @@ const CuerpoMedico = () => {
                     zIndex: "100",
                 }}
             >
-                    <div>
+                    <div 
+                        style={{
+                            position: "absolute",
+                            top: "30%", 
+                            left: "20%",
+                            zIndex: 1000000,
+                            width: "75%",
+                            borderRadius: "20px",
+                            backgroundColor: "white",
+                            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                            padding: "10px"
+                        }}>
                         {/* Buscador */}
                         <div
                             style={{
@@ -686,7 +1422,7 @@ const CuerpoMedico = () => {
                                                             {paciente.cuerpo_medico === 1 ? 'Sí' : 'No'}
                                                         </div>
                                                         <div style={{ flex: 1, textAlign: "right"}}>
-                                                            {formatDate(paciente.fecha_nacimiento)}
+                                                            {sumarUnDia(formatDate(paciente.fecha_nacimiento))}
                                                         </div>
                                                     </li>
                                                 ))}
@@ -700,571 +1436,11 @@ const CuerpoMedico = () => {
                             </div>
                         </div>
 
-                        {crearNuevo && (
-    <div style={{ marginTop: "20px", fontFamily: "'Arial', sans-serif" }}>
-        <h3 style={{ textAlign: "center", color: "#333" }}>Nuevo usuario</h3>
-        <table
-            style={{
-                width: "100%",
-                backgroundColor: "#f9f9f9",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-                padding: "20px",
-                marginBottom: "20px"
-            }}
-        >
-            <thead>
-                <tr style={{ backgroundColor: "#f1f1f1" }}>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Nombre</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Apellido 1</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Apellido 2</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Contraseña</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Fecha Nac.</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Género</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Correo</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Centro</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Cuerpo Médico</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Hábitos</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Altura</th>
-                    <th style={{ padding: "10px", textAlign: "left" }}>Observaciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.nombre} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, nombre: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.apellido1} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, apellido1: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.apellido2} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, apellido2: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.password} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, password: e.target.value })} /></td>
-                    <td><input type="date" style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.fecha_nacimiento} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, fecha_nacimiento: formatDate(e.target.value) })} /></td>
-                    <td>
-                        <select style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.genero} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, genero: parseInt(e.target.value) })}>
-                            <option value={1}>Masculino</option>
-                            <option value={2}>Femenino</option>
-                            <option value={3}>Otro</option>
-                        </select>
-                    </td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.correo} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, correo: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.centro}/></td>
-                    <td>
-                        <select style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.cuerpo_medico}>
-                            <option value={0}>No</option>
-                        </select>
-                    </td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.habitos_toxicos} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, habitos_toxicos: e.target.value })} /></td>
-                    <td><input style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.altura} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, altura: e.target.value })} /></td>
-                    <td><textarea style={{ width: "100%", padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }} value={nuevoUsuario.observaciones} onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, observaciones: e.target.value })} /></td>
-                </tr>
-            </tbody>
-        </table>
 
-        <div style={{ textAlign: "center" }}>
-            <button
-                onClick={handleCrearUsuario}
-                style={{
-                    backgroundColor: "#28a745",
-                    color: "white",
-                    padding: "12px 20px",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: "16px",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-                }}
-            >
-                Guardar usuario
-            </button>
-        </div>
-    </div>
-)}
-
-
-
-                        {/* Tabla de Pacientes */}
-                        {data && (
-                            <div style={{ padding: "10px", backgroundColor: "#f9f9f9" }}>
-                                <h3 style={{ fontSize: "1.5rem", color: "#333", marginBottom: "20px" }}>Datos del usuario</h3>
-                                <table
-                                    border="1"
-                                    style={{
-                                        backgroundColor: "white",
-                                        width: "100%",
-                                        borderCollapse: "collapse",
-                                        borderRadius: "8px",
-                                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                                        fontFamily: "'Arial', sans-serif",
-                                    }}
-                                >
-                                    <thead>
-                                        <tr
-                                            style={{
-                                                backgroundColor: "#007bff",
-                                                color: "#fff",
-                                                textAlign: "center",
-                                                fontSize: "1rem",
-                                                fontWeight: "bold",
-                                            }}
-                                        >
-                                            <th>Nombre</th>
-                                            <th>Primer apellido</th>
-                                            <th>Segundo apellido</th>
-                                            <th>F. Nacimiento</th>
-                                            <th>H. tóxicos</th>
-                                            <th>Género</th>
-                                            <th>Centro</th>
-                                            <th>Correo</th>
-                                            <th>Cuerpo Médico</th>
-                                            <th>Altura</th>
-                                            <th>Observaciones</th>
-                                            <th>Parámetros médicos</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
-                                            style={{
-                                                textAlign: "center",
-                                                borderBottom: "1px solid #ddd",
-                                                transition: "background-color 0.3s ease",
-                                            }}
-                                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f1f1f1"}
-                                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "white"}
-                                        >
-                                        <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.paciente[0].nombre}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], nombre: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.paciente[0].apellido1}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], apellido1: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.paciente[0].apellido2}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], apellido2: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="date"
-                                                    value={formatDate(data.paciente[0].fecha_nacimiento) }
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], fecha_nacimiento: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "80%", padding: "5px", borderRadius: "4px", border: "1px solid #ccc" }}
-                                                />
-                                            </td>
-
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.paciente[0].habitos_toxicos}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], habitos_toxicos: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <select
-                                                    value={data.paciente[0].genero}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], genero: parseInt(e.target.value) }],
-                                                        })
-                                                    }
-                                                    style={{
-                                                        width: "100%",
-                                                        padding: "5px",
-                                                        borderRadius: "4px",
-                                                        border: "1px solid #ccc",
-                                                    }}
-                                                >
-                                                    <option value="1">Masculino</option>
-                                                    <option value="2">Femenino</option>
-                                                    <option value="3">Otro</option>
-                                                </select>
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.usuario[0].centro}
-                                                    style={{ width: "60%" }}
-                                                />
-                                        </td>
-
-                                            <td>
-                                                <input
-                                                    type="email"
-                                                    value={data.usuario[0].correo}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            usuario: [{ ...data.usuario[0], correo: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                            <select
-                                                value={data.usuario[0].cuerpo_medico}
-                                                style={{ width: "100%", padding: "5px", borderRadius: "4px", border: "1px solid #ccc" }}
-                                            >
-                                                <option value="1">Sí</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                        </td>
-
-
-                                            <td>
-                                                <input
-                                                    type="number"
-                                                    value={data.paciente[0].altura}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], altura: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <textarea
-                                                    value={data.paciente[0].exploraciones}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], exploraciones: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-                                            <td>
-                                                <div className="grid grid-cols-1 gap-4 p-4 max-w-md mx-auto">
-                                                    {icons.map((icon, i) => (
-                                                    <button
-                                                        key={i}
-                                                        type="button"
-                                                        onClick={() => handleClick(i)}
-                                                        className="flex gap-2 items-center p-3 bg-blue-100 hover:bg-blue-200 rounded-xl shadow-md transition"
-                                                    >
-                                                        <span
-                                                        className="text-blue-700"
-                                                        dangerouslySetInnerHTML={{ __html: icon }}
-                                                        />
-                                                        <span className="ml-auto text-sm font-medium">Botón {i + 1}</span>
-                                                    </button>
-                                                    ))}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                {graficaMostrada === "frecuencia" && (
-                                        <div className="graficas" style={{ marginBottom: "60px" }}>
-                                        <ResponsiveContainer width="100%" height={300}>
-                                            <LineChart data={frecuencia}>
-                                            <CartesianGrid strokeDasharray="3 3" />
-                                            <XAxis
-                                                stroke="#FFFFFF"
-                                                dataKey="fecha"
-                                                tick={{ fontSize: 16, fontWeight: "bold" }}
-                                            />
-                                            <YAxis
-                                                domain={["auto", "auto"]}
-                                                tick={{ fontSize: 16, fontWeight: "bold" }}
-                                                stroke="#FFFFFF"
-                                            />
-                                            <Tooltip />
-                                            <Line
-                                                type="monotone"
-                                                dataKey="frecuencia"
-                                                stroke="#4A90E2"
-                                                strokeWidth={4}
-                                                dot={{ r: 6 }}
-                                                name="Frecuencia"
-                                            />
-                                            </LineChart>
-                                        </ResponsiveContainer>
-                                    </div>
-                                )}
-
-                                {graficaMostrada === "medicacion" && (
-                                <div
-                                    className="calendar-container"
-                                    style={{ marginBottom: "100px", position: "relative", zIndex: "100" }}
-                                >
-                                    <Calendar
-                                    tileClassName={({ date }) =>
-                                        medicacion.some((m) => new Date(m.fecha).toDateString() === date.toDateString())
-                                        ? "marked-date"
-                                        : null
-                                    }
-                                    tileContent={({ date }) =>
-                                        medicacion.some((m) => new Date(m.fecha).toDateString() === date.toDateString()) ? (
-                                        <div
-                                            className="calendar-note"
-                                            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-                                        >
-                                            <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            width="20"
-                                            height="20"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            >
-                                            <rect
-                                                x="3"
-                                                y="8"
-                                                width="18"
-                                                height="8"
-                                                rx="4"
-                                                transform="rotate(-45 12 12)"
-                                            />
-                                            <line x1="10" y1="10" x2="14" y2="15" />
-                                            <rect
-                                                x="8"
-                                                y="12"
-                                                width="7"
-                                                height="8"
-                                                rx="2"
-                                                transform="rotate(45 12 12)"
-                                                fill="currentColor"
-                                            />
-                                            </svg>
-                                        </div>
-                                        ) : null
-                                    }
-                                    selectRange={false}
-                                    />
-                                </div>
-                                )}
-
-
-                                {graficaMostrada === "tension" && (
-                                    <div className="graficas" style={{ marginBottom: "100px" }}>
-                                        <ResponsiveContainer width="100%" height={300}>
-                                            <ComposedChart data={tension}>
-                                                <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis stroke="#FFFFFF" dataKey="fecha" tick={{ fontSize: 16, fontWeight: 'bold' }} />
-                                                <YAxis domain={["auto", "auto"]} tick={{ fontSize: 16, fontWeight: 'bold' }} stroke="#FFFFFF" />
-                                                <Tooltip />
-
-                                                {/* Barra para la diferencia entre tensiones */}
-                                                <Bar dataKey="tension_min" fill="transparent" barSize={8} name="" stackId="tension" />
-                                                <Bar dataKey="tension_maxima" fill="blue" barSize={8} name="Diferencia entre máxima y mínima"  stackId="tension" />
-
-                                                {/* Punto en tensión máxima */}
-                                                <Scatter 
-                                                    dataKey="tension_max" 
-                                                    fill="blue" // Color de los puntos
-                                                    name="Tensión Máxima"
-                                                />
-                                                
-                                                {/* Punto en tensión mínima */}
-                                                <Scatter 
-                                                    dataKey="tension_min" 
-                                                    fill="blue" // Color de los puntos
-                                                    name="Tensión Mínima"
-                                                />
-
-                                                {/* Línea de tensión media */}
-                                                <Line 
-                                                    type="monotone" 
-                                                    dataKey="tension_med" 
-                                                    stroke="#4A90E2" 
-                                                    strokeWidth={4} 
-                                                    dot={{ r: 6 }} 
-                                                    strokeDasharray="5 5" 
-                                                    name="Tensión Media" 
-                                                />
-                                            </ComposedChart>
-                                        </ResponsiveContainer>
-                                    </div>
-                                )}
-
-                            {graficaMostrada === "arritmia" && (
-                                
-                                <div
-                                    className="calendar-container"
-                                    style={{ marginBottom: "100px", position: "relative", zIndex: "100" }}
-                                >
-                                    <Calendar
-                                    tileClassName={({ date }) =>
-                                        arritmia.some((a) => new Date(a.fecha).toDateString() === date.toDateString())
-                                        ? "marked-date"
-                                        : null
-                                    }
-                                    tileContent={({ date }) =>
-                                        arritmia.some((a) => new Date(a.fecha).toDateString() === date.toDateString()) ? (
-                                        <div
-                                            className="calendar-note"
-                                            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-                                        >
-                                            <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            width="20"
-                                            height="20"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            >
-                                            <rect
-                                                x="3"
-                                                y="8"
-                                                width="18"
-                                                height="8"
-                                                rx="4"
-                                                transform="rotate(-45 12 12)"
-                                            />
-                                            <line x1="10" y1="10" x2="14" y2="15" />
-                                            <rect
-                                                x="8"
-                                                y="12"
-                                                width="7"
-                                                height="8"
-                                                rx="2"
-                                                transform="rotate(45 12 12)"
-                                                fill="currentColor"
-                                            />
-                                            </svg>
-                                        </div>
-                                        ) : null
-                                    }
-                                    selectRange={false}
-                                    />
-                                </div>
-                                )}
-
-                                {graficaMostrada === "peso" && (
-                                    <div className="graficas" style={{ marginBottom: "60px" }}> 
-                                        <ResponsiveContainer width="100%" height={300}>
-                                            <LineChart data={peso}> 
-                                                <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis 
-                                                    stroke="#FFFFFF"
-                                                    dataKey="fecha" 
-                                                    tick={{ fontSize: 16, fontWeight: 'bold' }} 
-                                                />
-                                                <YAxis 
-                                                    domain={["auto", "auto"]} 
-                                                    tick={{ fontSize: 16, fontWeight: 'bold' }}  
-                                                    stroke="#FFFFFF"
-                                                />
-                                                <Tooltip />
-                                                <Line 
-                                                    type="monotone" 
-                                                    dataKey="peso" 
-                                                    stroke="#4A90E2" 
-                                                    strokeWidth={4}  
-                                                    dot={{ r: 6 }} 
-                                                />
-                                            </LineChart>
-                                        </ResponsiveContainer>
-                                    </div>
-                                )}
-                                
-                                <button
-                                    onClick={handleEditarUsuario}
-                                    style={{
-                                        backgroundColor: "#28a745",
-                                        color: "#fff",
-                                        border: "none",
-                                        borderRadius: "8px",
-                                        padding: "12px 18px",
-                                        cursor: "pointer",
-                                        fontSize: "16px",
-                                        fontWeight: "600",
-                                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                                        transition: "background-color 0.3s ease, transform 0.2s ease",
-                                        marginTop: "20px", // Ajustado para un mejor espaciado
-                                        marginLeft: "40%",
-                                    }}
-                                    onMouseEnter={(e) => e.target.style.backgroundColor = "#218838"}
-                                    onMouseLeave={(e) => e.target.style.backgroundColor = "#28a745"}
-                                >
-                                    Guardar
-                                </button>
-
-                                {nombreSeleccionado && (
-                                    <button
-                                        onClick={handleEliminarUsuario}
-                                        style={{
-                                            marginLeft: "15px",
-                                            padding: "12px 20px",
-                                            backgroundColor: "#dc3545",
-                                            color: "white",
-                                            border: "none",
-                                            borderRadius: "8px",
-                                            fontSize: "16px",
-                                            fontWeight: "600",
-                                            cursor: "pointer",
-                                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                                            transition: "background-color 0.3s ease, transform 0.2s ease",
-                                        }}
-                                        onMouseEnter={(e) => e.target.style.backgroundColor = "#c82333"}
-                                        onMouseLeave={(e) => e.target.style.backgroundColor = "#dc3545"}
-                                    >
-                                        Eliminar usuario
-                                    </button>
-                                )}
-
-                               
-
-                            </div>
-                        )}
+                        
 
                     </div>
-                
+                </div>
             </div>
         </div>
     );

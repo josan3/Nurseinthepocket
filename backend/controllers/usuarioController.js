@@ -44,15 +44,9 @@ const registroUsuario = async (req, res) => {
       return res.status(400).json({ error: "Aporta todos los datos para crear el usuario" });
     }
 
-    // Cifrar la contraseña antes de guardar
-    bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
-      if (err) {
-        return res.status(500).json({ error: 'Error al cifrar la contraseña' });
-      }
-
-      crearUsuario(correo, nombre, hashedPassword, apellido1, apellido2, centro, (err, result) => {
+      crearUsuario(correo, nombre, password, apellido1, apellido2, centro, (err, result) => {
         if (err) {
-          return res.status(500).json({ error: 'Error al acceder a la base de datos' });
+          return res.status(500).json({ error: 'Error al acceder a la base de datos', err });
         }
         if (!result) {
           return res.status(400).json({ error: 'Error al crear el usuario' });
@@ -62,7 +56,6 @@ const registroUsuario = async (req, res) => {
           message: 'Usuario creado con éxito',
           result: result
         });
-      });
     });
 
   } catch (error) {
@@ -299,26 +292,24 @@ const setUsuario = (req, res) => {
     return res.status(400).json({ error: "Aporta todos los datos para editar el usuario" });
   }
 
-    // 2. Actualizar usuario en base de datos
-    const result1 = actualizarUsuarioporId(id, nombre, apellido1, apellido2, correo, centro);
-
-    if (!result1) {
-      return res.status(400).json({ error: "Error al editar el usuario" });
+  actualizarUsuarioporId(id, nombre, apellido1, apellido2, correo, centro, (err1, result1) => {
+    if (err1) {
+      return res.status(500).json({ error: "Error al editar el usuario" });
     }
 
-    // 3. Actualizar paciente en base de datos
-    const result2 = setPacienteporId(id, altura, habitos_toxicos);
+    setPacienteporId(id, altura, habitos_toxicos, (err2, result2) => {
+      if (err2) {
+        return res.status(500).json({ error: "Error al editar el paciente" });
+      }
 
-    if (!result2) {
-      return res.status(400).json({ error: "Error al editar el paciente" });
-    }
-
-    // 4. Si todo salió bien:
-    return res.status(201).json({
-      message: "Usuario creado y paciente actualizado con éxito",
-      uid: userRecord.uid,
+      return res.status(201).json({
+        message: "Usuario actualizado y paciente actualizado con éxito",
+        // uid: userRecord.uid,  <-- Aquí asegúrate de qué es userRecord si lo usas
+      });
     });
+  });
 };
+
 
 /**
  * Consulta los datos de un usuario y paciente en la base de datos.
