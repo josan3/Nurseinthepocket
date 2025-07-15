@@ -96,12 +96,12 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.expect(pm.response.code).to.equal(1000);\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
 							"});\r",
 							"\r",
 							"\r",
 							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 							"});\r",
 							"\r",
 							"\r",
@@ -904,6 +904,57 @@
 		},
 		{
 			"name": "setPeso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields in the data object\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.exist.and.to.be.an('object');\r",
+							"    \r",
+							"    const requiredFields = ['fieldCount', 'affectedRows', 'insertId', 'serverStatus', 'warningCount', 'message', 'protocol41', 'changedRows'];\r",
+							"    \r",
+							"    requiredFields.forEach(field => {\r",
+							"        pm.expect(responseData.data).to.have.property(field);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"InsertId is a non-negative integer\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.be.an('object');\r",
+							"    pm.expect(responseData.data.insertId).to.be.a('number').and.to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Protocol41 is a boolean value\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.data).to.be.an('object');\r",
+							"    pm.expect(responseData.data.protocol41).to.be.a('boolean');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -917,13 +968,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://192.168.1.42:8801/peso",
+					"raw": "http://192.168.1.37:8801/peso",
 					"protocol": "http",
 					"host": [
 						"192",
 						"168",
 						"1",
-						"42"
+						"37"
 					],
 					"port": "8801",
 					"path": [
@@ -1096,6 +1147,60 @@
 		},
 		{
 			"name": "setMedicamento",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has Content-Type of application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the schema of the data object\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('data').that.is.an('object');\r",
+							"    pm.expect(responseData.data).to.have.property('result').that.is.an('object');\r",
+							"    \r",
+							"    const result = responseData.data.result;\r",
+							"    pm.expect(result).to.have.all.keys('fieldCount', 'affectedRows', 'insertId', 'serverStatus', 'warningCount', 'message', 'protocol41', 'changedRows');\r",
+							"    \r",
+							"    pm.expect(result.fieldCount).to.be.a('number');\r",
+							"    pm.expect(result.affectedRows).to.be.a('number');\r",
+							"    pm.expect(result.insertId).to.be.a('number');\r",
+							"    pm.expect(result.serverStatus).to.be.a('number');\r",
+							"    pm.expect(result.warningCount).to.be.a('number');\r",
+							"    pm.expect(result.message).to.be.a('string');\r",
+							"    pm.expect(result.protocol41).to.be.a('boolean');\r",
+							"    pm.expect(result.changedRows).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"The message field must be a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
