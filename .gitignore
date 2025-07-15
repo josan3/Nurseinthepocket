@@ -3,3 +3,9 @@ backend/serviceAccountKey.json
 
 # Clave API de Google
 frontend/src/firebase.js
+
+# Correo asociación
+.env
+
+# Clave Autenticación
+NurseinthePocket.postman_collection.json

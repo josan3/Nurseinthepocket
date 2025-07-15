@@ -1,9 +1,7 @@
 const { application } = require('express');
 const express = require("express");
 const nodemailer = require("nodemailer");
-EMAIL_USER= 'nurseinthepocket@gmail.com';
-EMAIL_PASS= 'Nurseinthepocket2025';
-
+require("dotenv").config();
 
 
 /**
