@@ -24,7 +24,7 @@ const Arritmia = () => {
 
     const mensaje = (
         <>
-          Si has tenido una arritmia utiliza el calendario de abajo como diario.
+          Si has tenido una arritmia utiliza este calendario como diario.
           <br />
           <br />
           <br />
@@ -53,7 +53,7 @@ const Arritmia = () => {
         const formattedDate = selectedDate.toISOString().split('T')[0]; // Formato AÑO-MES-DÍA
         try {
             const response = await fetch("http://localhost:8801/eliminararritmia", {
-                method: "POST",
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -65,7 +65,7 @@ const Arritmia = () => {
             if (response.ok) {
                 setSuccess("Arritmia eliminada");
                 setError("");
-                window.location.reload(); // Recarga la página después de eliminar
+                window.location.reload(); 
             } else {
                 setError(data.error || "Error al eliminar la arritmia");
                 setSuccess("");
@@ -74,13 +74,13 @@ const Arritmia = () => {
             setError("Error de conexión con el servidor");
             setSuccess("");
         }
-        setShowDeleteConfirmation(false); // Cierra la confirmación de eliminar
+        setShowDeleteConfirmation(false); 
     };
 
 
 
     const handleOptionClick = (path) => {
-        navigate(path); // Redirige a la ruta seleccionada
+        navigate(path);
     };
 
     const handleDateClick = (date) => {
@@ -208,7 +208,7 @@ const Arritmia = () => {
 
             <div className="cuerpo">
             <div className="container">
-                <div className="robothablando-container" style={{ marginBottom: "600px" }}>
+                <div className="robothablando-container" style={{ marginBottom: "400px" }}>
                     <img src={robot} alt="Robot" className="robotquieto" />
                     <div 
                     className="speech-bubble" 
@@ -373,7 +373,7 @@ const Arritmia = () => {
 
 
             {/* Calendario con días marcados */}
-            <div className="calendar-container" style={{marginTop: "280px", width: "100%" , marginBottom: "10px", position: "relative", zIndex: "100" }}>
+            <div className="calendar-container">
                 <Calendar
                     onClickDay={handleDateClick} // Llamamos a la función handleDateClick al hacer clic en un día
                     tileClassName={({ date }) => 
@@ -420,6 +420,7 @@ const Arritmia = () => {
                     </div>
                 </div>
                 )}
+
 
             {/* Modal de confirmación para eliminar */}
             {showDeleteConfirmation && (

@@ -17,6 +17,9 @@ const Correo = () => {
         e.preventDefault();
         emailjs.sendForm("service_2b5cnq4", "template_5od5vic", e.target, "sIPPhiKFwIJxPCofc")
         setSuccess("Correo enviado");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
     };
 
     const buttons = [
@@ -73,7 +76,6 @@ const Correo = () => {
     
                     if (response.ok) {
                         setEmail(data.data.correo)
-                        setSuccess("Datos obtenidos");
                         setError("");
                         
                     } else {
@@ -122,8 +124,8 @@ const Correo = () => {
                 </div>
            
 
-                <div style={{ margin: "0 auto", textAlign: "center" }}>
-                        <form onSubmit={handleSubmit} className="formulario-contacto" style={{ width: "70%", left: "26%" }}>
+                <div className="correo" >
+                        <form onSubmit={handleSubmit} className="formulario-contacto">
                             <div style={{ marginBottom: "20px"}}>
                                 <label htmlFor="email" style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
                                     Correo del destinatario:
@@ -181,7 +183,9 @@ const Correo = () => {
                             >
                                 Enviar
                             </button>
+                            {success && <p style={{ color: "green" }}>{success}</p>}
                         </form>
+                        
                     </div>
 
              </div>

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { eliminarMedicamentoPaciente } = require('../controllers/medicamentosController');
 
-// Ruta POST para eliminar un medicamento
-router.post('/', eliminarMedicamentoPaciente);
+router.delete('/', eliminarMedicamentoPaciente);
 
 module.exports = router;

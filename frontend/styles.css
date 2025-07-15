@@ -19,9 +19,9 @@ body {
     padding: 0;
     opacity: 1;
     font-family: 'Judson';
+    overflow-x: hidden;
+    width: 100%;
 }
-
-
 
 .cuerpo{
     padding-top: 150px; /* Ajusta este valor según la altura del H1 */
@@ -92,6 +92,7 @@ input[type="text"], input[type="password"] {
     border: 1px solid #ccc;
     opacity: 1;
 }
+
 input[type="text"]:focus, input[type="password"]:focus {
     border-color: #3498db;
     opacity: 1;
@@ -152,6 +153,21 @@ button:hover {
 
 }
 
+@media (max-width: 768px) {
+
+    .pulsocardiaco {
+        position: relative;
+        width: 10px;
+        height: 89px;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><polyline points="0,50 30,50 50,10 70,90 90,50 120,50 140,30 160,50 200,50" stroke-opacity="0.3"/></svg>') no-repeat;
+        clip-path: inset(0 15px 0 0) ;
+        background-size: contain;
+        animation: pulsocardiaco-onda 10s linear infinite;
+        background-color: #2fa831; 
+    }
+
+
+}
 
 /*animacion pulso cardiaco*/
 .pulsocardiaco-container {
@@ -165,6 +181,7 @@ button:hover {
     animation: pulsocardiacoLinea 30s linear infinite;;
 
 }
+
 .pulsocardiaco-container2 {
     position: fixed;
     top: 25%;
@@ -723,8 +740,11 @@ p{
         position: "relative";
         z-Index: 10000000000;
         background-color: white;
-        margin-top: -560%;
+        margin-top: -525%;
         width: 125%;
+        margin-bottom: 70%;
+        position: "relative";
+        border-radius: 10px;
     }
 }
 
@@ -771,12 +791,11 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
 
 /*Estilo de gráficas*/
 .graficas {
-    margin-Top:10px;
+    padding: 15px;
     position: relative;
     z-Index:10; 
     background-Color:transparent;
-    width:80%;
-    left:10%;
+    width:90%;
     margin-top:5%;
 }
 
@@ -907,6 +926,12 @@ h5 {
     margin-Bottom:50px;
     margin-top:20%;
     max-width: 75%;
+    background-Color: rgba(255, 255, 255, 0.6);
+    z-Index: 100;
+    width: 70%;
+    left: 20%;
+    border-radius: 20px;
+
 }
 
 /*Estilo de imagenes*/
@@ -979,7 +1004,6 @@ h5 {
 @media screen and (max-width: 768px) {
 
  
-
     /* Contenedor de las tarjetas */
     .cardcontainer {
         position:relative;
@@ -988,10 +1012,15 @@ h5 {
         justify-content: center; /* Centra las tarjetas horizontalmente */
         padding: 20px;
         gap: 20px;
-        left: 10%;
-        margin-Bottom:50px;
+        margin-Bottom:70px;
         margin-top:20%;
         max-width: 75%;
+        background-Color: rgba(255, 255, 255, 0.6);
+        z-Index: 100;
+        width: 70%;
+        left: 10%;
+        border-radius: 20px;
+        
     }
 
     .cardimagespeech {
@@ -1039,6 +1068,7 @@ h5 {
     max-height: 250px; /* Limita la altura del contenido para activar el scroll */
     padding-right: 10px; /* Espacio para la barra de desplazamiento */
     color: black;
+    z-index: 10000;
 }
 
 /* Personalización del scrollbar */
@@ -1186,7 +1216,7 @@ h5 {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 100000;
 }
 
 .modal-content {
@@ -1212,13 +1242,104 @@ h5 {
 }
 
 @media (max-width: 768px) {
+    .correo{
+        margin: "0 auto";
+        text-align: "center";
+    }
+
   .formulario-contacto {
-    margin-top: -30px;
+    margin-top: -60px;
+    width: 70%;
+    left: 26%; 
   }
 }
 
 @media (min-width: 769px) {
+    .correo{
+        text-align: "center";
+    }
+
   .formulario-contacto {
-    margin-top: 80px;
+    margin-top: 130px;
+    position: relative;
+    left: 26%; 
   }
+}
+
+@media (min-width: 769px) {
+
+    .configuracion{
+        margin-top: 15%;
+        background-color: rgba(255, 255, 255, 0.6);
+        position: relative;
+        z-index: 100;
+        width: 90%;
+        left: 30%; 
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 769px) {
+    .configuracion{
+        margin-top: -30%;
+        background-color: rgba(255, 255, 255, 0.6);
+        position: relative;
+        z-index: 100;
+        width: 90%;
+        left: 30%; 
+        border-radius: 10px;
+    }
+}
+
+@media (min-width: 769px) {
+
+    .fondograficas{
+        position: relative;
+        padding-bottom: 5px;
+        background-color: white;
+        top: 40px;
+        z-index: 100;
+        width: 78%;
+        left: 20%;
+        border-radius: 20px;
+        margin-bottom: 60px;
+    }
+
+    .calendar-container{
+        margin-top: 300px;
+        width: 130%;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 100;
+        left: -5%;
+    }
+}
+
+@media (max-width: 769px) {
+    .fondograficas{
+        background-color: white;
+        padding-bottom: 5px;
+        position: relative;
+        top: -50px;
+        z-index: 100;
+        width: 90%;
+        left: 5%;
+        border-radius: 10px;
+    }
+
+
+
+    .calendar-container {
+    overflow-x: block;
+    margin-top: 200px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 100;
+    width: 150%;
+    left: -90px;
+    zoom: 1;       /* Escala visualmente el calendario */
+    transform-origin: top center; /* Mantiene centrado al hacer zoom */
+}
+
+
 }

@@ -315,9 +315,9 @@ const Peso = () => {
                 ))}
             </div>
 
-            <div style={{ backgroundColor: "white", position: "relative", zIndex: "100", width: "75%", left: "19%", borderRadius: "10px"}}>
+             <div className="fondograficas" >
                 <div className="graficas" style={{ marginTop: "280px"}}>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={400}>
                     <LineChart data={data}> 
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis 
@@ -342,6 +342,8 @@ const Peso = () => {
                 </ResponsiveContainer>
             </div>
             </div>
+
+            <div style={{height: "40px"}}></div>
           
         </div>
     );

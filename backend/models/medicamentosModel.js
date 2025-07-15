@@ -122,7 +122,7 @@ const getTomaporIdPaciente = (id_paciente, callback) => {
         ht.hora;`;
 
   db.query(sql1, [id_paciente], (err, results1) => {
-    if (err) {
+    if (err) { 
       return callback(err, null);
     }
 

@@ -102,6 +102,11 @@ const Frecuencia = () => {
                 });
 
                 const data = await response.json();
+                data.data = data.data.map(item => ({
+                    ...item,
+                    fecha: item.fecha.split('-').reverse().join('/')
+                }));
+
                 console.log("Datos recibidos:", data);
 
                 if (response.ok) {
@@ -318,9 +323,9 @@ const Frecuencia = () => {
                 ))}
             </div>
 
-                <div style={{ backgroundColor: "white", position: "relative", zIndex: "100", width: "75%", left: "19%", borderRadius: "10px"  }}>
+                <div className="fondograficas" >
                 <div className="graficas" style={{ marginTop: "280px"}}>
-                        <ResponsiveContainer width="100%" height={380}>
+                        <ResponsiveContainer width="100%" height={400}>
                         <LineChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis stroke="#2fa831" dataKey="fecha" tick={{ fontSize: 16, fontWeight: "bold" }} />

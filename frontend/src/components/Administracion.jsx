@@ -32,6 +32,11 @@ const Administracion = () => {
         observaciones: ""
     });
 
+    function sumarUnDia(fechaString) {
+        const fecha = new Date(fechaString);
+        fecha.setDate(fecha.getDate() + 1);
+        return fecha.toISOString().split("T")[0]; // Devuelve en formato YYYY-MM-DD
+    }
 
     const buttons = [
         { label: "Información usuarios", 
@@ -116,7 +121,7 @@ const Administracion = () => {
         const getNombres = async () => {
             try {
                 const response = await fetch("http://localhost:8801/getusernames", {
-                    method: "POST",
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -144,7 +149,7 @@ const Administracion = () => {
         const getMedicamentos = async () => {
             try {
                 const response = await fetch("http://localhost:8801/getmedicamentos", {
-                    method: "POST",
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -349,7 +354,7 @@ const Administracion = () => {
 
         try {
             const response = await fetch("http://localhost:8801/deletemedicamentos", {
-                method: "POST",
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -378,7 +383,7 @@ const Administracion = () => {
     const handleEditarUsuario = async () => {
         try {
             const response = await fetch("http://localhost:8801/editarusuario", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -465,7 +470,7 @@ const Administracion = () => {
 
     try {
         const response = await fetch("http://localhost:8801/eliminar", {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -819,216 +824,210 @@ const Administracion = () => {
                                 <img src={cara} alt="Robot" className="robot" style={{ marginTop: "10px" ,width: "5%", height: "auto" }} />
                                 <p></p>
                                 <h3 style={{ textAlign: "center", color: "#2fa831", marginTop: "-10px" }}>Datos del usuario</h3>
-                                <table
-                                    border="1"
-                                    style={{
-                                        backgroundColor: "white",
-                                        width: "100%",
-                                        borderCollapse: "collapse",
-                                        borderRadius: "8px",
-                                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                                        fontFamily: "'Arial', sans-serif",
-                                    }}
-                                >
-                                    <thead>
-                                        <tr
-                                            style={{
-                                                backgroundColor: "#007bff",
-                                                color: "#fff",
-                                                textAlign: "center",
-                                                fontSize: "1rem",
-                                                fontWeight: "bold",
-                                            }}
+                               <table
+                                style={{
+                                width: "100%",
+                                backgroundColor: "#f9f9f9",
+                                borderRadius: "8px",
+                                padding: "20px",
+                                marginBottom: "20px",
+                                }}
+                            >
+                                {/* Fila de encabezado 1 */}
+                                <thead>
+                                <tr style={{ textAlign: "left" }}>
+                                    <th>Nombre</th>
+                                    <th>Primer apellido</th>
+                                    <th>Segundo apellido</th>
+                                    <th>F. Nacimiento</th>
+                                    <th>H. tóxicos</th>
+                                    <th>Género</th>
+                                </tr>
+                                </thead>
+
+                                {/* Fila de inputs 1 */}
+                                <tbody>
+                                <tr>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={data.paciente[0].nombre}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], nombre: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative",  top: "5px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={data.paciente[0].apellido1}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], apellido1: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative",  top: "5px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={data.paciente[0].apellido2}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], apellido2: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative",  top: "5px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="date"
+                                        value={sumarUnDia(formatDate(data.paciente[0].fecha_nacimiento))}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], fecha_nacimiento: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-35px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="text"
+                                        value={data.paciente[0].habitos_toxicos}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], habitos_toxicos: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-45px", position: "relative",  top: "5px" }}
+                                    />
+                                    </td>
+                                    <td>
+                                    <select
+                                        value={data.paciente[0].genero}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], genero: parseInt(e.target.value) }],
+                                        })
+                                        }
+                                        style={{width: "130%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-20px"}}
+                                    >
+                                        <option value="1">Masculino</option>
+                                        <option value="2">Femenino</option>
+                                        <option value="3">Otro</option>
+                                    </select>
+                                    </td>
+                                </tr>
+
+                                {/* Fila de encabezado 2 */}
+                                <tr style={{position: "relative",  top: "30px", left: "50px"}}>
+                                    <th>Correo</th>
+                                    <th>Cuerpo Médico</th>
+                                    <th>Centro</th>
+                                    <th>Altura</th>
+                                    <th colSpan="2">Observaciones</th>
+                                </tr>
+
+                                {/* Fila de inputs 2 */}
+                                <tr>
+                                    <td>
+                                        <span
+                                        style={{
+                                            display: "inline-block",
+                                            width: "120%",
+                                            padding: "4px",
+                                            borderRadius: "4px",
+                                            border: "1px solid #ccc",
+                                            marginLeft: "-10px",
+                                            position: "relative",
+                                            top: "30px",
+                                            backgroundColor: "#f9f9f9",
+                                            fontSize: "12px",
+                                        }}
                                         >
-                                            <th>Nombre</th>
-                                            <th>Primer apellido</th>
-                                            <th>Segundo apellido</th>
-                                            <th>F. Nacimiento</th>
-                                            <th>H. tóxicos</th>
-                                            <th>Género</th>
-                                            <th>Centro</th>
-                                            <th>Correo</th>
-                                            <th>Cuerpo Médico</th>
-                                            <th>Altura</th>
-                                            <th>Observaciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
+                                        {data.usuario[0].correo}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <select
+                                            value={data.usuario[0].cuerpo_medico}
+                                            onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                usuario: [{ ...data.usuario[0], cuerpo_medico: parseInt(e.target.value) }],
+                                            })
+                                            }
                                             style={{
-                                                textAlign: "center",
-                                                borderBottom: "1px solid #ddd",
-                                                transition: "background-color 0.3s ease",
+                                                display: "inline-block",
+                                                width: "80%",
+                                                padding: "4px",
+                                                borderRadius: "4px",
+                                                border: "1px solid #ccc",
+                                                marginLeft: "60px",
+                                                position: "relative",
+                                                top: "30px",
+                                                backgroundColor: "#f9f9f9",
+                                                fontSize: "16px",
                                             }}
-                                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f1f1f1"}
-                                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "white"}
-                                        >
-                                        <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.paciente[0].nombre}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], nombre: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.paciente[0].apellido1}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], apellido1: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.paciente[0].apellido2}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], apellido2: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="date"
-                                                    value={formatDate(data.paciente[0].fecha_nacimiento) }
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], fecha_nacimiento: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "80%", padding: "5px", borderRadius: "4px", border: "1px solid #ccc" }}
-                                                />
-                                            </td>
-
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.paciente[0].habitos_toxicos}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], habitos_toxicos: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <select
-                                                    value={data.paciente[0].genero}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], genero: parseInt(e.target.value) }],
-                                                        })
-                                                    }
-                                                    style={{
-                                                        width: "100%",
-                                                        padding: "5px",
-                                                        borderRadius: "4px",
-                                                        border: "1px solid #ccc",
-                                                    }}
-                                                >
-                                                    <option value="1">Masculino</option>
-                                                    <option value="2">Femenino</option>
-                                                    <option value="3">Otro</option>
-                                                </select>
-                                            </td>
-
-                                            <td>
-                                                <input
-                                                    type="text"
-                                                    value={data.usuario[0].centro}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            usuario: [{ ...data.usuario[0], centro: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                        </td>
-
-                                            <td>
-                                                <input
-                                                    type="email"
-                                                    value={data.usuario[0].correo}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            usuario: [{ ...data.usuario[0], correo: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                            <select
-                                                value={data.usuario[0].cuerpo_medico}
-                                                onChange={(e) =>
-                                                    setData({
-                                                        ...data,
-                                                        usuario: [{ ...data.usuario[0], cuerpo_medico: parseInt(e.target.value) }],
-                                                    })
-                                                }
-                                                style={{ width: "100%", padding: "5px", borderRadius: "4px", border: "1px solid #ccc" }}
                                             >
-                                                <option value="1">Sí</option>
-                                                <option value="0">No</option>
-                                            </select>
-                                        </td>
-
-
-                                            <td>
-                                                <input
-                                                    type="number"
-                                                    value={data.paciente[0].altura}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], altura: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-
-                                            <td>
-                                                <textarea
-                                                    value={data.paciente[0].exploraciones}
-                                                    onChange={(e) =>
-                                                        setData({
-                                                            ...data,
-                                                            paciente: [{ ...data.paciente[0], exploraciones: e.target.value }],
-                                                        })
-                                                    }
-                                                    style={{ width: "60%" }}
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                            <option value="1">Sí</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="text"
+                                            value={data.usuario[0].centro}
+                                            onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                usuario: [{ ...data.usuario[0], centro: e.target.value }],
+                                            })
+                                            }
+                                            style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "80px", position: "relative",top: "35px"}}
+                                        />
+                                    </td>
+                                    <td>
+                                    <input
+                                        type="number"
+                                        value={data.paciente[0].altura}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], altura: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "50%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "60px", position: "relative", top: "30px"}}
+                                    />
+                                    </td>
+                                    <td colSpan="2">
+                                    <textarea
+                                        value={data.paciente[0].exploraciones}
+                                        onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            paciente: [{ ...data.paciente[0], exploraciones: e.target.value }],
+                                        })
+                                        }
+                                        style={{width: "100%", height: "20px", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "10px", position: "relative", top: "30px"}}
+                                    />
+                                    </td>
+                                    
+                                </tr>
+                                </tbody>
+                            </table>
 
                                 <button
                                         onClick={cancelar}

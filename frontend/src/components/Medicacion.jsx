@@ -90,7 +90,7 @@ const Medicacion = () => {
 
         try {
             const response = await fetch("http://localhost:8801/deletetoma", {
-                method: "POST",
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                 },

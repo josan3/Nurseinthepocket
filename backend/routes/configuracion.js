@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { setUsuario } = require('../controllers/usuarioController');
 
-// Ruta POST para crear un usuario
-router.post('/', setUsuario);
+router.put('/', setUsuario);
 
 module.exports = router;

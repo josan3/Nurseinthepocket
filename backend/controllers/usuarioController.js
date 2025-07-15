@@ -1,5 +1,5 @@
 const { application } = require('express');
-const {obtenerHistorial, setRegistroUsuarioAcceso, crearUsuario, crearUsuarioGoogle, encontrarUsuarioporCorreo, getCorreo, actualizar, actualizarGoogle, getUsuarioporId, actualizarUsuarioporId, getNombreUsuarioporId, getListaUsuarios, editarUsuarioporId, eliminarUsuarioporId, getListaUsuariosCentro} = require('../models/usuarioModel');
+const {obtenerCentros, obtenerHistorial, setRegistroUsuarioAcceso, crearUsuario, crearUsuarioGoogle, encontrarUsuarioporCorreo, getCorreo, actualizar, actualizarGoogle, getUsuarioporId, actualizarUsuarioporId, getNombreUsuarioporId, getListaUsuarios, editarUsuarioporId, eliminarUsuarioporId, getListaUsuariosCentro} = require('../models/usuarioModel');
 const bcrypt = require ('bcryptjs');
 const {getDatosPacienteporId, setPacienteporId } = require('../models/pacientesModel');
 const util = require("util");
@@ -690,4 +690,33 @@ const historialAcceso = (req, res) => {
   });
 };
 
-module.exports = {historialAcceso, registroUsuarioAcceso, inicioSesionUsuario, actualizarUsuarioGoogle, inicioSesionUsuarioGoogle, obtenerCorreo, registroUsuario, registroUsuarioGoogle, actualizarUsuario, setUsuario, getUsuario, getNombreUsuario, getUsuarios, eliminarusuario , crearUsuarioAdmin, verificarRolAdmin, editarUsuario, getUsuariosporCentro};
+/**
+ * Consulta la lista de centros disponibles en el sistema.
+ * 
+ * @param {Object} req - El objeto de solicitud (Request).
+ * @param {Object} res - El objeto de respuesta (Response).
+ * @returns {void}
+ * 
+ * @precondición Deben existir centros registrados en la base de datos.
+ * @postcondición Se devuelve un JSON con los centros disponibles o un mensaje de error.
+ */
+const getCentros = (req, res) => {
+  obtenerCentros((err, result) => {
+    if (err) {
+      console.error("Error SQL al obtener centros:", err);
+      return res.status(500).json({ error: "Error al consultar la base de datos" });
+    }
+
+    if (!result || result.length === 0) {
+      return res.status(404).json({ error: "No se encontraron centros registrados" });
+    }
+
+    return res.status(200).json({
+      message: "Centros obtenidos con éxito",
+      data: result,
+    });
+  });
+};
+
+
+module.exports = {getCentros, historialAcceso, registroUsuarioAcceso, inicioSesionUsuario, actualizarUsuarioGoogle, inicioSesionUsuarioGoogle, obtenerCorreo, registroUsuario, registroUsuarioGoogle, actualizarUsuario, setUsuario, getUsuario, getNombreUsuario, getUsuarios, eliminarusuario , crearUsuarioAdmin, verificarRolAdmin, editarUsuario, getUsuariosporCentro};

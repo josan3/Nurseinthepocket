@@ -407,5 +407,19 @@ const obtenerHistorial = (callback) => {
   });
 };
 
+const obtenerCentros = (callback) => {
+  const sql = `
+  SELECT DISTINCT 
+    centro
+  FROM 
+    usuario
+`;
+  db.query(sql, (err, result) => {
+    if (err) return callback(err, null);
+    return callback(null, result);
+  });
+};
 
-module.exports = {obtenerHistorial, setRegistroUsuarioAcceso, crearUsuario, actualizarGoogle, encontrarUsuarioporCorreo, getUsuarioporId, actualizarUsuarioporId, actualizar, getNombreUsuarioporId, getIdporNombreUsuario, getListaUsuarios, editarUsuarioporId, eliminarUsuarioporId, getCorreo, getListaUsuariosCentro, crearUsuarioGoogle};
+
+
+module.exports = {obtenerCentros, obtenerHistorial, setRegistroUsuarioAcceso, crearUsuario, actualizarGoogle, encontrarUsuarioporCorreo, getUsuarioporId, actualizarUsuarioporId, actualizar, getNombreUsuarioporId, getIdporNombreUsuario, getListaUsuarios, editarUsuarioporId, eliminarUsuarioporId, getCorreo, getListaUsuariosCentro, crearUsuarioGoogle};

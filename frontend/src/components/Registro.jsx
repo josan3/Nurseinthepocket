@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js"
@@ -13,12 +13,42 @@ const Registro = () => {
   const [apellido1, setApellido1] = useState("");
   const [apellido2, setApellido2] = useState("");
   const [centro, setCentro] = useState("");
+  const [centrosDisponibles, setCentrosDisponibles] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
   const navigate = useNavigate(); 
 
-    const handleGoogleSignIn = async (e) => {
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:8801/getcentros", {
+        method: "GET",
+      });
+
+      const data4 = await response.json();
+      console.log("obtenido", data4);
+
+      if (response.ok) {
+        setCentrosDisponibles(data4.data);
+        setSuccess("Datos obtenidos");
+        setError("");
+      } else {
+        setError(data4.error || "Error al obtener datos");
+        setSuccess("");
+      }
+    } catch (error) {
+      setError("Error de conexión con el servidor");
+      setSuccess("");
+      }
+  };
+
+  fetchData();
+}, []);
+
+    
+
+
+  const handleGoogleSignIn = async (e) => {
     e.preventDefault(); // Evita recargar la página
   
     const provider = new GoogleAuthProvider();
@@ -170,12 +200,18 @@ const Registro = () => {
           </div>
           <div>
             <label>Hospital:</label><br />
-            <input
-              type="text"
-              placeholder="Ingrese su hospital correspondiente"
+            <select
               value={centro}
               onChange={(e) => setCentro(e.target.value)}
-            />
+              style={{ padding: "6px", borderRadius: "4px", border: "1px solid #ccc", width: "100%", marginBottom: "10px" }}
+            >
+              <option value="">Seleccione un hospital</option>
+              {centrosDisponibles.map((c, index) => (
+                <option key={index} value={c.centro}>
+                  {c.centro}
+                </option>
+              ))}
+            </select>
           </div>
           <button type="submit" style={{marginRight: '10px' }}>Registrarse</button>
           <button onClick={handleGoogleSignIn}>

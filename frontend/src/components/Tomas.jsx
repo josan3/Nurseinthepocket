@@ -101,7 +101,7 @@ const Tomas = () => {
       console.log("datos", id_paciente, medicamento, fecha, hora)
         try {
           const response = await fetch("http://localhost:8801/eliminartoma", {
-            method: "POST",
+            method: "DELETE",
             headers: {
               "Content-Type": "application/json",
             },

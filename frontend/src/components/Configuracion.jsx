@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaEdit } from "react-icons/fa"; // Importa el ícono de lápiz
 import robot from "../assets/normal.png";
+import cara from "../assets/cara.png"; 
 
 const Configuracion = () => {
     const id = localStorage.getItem("id");
@@ -18,6 +18,7 @@ const Configuracion = () => {
     const [editableField, setEditableField] = useState(null); // Estado para controlar qué campo es editable
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     const mensaje = `¿Desea modificar algún dato personal?`;
+    const [showModal, setShowModal] = useState(false);
 
     const navigate = useNavigate();
 
@@ -69,7 +70,7 @@ const Configuracion = () => {
 
         try {
             const response = await fetch("http://localhost:8801/configuracion", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -163,136 +164,52 @@ const Configuracion = () => {
                 <div className="container" >
                     <div className="robothablando-container">
                         <img src={robot} alt="Robot" className="robotquieto" />
-                        <div className="speech-bubble" style={{maxHeight:"250px"}}>
+                        <div className="speech-bubble" style={{maxHeight:"150px"}}>
                             {mensaje}
                         </div>
                     </div>
-            
 
-            <div style={{marginTop: "15%", backgroundColor: "white", position: "relative", zIndex: "100", width: "75%", left: "35%", borderRadius: "10px"  }}>
-                <form onSubmit={handleSubmit} style={{marginBottom: "100px"}}>
-                    <div>
-                        <label>Correo:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                type="text"
-                                placeholder="Ingrese su nombre"
-                                value={correo}
-                                onChange={(e) => handleInputChange("correo", e.target.value)}
-                                disabled
-                            />
-                            
-                        </div>
-                    </div>
-                    <div>
-                        <label>Nombre:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                type="text"
-                                placeholder="Ingrese su nombre"
-                                value={nombre}
-                                onChange={(e) => handleInputChange("nombre", e.target.value)}
-                                disabled={editableField !== "nombre"} // Solo editable si es el campo seleccionado
-                            />
-                            <FaEdit
-                                style={{ marginLeft: "10px", cursor: "pointer" }}
-                                onClick={() => handleEditClick1("nombre")}
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label>Primer apellido:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                type="text"
-                                placeholder="Ingrese su primer apellido"
-                                value={apellido1}
-                                onChange={(e) => handleInputChange("apellido1", e.target.value)}
-                                disabled={editableField !== "apellido1"} // Solo editable si es el campo seleccionado
-                            />
-                            <FaEdit
-                                style={{ marginLeft: "10px", cursor: "pointer" }}
-                                onClick={() => handleEditClick1("apellido1")}
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label>Segundo apellido:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                type="text"
-                                placeholder="Ingrese su segundo apellido"
-                                value={apellido2}
-                                onChange={(e) => handleInputChange("apellido2", e.target.value)}
-                                disabled={editableField !== "apellido2"} // Solo editable si es el campo seleccionado
-                            />
-                            <FaEdit
-                                style={{ marginLeft: "10px", cursor: "pointer" }}
-                                onClick={() => handleEditClick1("apellido2")}
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label>Centro:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                type="text"
-                                placeholder="Ingrese su centro médico"
-                                value={centro}
-                                onChange={(e) => handleInputChange("centro", e.target.value)}
-                                disabled
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label>Altura:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                type="text"
-                                placeholder="Ingrese altura"
-                                value={altura}
-                                onChange={(e) => handleInputChange("altura", e.target.value)}
-                                disabled={editableField !== "altura"} // Solo editable si es el campo seleccionado
-                            />
-                            <FaEdit
-                                style={{ marginLeft: "10px", cursor: "pointer" }}
-                                onClick={() => handleEditClick1("altura")}
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label>Hábitos tóxicos:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                type="text"
-                                placeholder="Ingrese hábitos tóxicos"
-                                value={habitos_toxicos}
-                                onChange={(e) => handleInputChange("habito_toxicos", e.target.value)}
-                                disabled={editableField !== "habito_toxicos"} 
-                            />
-                            <FaEdit
-                                style={{ marginLeft: "10px", cursor: "pointer" }}
-                                onClick={() => handleEditClick1("habito_toxicos")}
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label>Fecha Nacimiento:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                type="text"
-                                placeholder="Ingrese su fecha de nacimiento"
-                                value={formatDate(fechnacimiento)}
-                                disabled
-                            />
-                        </div>
-                    </div>
-                    <button type="submit">Guardar cambios</button>
-                    {error && <p style={{ color: "red" }}>{error}</p>}
-                </form>
-           </div>
+                    {/* Modal de confirmación */}
+                       {showModal && (
+                           <div className="confirmation-modal" >
+                               <div className="modal-content">
+                               <img src={cara} alt="Robot" className="robot" style={{ width: "10%", height: "auto" }} />
+                               
+                               <p>
+                                   ¿Quieres guardar los cambios realizados?                              
+                               </p>
+                               
+                                <button
+                                onClick={handleSubmit} // tu función de submit
+                                style={{
+                                    marginRight: "10px",
+                                    padding: "8px 16px",
+                                    backgroundColor: "#2fa831",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "5px",
+                                    cursor: "pointer"
+                                }}
+                                >
+                                Guardar
+                                </button>
+                                <button
+                                onClick={() => setShowModal(false)}
+                                style={{
+                                    padding: "8px 16px",
+                                    backgroundColor: "#ccc",
+                                    border: "none",
+                                    borderRadius: "5px",
+                                    cursor: "pointer"
+                                }}
+                                >
+                                Cancelar
+                                </button>
+                               </div>
+                           </div>
+                           )}
 
-<div style={{ height: "5px" }} />
+                           <div style={{ height: "5px" }} />
             
             <div className="barra"style={{ height: "10%" }}></div>
             <div className="barra2" style={{ height: "1000%", top: "-200px" }}></div>
@@ -437,8 +354,140 @@ const Configuracion = () => {
                         )}
                     </div>
                 ))}
+                </div>
+            
 
-        </div>
+            <div className="configuracion" >
+                <form onSubmit={handleSubmit} style={{marginBottom: "100px", backgroundColor: "transparent", fontSize: "18px"}}>
+                    <h3 style={{marginTop: "-10px", marginBottom: "10px", backgroundColor: "transparent"}}>Datos personales</h3>
+                    <div>
+                        <label>Correo:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%" }}
+                                type="text"
+                                placeholder="Ingrese su nombre"
+                                value={correo}
+                                onChange={(e) => handleInputChange("correo", e.target.value)}
+                                disabled
+                            />
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <label>Nombre:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
+                                type="text"
+                                placeholder="Ingrese su nombre"
+                                value={nombre}
+                                onChange={(e) => handleInputChange("nombre", e.target.value)}
+                            />
+                    </div>
+                    </div>
+                    <div>
+                        <label>Primer apellido:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
+                                type="text"
+                                placeholder="Ingrese su primer apellido"
+                                value={apellido1}
+                                onChange={(e) => handleInputChange("apellido1", e.target.value)}
+                                />
+                        </div>
+                    </div>
+                    <div>
+                        <label>Segundo apellido:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
+                                type="text"
+                                placeholder="Ingrese su segundo apellido"
+                                value={apellido2}
+                                onChange={(e) => handleInputChange("apellido2", e.target.value)}
+                                />
+                        </div>
+                    </div>
+                    <div>
+                        <label>Centro:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
+                                type="text"
+                                placeholder="Ingrese su centro médico"
+                                value={centro}
+                                onChange={(e) => handleInputChange("centro", e.target.value)}
+                                disabled
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <label>Altura:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                           <div style={{ position: "relative", width: "90%" }}>
+                                <input
+                                    style={{
+                                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                                    width: "100%",
+                                    paddingRight: "8%",
+                                    }}
+                                    type="text"
+                                    placeholder="Ingrese altura"
+                                    value={altura}
+                                    onChange={(e) => handleInputChange("altura", e.target.value)}
+                                />
+                                <span
+                                    style={{
+                                    position: "absolute",
+                                    right: "10px",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    color: "black",
+                                    pointerEvents: "none"
+                                    }}
+                                >
+                                    cms
+                                </span>
+                                </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Hábitos tóxicos:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%"  }}
+                                type="text"
+                                placeholder="Ingrese hábitos tóxicos"
+                                value={habitos_toxicos}
+                                onChange={(e) => handleInputChange("habito_toxicos", e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <label>Fecha Nacimiento:</label><br />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <input
+                                style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%"  }}
+                                type="text"
+                                placeholder="Ingrese su fecha de nacimiento"
+                                value={formatDate(fechnacimiento)}
+                                disabled
+                            />
+                        </div>
+                    </div>
+                    <button type="button" onClick={() => setShowModal(true)}>
+                        Guardar cambios
+                    </button>
+
+                    {error && <p style={{ color: "red" }}>{error}</p>}
+                </form>
+           </div>
+
+           <div style={{height: "10px"}}></div>
+
+        
         </div>
         </div>
         </div>

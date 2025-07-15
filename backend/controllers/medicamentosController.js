@@ -116,7 +116,7 @@ const eliminarMedicamento = (req, res) => {
   const {nombre} = req.body;
 
   if (!nombre) {
-    return res.status(400).json({ error: "Error al obtener los datos" });
+    return res.status(400).json({ error: "El nombre es obligatorio para eliminar" });
   }
 
   eliminarMedicamentoporNombre(nombre, (err, result) => {
@@ -125,11 +125,11 @@ const eliminarMedicamento = (req, res) => {
     }
 
     if (!result) {
-      return res.status(400).json({ error: 'Error al obtener los datos de la base de datos' });
+      return res.status(400).json({ error: 'Medicamento no encontrado' });
     }
 
-    return res.status(201).json({
-      message: 'Datos obtenidos con éxito',
+    return res.status(200).json({
+      message: 'Medicamento eliminado correctamente',
       data: result
     });
   });
@@ -156,7 +156,7 @@ const setToma = (req, res) => {
 
   setTomaporDia(id_toma, fecha, hora, (err, result) => {
     if (err) {
-      return res.status(500).json({ error: 'Error al acceder a la base de datos' });
+      return res.status(500).json({ error: 'Error al acceder a la base de datos', err });
     }
 
     if (!result) {

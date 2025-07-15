@@ -326,12 +326,18 @@ const CuerpoMedico = () => {
                 });
 
                 const data2 = await response.json();
+                
 
                 console.log(data2)
 
                 if (response.ok) {
-                    setLista(data2.data);
-                    setResultadosFiltrados(data2.data);
+                    
+                    const usuariosFiltrados = data2.data.filter(
+                    (usuario) => usuario.nombre !== "Nurse" && usuario.apellido1 !== "inthe" && usuario.apellido2 !== "Pocket"
+                );
+
+                setLista(usuariosFiltrados);
+                setResultadosFiltrados(usuariosFiltrados);
                     setSuccess("Datos obtenidos");
                     setError("");
                 } else {
@@ -388,6 +394,7 @@ const CuerpoMedico = () => {
             });
 
             const data1 = await response.json();
+
             setId(data1.id);
             setAntiguoCorreo(data1.data.usuario[0].correo);
 
@@ -423,7 +430,7 @@ const CuerpoMedico = () => {
     const handleEditarUsuario = async () => {
         try {
             const response = await fetch("http://localhost:8801/editarusuario", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -505,7 +512,7 @@ const CuerpoMedico = () => {
     
         try {
             const response = await fetch("http://localhost:8801/eliminar", {
-                method: "POST",
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -800,32 +807,41 @@ const CuerpoMedico = () => {
                                 {/* Fila de inputs 2 */}
                                 <tr>
                                     <td>
-                                    <input
-                                        type="email"
-                                        value={data.usuario[0].correo}
-                                        onChange={(e) =>
-                                        setData({
-                                            ...data,
-                                            usuario: [{ ...data.usuario[0], correo: e.target.value }],
-                                        })
-                                        }
-                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "0px", marginRight: "60px", position: "relative", top: "-30px" }}
-                                    />
+                                        <span
+                                        style={{
+                                            display: "inline-block",
+                                            width: "100%",
+                                            padding: "4px",
+                                            borderRadius: "4px",
+                                            border: "1px solid #ccc",
+                                            marginLeft: "-10px",
+                                            position: "relative",
+                                            top: "-30px",
+                                            backgroundColor: "#f9f9f9",
+                                            fontSize: "12px",
+                                        }}
+                                        >
+                                        {data.usuario[0].correo}
+                                        </span>
                                     </td>
                                     <td>
-                                    <select
-                                        value={data.usuario[0].cuerpo_medico}
-                                        onChange={(e) =>
-                                        setData({
-                                            ...data,
-                                            usuario: [{ ...data.usuario[0], cuerpo_medico: parseInt(e.target.value) }],
-                                        })
-                                        }
-                                        style={{width: "80%", padding: "4px", borderRadius: "4px", border: "1px solid #ccc", marginLeft: "-15px", position: "relative", top: "-30px"}}
-                                    >
-                                        <option value="1">Sí</option>
-                                        <option value="0">No</option>
-                                    </select>
+                                    <span
+                                        style={{
+                                            display: "inline-block",
+                                            width: "80%",
+                                            padding: "4px",
+                                            borderRadius: "4px",
+                                            border: "1px solid #ccc",
+                                            marginLeft: "10px",
+                                            position: "relative",
+                                            top: "-30px",
+                                            backgroundColor: "#f9f9f9",
+                                            fontSize: "16px",
+                                            color: "grey"
+                                        }}
+                                        >
+                                        {data.usuario[0].cuerpo_medico === 1 ? "Sí" : "No"}
+                                    </span>
                                     </td>
                                     <td colSpan="3">
                                         <div style={{ height: "20px" }}></div>
