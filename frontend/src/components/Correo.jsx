@@ -10,7 +10,7 @@ const Correo = () => {
 
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
-    const [error, setError] = useState("");
+    const [, setError] = useState("");
     const [success, setSuccess] = useState("");
     
     const handleSubmit = async (e) => {
@@ -83,7 +83,7 @@ const Correo = () => {
                         setSuccess("");
                     }
                 } catch (error) {
-                    setError("Error de conexión con el servidor");
+                    setError("Error de conexión con el servidor", error);
                     setSuccess("");
                 }
             };

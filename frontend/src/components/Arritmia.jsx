@@ -8,8 +8,8 @@ import cara from "../assets/cara.png";
 const Arritmia = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([false]);  // Estado para almacenar los datos de la API
-    const [error, setError] = useState(""); // Estado para manejar errores
-    const [success, setSuccess] = useState(""); // Estado para mostrar mensajes de éxito
+    const [, setError] = useState(""); // Estado para manejar errores
+    const [, setSuccess] = useState(""); // Estado para mostrar mensajes de éxito
     const [selectedDate, setSelectedDate] = useState(null);  // Nuevo estado para la fecha seleccionada
     const [showEditOptions, setShowEditOptions] = useState(false); 
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -71,7 +71,7 @@ const Arritmia = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
         setShowDeleteConfirmation(false); 
@@ -124,7 +124,7 @@ const Arritmia = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -154,7 +154,7 @@ const Arritmia = () => {
                     setSuccess("");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor");
+                setError("Error de conexión con el servidor", error);
                 setSuccess("");
             }
         };
@@ -164,7 +164,6 @@ const Arritmia = () => {
 
     // Convierte las fechas de arritmia en formato Date
     const markedDates = data.map(entry => new Date(entry.fecha));
-    const [hovered, setHovered] = useState(null);
             
     const buttons = [
         { path: "/informacion", label: "Obtener información", nombre: "Obtener información", icon: (

@@ -9,7 +9,7 @@ const Tension = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);  // Estado para almacenar los datos de la API
     const [error, setError] = useState(""); // Estado para manejar errores
-    const [success, setSuccess] = useState(""); // Estado para mostrar mensajes de éxito
+    const [, setSuccess] = useState(""); // Estado para mostrar mensajes de éxito
     const [valor_max, setValorMax] = useState("");
     const [valor_min, setValorMin] = useState("");
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu tensión`;
@@ -24,10 +24,6 @@ const Tension = () => {
     const handleEditClick = () => {
         setShowEditOptions(!showEditOptions); // Alterna la visibilidad de las opciones de editar
     };
-    
-    
-    
-    const [hovered, setHovered] = useState(null);
             
     const buttons = [
         { path: "/informacion", label: "Obtener información", nombre: "Obtener información", icon: (
@@ -89,7 +85,7 @@ const Tension = () => {
                 setSuccess("");
             }
         } catch (error) {
-          setError("Error de conexión con el servidor");
+          setError("Error de conexión con el servidor", error);
           setSuccess("");
         }
         
@@ -129,7 +125,7 @@ const Tension = () => {
                     setSuccess(""); // Borra mensaje de éxito
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor");
+                setError("Error de conexión con el servidor", error);
                 setSuccess("");
             }
         };

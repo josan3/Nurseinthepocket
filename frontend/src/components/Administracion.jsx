@@ -11,8 +11,8 @@ const Administracion = () => {
     const [busqueda, setBusqueda] = useState("");
     const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
     const [vista, setVista] = useState(localStorage.getItem('vista') || 'pacientes');
-    const [error, setError] = useState([]);
-    const [success, setSuccess] = useState([]);
+    const [, setError] = useState([]);
+    const [, setSuccess] = useState([]);
     const [id, setId] = useState([]);
     const [crearNuevo, setCrearNuevo] = useState(false);
     const [correo, setAntiguoCorreo] = useState("");
@@ -296,7 +296,7 @@ const Administracion = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error: ", error);
             setSuccess("");
         }
     };
@@ -341,7 +341,7 @@ const Administracion = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error: ", error);
             setSuccess("");
         }
     };
@@ -375,7 +375,7 @@ const Administracion = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error: ", error);
             setSuccess("");
         }
     };
@@ -417,7 +417,7 @@ const Administracion = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error: ", error);
             setSuccess("");
         }
     };
@@ -440,8 +440,6 @@ const Administracion = () => {
                 }),
             });
     
-            const data = await response.json();
-    
             if (response.ok) {
                 setSuccess("Usuario creado con éxito");
                 setError("");
@@ -451,7 +449,7 @@ const Administracion = () => {
                 setError(result.error || "No se pudo crear el usuario");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error: ", error);
             setSuccess("");
         }
     };
@@ -494,8 +492,7 @@ const Administracion = () => {
         }
 
     } catch (error) {
-        console.error("Error de conexión:", error);
-        setError("Error de conexión con el servidor");
+        setError("Error: ", error);
         setSuccess("");
     }
 };

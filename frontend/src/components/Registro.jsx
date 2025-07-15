@@ -6,7 +6,7 @@ import { auth } from "../firebase.js";
 import google from "../assets/google.png"; 
 
 const Registro = () => {
-  const [id, setId] = useState("");
+  const [, setId] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [nombre, setNombre] = useState("");
@@ -37,7 +37,7 @@ useEffect(() => {
         setSuccess("");
       }
     } catch (error) {
-      setError("Error de conexión con el servidor");
+      setError("Error de conexión con el servidor", error);
       setSuccess("");
       }
   };
@@ -91,11 +91,11 @@ useEffect(() => {
           setSuccess("");
         }
       } catch (error) {
-        setError("Error de conexión con el servidor");
+        setError("Error de conexión con el servidor", error);
         setSuccess("");
       }
     }catch (error) {
-      setError("Datos no aportados correctamente, por favor introduzca un correo y contraseña de 6 caracteres mínimo");
+      setError("Datos no aportados correctamente, por favor introduzca un correo y contraseña de 6 caracteres mínimo", error);
       setSuccess("");
     }
   };
@@ -139,11 +139,11 @@ useEffect(() => {
           setSuccess("");
         }
       } catch (error) {
-        setError("Error de conexión con el servidor");
+        setError("Error de conexión con el servidor", error);
         setSuccess("");
       }
     }catch (error) {
-      setError("Datos no aportados correctamente, por favor introduzca un correo y contraseña de 6 caracteres mínimo");
+      setError("Datos no aportados correctamente, por favor introduzca un correo y contraseña de 6 caracteres mínimo", error);
       setSuccess("");
     }
   };

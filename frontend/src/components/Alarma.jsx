@@ -45,7 +45,7 @@ const Alarma = () => {
         setSuccess("");
       }
     } catch (err) {
-      setError("Error de conexión con el servidor.");
+      setError("Error de conexión con el servidor.", err);
       setSuccess("");
     }
   };

@@ -183,7 +183,7 @@ const setToma = (req, res) => {
  */
 const setTomaporIdPaciente = (req, res) => {
   console.log("Datos recibidos del frontend:", req.body);
-  const {id_paciente, medicamento, hora, fecha} = req.body;
+  const {id_paciente, medicamento, hora} = req.body;
 
   if (!id_paciente || !medicamento || !hora) {
     return res.status(400).json({ error: "Error al obtener los datos" });

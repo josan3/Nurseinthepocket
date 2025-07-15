@@ -232,12 +232,13 @@ const eliminarTomaporId = (id_paciente, medicamento, fecha, hora, callback) => {
     // Aseguramos que la fecha esté en formato YYYY-MM-DD
     let formattedFecha = fecha;
     if (fecha.includes('/')) {
-      try {
-        const [day, month, year] = fecha.split('/');
-        formattedFecha = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-      } catch (e) {
+      const parts = fecha.split('/');
+      if (parts.length !== 3) {
         return callback(new Error('Formato de fecha inválido'), null);
       }
+
+      const [day, month, year] = parts;
+      formattedFecha = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
 
     const sqlEliminar = `

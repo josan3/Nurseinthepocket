@@ -15,7 +15,7 @@ const suscripciones = []; // Array con las suscripciones de los usuarios
  * @precondición El parámetro `userId` debe existir y ser válido. El `titulo` y el `mensaje` deben ser cadenas no vacías.
  * @postcondición Si se encuentra la suscripción del usuario, se envía la notificación push con el título y el mensaje. Si ocurre un error, se maneja e imprime en consola.
  */
-const enviarNotificacionPush = async (userId, titulo, mensaje) => {
+/*const enviarNotificacionPush = async (userId, titulo, mensaje) => {
   const payload = JSON.stringify({ title: titulo, body: mensaje });
 
   // Filtrar la suscripción para el usuario específico
@@ -29,7 +29,31 @@ const enviarNotificacionPush = async (userId, titulo, mensaje) => {
       console.error("Error al enviar la notificación:", error);
     }
   }
+};*/
+const enviarNotificacionPush = async (userId, titulo, mensaje) => {
+  const payload = JSON.stringify({ title: titulo, body: mensaje });
+
+  // Asegúrate de que 'suscripciones' esté definido y no vacío antes de buscar
+  if (!Array.isArray(suscripciones) || suscripciones.length === 0) {
+    console.warn("No hay suscripciones disponibles para enviar notificación");
+    return;
+  }
+
+  // Filtrar la suscripción para el usuario específico
+  const suscripcion = suscripciones.find((sub) => sub.userId === userId);
+
+  if (suscripcion) {
+    try {
+      await webPush.sendNotification(suscripcion.subscription, payload);
+      console.log('Notificación enviada');
+    } catch (error) {
+      console.error("Error al enviar la notificación:", error);
+    }
+  } else {
+    console.warn(`No se encontró suscripción para el usuario con ID ${userId}`);
+  }
 };
+
 
 /**
  * Verifica las alarmas del usuario y envía una notificación push si la hora actual coincide con alguna de las alarmas.
@@ -90,7 +114,7 @@ const notificacion = async (req, res) => {
 
     return res.status(200).json({ message: 'Notificación procesada correctamente' });
   } catch (err) {
-    return res.status(500).json({ error: 'Error al procesar la solicitud' });
+    return res.status(500).json({ error: 'Error al procesar la solicitud', err });
   }
 };
 

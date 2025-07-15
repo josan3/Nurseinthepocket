@@ -6,7 +6,7 @@ import { auth } from "../firebase.js";
 import google from "../assets/google.png"; 
 
 const InicioSesion = () => {
-  const [id, setId] = useState("");
+  const [, setId] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -49,7 +49,7 @@ const registro_usuario = async (idusuario) => {
       setSuccess("");
     }
   } catch (error) {
-    setError("Error de conexión con el servidor");
+    setError("Error de conexión con el servidor", error);
     setSuccess("");
   }
 };
@@ -105,7 +105,7 @@ const handleGoogleSignIn = async (e) => {
     }
   } catch (error) {
     console.error(error);
-    setError("Error en autenticación o cuenta no registrada");
+    setError("Error en autenticación o cuenta no registrada", error);
     setSuccess("");
   }
 };
@@ -157,8 +157,7 @@ const handleGoogleSignIn = async (e) => {
       setSuccess("");
     }
   } catch (error) {
-    console.error(error);
-    setError("Contraseña o correo incorrecto");
+    setError("Contraseña o correo incorrecto", error);
     setSuccess("");
   }
 };

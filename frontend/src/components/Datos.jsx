@@ -42,7 +42,7 @@ const Datos = () => {
         setSuccess(""); // Borra mensaje de éxito
       }
     } catch (error) {
-      setError("Error de conexión con el servidor");
+      setError("Error de conexión con el servidor", error);
       setSuccess("");
     }
   };

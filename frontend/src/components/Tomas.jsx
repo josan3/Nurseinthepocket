@@ -9,13 +9,13 @@ const Tomas = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [showEditOptions, setShowEditOptions] = useState(false); 
-    const [error, setError] = useState([]);
+    const [, setError] = useState([]);
     const [selectedMeds, setSelectedMeds] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const markedDates = data.map((item) => new Date(item.fecha));
     const [listaTomas, setlistaTomas] = useState([]);
-    const [success, setSuccess] = useState([]);
+    const [, setSuccess] = useState([]);
 
     
     const mensaje = (
@@ -113,15 +113,13 @@ const Tomas = () => {
             }),
           });
       
-          const data = await response.json();
-      
           if (response.ok) {
             window.location.reload();
           } else {
             setError("Error de conexión")
           }
         } catch (error) {
-            setError("Error de conexión con el servidor")
+            setError("Error de conexión con el servidor", error)
         }
     };
 
@@ -149,7 +147,7 @@ const Tomas = () => {
           }
 
           // Convierte la fecha al formato YYYY-MM-DD
-    const formattedFecha = formatFecha(fecha);
+          const formattedFecha = formatFecha(fecha);
       
     
           const response2 = await fetch("http://localhost:8801/toma", {
@@ -163,8 +161,7 @@ const Tomas = () => {
                 hora: hora
             }),
           });
-      
-          const data2 = await response2.json();
+
       
           if (response2.ok) {
             window.location.reload(); // actualizar vista
@@ -173,8 +170,7 @@ const Tomas = () => {
           }
       
         } catch (error) {
-          console.error(error);
-          setError("Error de conexión con el servidor");
+          setError("Error de conexión con el servidor", error);
         }
       };
       
@@ -205,7 +201,7 @@ const Tomas = () => {
             setError("Error de conexión ");
           }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
         }
     };
 
@@ -232,7 +228,7 @@ const Tomas = () => {
                         setSuccess("");
                     }
                 } catch (error) {
-                    setError("Error de conexión con el servidor");
+                    setError("Error de conexión con el servidor", error);
                     setSuccess("");
                 }
             };

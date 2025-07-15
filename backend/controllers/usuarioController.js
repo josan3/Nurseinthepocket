@@ -452,7 +452,7 @@ const crearUsuarioAdmin = async (req, res) => {
 
    try {
     // 1. Crear usuario en Firebase
-    const userRecord = await admin.auth().createUser({
+    await admin.auth().createUser({
       email: datos.correo,
       password: datos.password,
     });
@@ -658,7 +658,7 @@ const registroUsuarioAcceso = async (req, res) => {
       data: result,
     });
   } catch (err) {
-    return res.status(500).json({ error: "Error al consultar la base de datos" });
+    return res.status(500).json({ error: "Error al consultar la base de datos", err });
   }
 };
 

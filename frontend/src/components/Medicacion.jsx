@@ -15,8 +15,8 @@ const Medicacion = () => {
     const [busqueda, setBusqueda] = useState("");
     const [tomas, setTomas] = useState(1); 
     const [horas, setHoras] = useState([]);
-    const [error, setError] = useState([]);
-    const [success, setSuccess] = useState([]);
+    const [, setError] = useState([]);
+    const [, setSuccess] = useState([]);
     const [showMedicamentos, setShowMedicamentos] = useState(false);
     const [tomaSeleccionada, setTomaSeleccionada] = useState(null); 
     const [id_toma, setIdToma] = useState(null);
@@ -78,7 +78,7 @@ const Medicacion = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -110,7 +110,7 @@ const Medicacion = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -175,7 +175,7 @@ const Medicacion = () => {
                     setSuccess("");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor");
+                setError("Error de conexión con el servidor", error);
                 setSuccess("");
             }
         };
@@ -200,7 +200,7 @@ const Medicacion = () => {
                   setError("Error de conexión ");
                 }
               } catch (error) {
-                  setError("Error de conexión con el servidor");
+                  setError("Error de conexión con el servidor", error);
             }
           
        };
@@ -228,8 +228,6 @@ const Medicacion = () => {
     const handleOptionClick = (path) => {
         navigate(path); 
     };
-
-    
 
     return (
         

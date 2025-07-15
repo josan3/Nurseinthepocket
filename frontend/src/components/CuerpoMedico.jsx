@@ -12,9 +12,9 @@ const CuerpoMedico = () => {
     const [lista, setLista] = useState([]);
     const [busqueda, setBusqueda] = useState("");
     const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
-    const [vista, setVista] = useState(localStorage.getItem('vista') || 'pacientes');
-    const [error, setError] = useState([]);
-    const [success, setSuccess] = useState([]);
+    const [vista] = useState(localStorage.getItem('vista') || 'pacientes');
+    const [, setError] = useState([]);
+    const [, setSuccess] = useState([]);
     const [paciente, setPaciente] = useState([]);
     const [graficaMostrada, setGraficaMostrada] = useState(null);
     const [id, setId] = useState([]);
@@ -192,7 +192,7 @@ const CuerpoMedico = () => {
                 setSuccess(""); // Borra mensaje de éxito
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -221,7 +221,7 @@ const CuerpoMedico = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -248,7 +248,7 @@ const CuerpoMedico = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -276,7 +276,7 @@ const CuerpoMedico = () => {
             setSuccess("");
           }
         } catch (error) {
-          setError("Error de conexión con el servidor");
+          setError("Error de conexión con el servidor", error);
           setSuccess("");
         }
     };
@@ -302,7 +302,7 @@ const CuerpoMedico = () => {
                 setSuccess(""); // Borra mensaje de éxito
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -345,7 +345,7 @@ const CuerpoMedico = () => {
                     setSuccess("");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor");
+                setError("Error de conexión con el servidor", error);
                 setSuccess("");
             }
         };
@@ -411,7 +411,7 @@ const CuerpoMedico = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -465,7 +465,7 @@ const CuerpoMedico = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -487,7 +487,6 @@ const CuerpoMedico = () => {
                 }),
             });
     
-            const data = await response.json();
     
             if (response.ok) {
                 setSuccess("Usuario creado con éxito");
@@ -498,7 +497,7 @@ const CuerpoMedico = () => {
                 setError(result.error || "No se pudo crear el usuario");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -532,7 +531,7 @@ const CuerpoMedico = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };

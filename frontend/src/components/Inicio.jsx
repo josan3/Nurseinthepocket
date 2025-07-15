@@ -6,7 +6,6 @@ const Inicio = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [alarmas, setAlarmas] = useState([]);
-    const [hovered, setHovered] = useState(null);
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     
 
@@ -68,7 +67,7 @@ const Inicio = () => {
                     setData(data.data);
                 }
             } catch (error) {
-                console.error("Error de conexión con el servidor");
+                console.error("Error de conexión con el servidor", error);
             }
         };
   
@@ -95,7 +94,7 @@ const Inicio = () => {
 
                 }
             } catch (error) {
-                console.error("Error de conexión con el servidor");
+                console.error("Error de conexión con el servidor", error);
             }
         };
 

@@ -14,8 +14,8 @@ const Configuracion = () => {
     const [habitos_toxicos, setHabitos_toxicos] = useState("");
     const [fechnacimiento, setFechNacimiento] = useState("");
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
-    const [editableField, setEditableField] = useState(null); // Estado para controlar qué campo es editable
+    const [, setSuccess] = useState("");
+    const [, setEditableField] = useState(null); // Estado para controlar qué campo es editable
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     const mensaje = `¿Desea modificar algún dato personal?`;
     const [showModal, setShowModal] = useState(false);
@@ -26,8 +26,6 @@ const Configuracion = () => {
         const date = new Date(dateString);
         return date.toLocaleDateString("es-ES"); // Formato: 23/02/2003
     };
-
-    const [hovered, setHovered] = useState(null);
     
     const buttons = [
         { path: "/informacion", label: "Obtener información", nombre: "Obtener información", icon: (
@@ -88,7 +86,7 @@ const Configuracion = () => {
                 setSuccess("");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor");
+            setError("Error de conexión con el servidor", error);
             setSuccess("");
         }
     };
@@ -124,17 +122,13 @@ const Configuracion = () => {
                     setSuccess("");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor");
+                setError("Error de conexión con el servidor", error);
                 setSuccess("");
             }
         };
 
         fetchData();
     }, [id]);
-
-    const handleEditClick1 = (field) => {
-        setEditableField(field); // Establece el campo que se puede editar
-    };
 
     const handleEditClick = () => {
         setShowEditOptions(!showEditOptions); // Alterna la visibilidad de las opciones de editar
