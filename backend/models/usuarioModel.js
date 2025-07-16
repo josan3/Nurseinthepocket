@@ -1,20 +1,23 @@
 const mysql = require('mysql');
 const bcrypt = require('bcryptjs');
+require("dotenv").config({ path: "../.env" });
 
 const saltRounds = 10;
 
 // Conexión a la base de datos
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '24022003Ja.',
-  database: 'nurseinthepocket',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  multipleStatements: true
 });
 
 
 // Manejo de errores en la conexión
 db.connect((err) => {
   if (err) {
+    console.error("Prueba",  process.env.DB_PASSWORD)
     console.error('Error al conectar a la base de datos:', err.message);
   } else {
     console.log('Conexión a la base de datos establecida.');

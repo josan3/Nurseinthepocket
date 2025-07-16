@@ -1,11 +1,14 @@
 const mysql = require('mysql');
+require("dotenv").config({ path: "../.env" });
+
 
 // Conexión a la base de datos
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '24022003Ja.',
-  database: 'nurseinthepocket',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  multipleStatements: true
 });
 
 

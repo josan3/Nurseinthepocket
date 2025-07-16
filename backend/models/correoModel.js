@@ -1,7 +1,7 @@
 const { application } = require('express');
 const express = require("express");
 const nodemailer = require("nodemailer");
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 
 /**
@@ -20,7 +20,10 @@ const enviarCorreo = (req, res) => {
 
     // Configurar el transporter de Nodemailer
     const transporte = nodemailer.createTransport({
-        service: "gmail",
+        host: "smtp.gmail.com",
+        //service: "gmail",
+        port: 465,
+        secure: true,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS,

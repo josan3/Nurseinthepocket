@@ -47,8 +47,21 @@ const historialRouter = require('./routes/historial.js');
 const centrosRouter = require('./routes/centros.js');
 
 const app = express();
+app.disable('x-powered-by'); 
 app.use(express.json());  // Middleware para manejar JSON
-app.use(cors({ origin: "*" }));          // Middleware para permitir peticiones desde el frontend
+const allowedOrigins = ["http://localhost:5173", "http://localhost:8080"];
+
+app.use(cors({
+  origin: function(origin, callback){
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) === -1){
+      const msg = "El CORS policy no permite acceso desde este origen.";
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 
 // Configurar claves VAPID
