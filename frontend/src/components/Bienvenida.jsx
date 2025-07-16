@@ -41,21 +41,44 @@ const Bienvenida = () => {
 
         <div className="cuerpo">
           <div className="container">
-            <div className="robot-container" style={{ maxHeight:"100px", }} onClick={avanzarDialogo}>
+            <div className="robot-container"   style={{ maxHeight: "100px", cursor: "pointer" }}
+              role="button"
+              tabIndex={0}
+              onClick={avanzarDialogo}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  avanzarDialogo();
+                }
+              }}
+            >
               <img src={robotsaludando} alt="Robot" className="robot" />
               <div className="speech-bubble" style={{ maxHeight:"100px"}}>{mensajes[indiceMensaje]}</div>
             </div>
           </div>
         
 
-          <div className="button2"
+          <div
+            className="button2"
+            role="button"
+            tabIndex={0}
             onClick={() => {
               setTimeout(() => {
                 localStorage.setItem("id", id);
-                navigate(`/data`); 
-              }, 1000); 
+                navigate("/data");
+              }, 1000);
             }}
-            >
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setTimeout(() => {
+                  localStorage.setItem("id", id);
+                  navigate("/data");
+                }, 1000);
+              }
+            }}
+            style={{ cursor: "pointer" }}
+          >
             Continuar
           </div>
         </div>

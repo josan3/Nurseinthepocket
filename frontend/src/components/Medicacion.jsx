@@ -35,14 +35,6 @@ const Medicacion = () => {
         </>
     ); 
 
-    const handleHorasChange = (index, newHora) => {
-        setHoras((prevHoras) => {
-            const updatedHoras = [...prevHoras];
-            updatedHoras[index] = newHora; 
-            return updatedHoras;
-        });
-    };
-
     const handleSearchClick = () => {
         setShowMedicamentos(true);  // Mostrar la lista al hacer clic
     };
@@ -144,7 +136,7 @@ const Medicacion = () => {
             </svg>
         ) },
         { path: "/configuracion",label: "Ajustes de usuario", nombre: "Editar datos personales", icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="3" />
                 <path d="M19.4 15a2 2 0 0 0 .5 2.1l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a2 2 0 0 0-2.1-.5 2 2 0 0 0-1.2 1.8V22a2 2 0 0 1-4 0v-.5a2 2 0 0 0-1.2-1.8 2 2 0 0 0-2.1.5l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a2 2 0 0 0 .5-2.1 2 2 0 0 0-1.8-1.2H2a2 2 0 0 1 0-4h.5a2 2 0 0 0 1.8-1.2 2 2 0 0 0-.5-2.1l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a2 2 0 0 0 2.1.5 2 2 0 0 0 1.2-1.8V2a2 2 0 0 1 4 0v.5a2 2 0 0 0 1.2 1.8 2 2 0 0 0 2.1-.5l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a2 2 0 0 0-.5 2.1 2 2 0 0 0 1.8 1.2H22a2 2 0 0 1 0 4h-.5a2 2 0 0 0-1.8 1.2z" />
             </svg>
@@ -312,7 +304,7 @@ const Medicacion = () => {
                                 </button>
 
                                 <button onClick={() => handleOptionClick("/peso")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                                     <circle cx="12" cy="10" r="3"/>
                                     <path d="M12 10v2"/>
@@ -320,7 +312,7 @@ const Medicacion = () => {
                                     &nbsp; &nbsp; Peso
                                 </button>
                                 <button onClick={() => handleOptionClick("/arritmia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
                                     </svg>
                                     &nbsp; &nbsp; Arritmia
@@ -333,9 +325,9 @@ const Medicacion = () => {
                                              height="15"
                                             fill="none"
                                             stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
+                                            strokeWidth="2"
+                                            strokeLinecap="round" 
+                                            strokeLinejoin="round"
                                             >
                                             <circle cx="10" cy="6" r="4" />
 
@@ -414,7 +406,7 @@ const Medicacion = () => {
 
 
     <form style={{ top: "-10%" }}onSubmit={handleSubmit}>
-        <label>Nombre del medicamento:</label>
+        <label>Nombre del medicamento:
         <input
             type="text"
             placeholder="Buscar medicamentos..."
@@ -430,6 +422,7 @@ const Medicacion = () => {
                 marginBottom: "8px"
             }}
         />
+        </label>
 
         {showMedicamentos && (
             <div style={{
@@ -448,6 +441,13 @@ const Medicacion = () => {
                             <li
                                 key={index}
                                 onClick={() => handleMedicamentoSelect(medicamento)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" || e.key === " ") {
+                                    handleMedicamentoSelect(medicamento);
+                                    }
+                                }}
+                                role="button"
+                                tabIndex={0}
                                 style={{
                                     padding: "4px",
                                     cursor: "pointer",
@@ -465,57 +465,59 @@ const Medicacion = () => {
             </div>
         )}
 
-        <label>Número de tomas:</label>
-        <input
-            type="number"
-            value={tomas}
-            onChange={(e) => setTomas(Number(e.target.value))}
-            min="1"
-            style={{
-                padding: "6px",
-                width: "100%",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                fontSize: "14px",
-                marginBottom: "10px"
-            }}
-        />
-        <label>Horas de las tomas:</label>
-        {Array.from({ length: tomas }).map((_, index) => (
+        <label>Número de tomas:
             <input
-                key={index}
-                type="time"
-                value={horas[index] || ""}
-                onChange={(e) => {
-                    const updatedHoras = [...horas];
-                    updatedHoras[index] = e.target.value;
-                    setHoras(updatedHoras);
-                }}
+                type="number"
+                value={tomas}
+                onChange={(e) => setTomas(Number(e.target.value))}
+                min="1"
                 style={{
                     padding: "6px",
-                    marginBottom: "6px",
+                    width: "100%",
                     borderRadius: "4px",
                     border: "1px solid #ccc",
-                    width: "60%",
-                    display: "block"
+                    fontSize: "14px",
+                    marginBottom: "10px"
                 }}
             />
-        ))}
+        </label>
+        <label>Horas de las tomas:
+            {Array.from({ length: tomas }).map((_, index) => (
+                <input
+                    key={index}
+                    type="time"
+                    value={horas[index] || ""}
+                    onChange={(e) => {
+                        const updatedHoras = [...horas];
+                        updatedHoras[index] = e.target.value;
+                        setHoras(updatedHoras);
+                    }}
+                    style={{
+                        padding: "6px",
+                        marginBottom: "6px",
+                        borderRadius: "4px",
+                        border: "1px solid #ccc",
+                        width: "60%",
+                        display: "block"
+                    }}
+                />
+            ))}
 
-        <br />
+            <br />
 
-        <button type="submit" style={{
-            marginTop: "3px",
-            padding: "8px 14px",
-            backgroundColor: "#2fa831",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            fontSize: "14px",
-            cursor: "pointer"
-        }}>
-            Guardar
-        </button>
+            <button type="submit" style={{
+                marginTop: "3px",
+                padding: "8px 14px",
+                backgroundColor: "#2fa831",
+                color: "#fff",
+                border: "none",
+                borderRadius: "4px",
+                fontSize: "14px",
+                cursor: "pointer"
+            }}>
+                Guardar
+            </button>
+        </label>
     </form>
 
     <div style={{ marginTop: "-180px" }}>
@@ -538,6 +540,14 @@ const Medicacion = () => {
                             setTomaSeleccionada(index);
                             setIdToma(tomaAgrupada.id);
                         }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                            setTomaSeleccionada(index);
+                            setIdToma(tomaAgrupada.id);
+                            }
+                        }}
+                        role="button"
+                        tabIndex={0}
                         style={{
                             padding: "8px",
                             border: "1px solid #ccc",

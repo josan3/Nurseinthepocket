@@ -174,6 +174,7 @@ const handleResetPassword = async () => {
       setShowModal(false);
       setResetCorreo("");
     } catch (error) {
+      console.log(error)
       setError("No se pudo enviar el correo de recuperación. ¿El correo está registrado?");
       setSuccess("");
     }
@@ -186,22 +187,24 @@ const handleResetPassword = async () => {
        
         <form onSubmit={handleSubmit} style={{top: '-120px'}}>
           <div>
-            <label>Correo:</label> <br></br>
+            <label>Correo: <br></br>
             <input
               type="text"
               placeholder="Escriba su correo"
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
             />
+            </label>
           </div>
           <div>
-            <label>Contraseña:</label><br></br>
+            <label>Contraseña:<br></br>
             <input
               type="password"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            </label>
           </div>
           <div>
           <button type="submit" style={{marginRight: '10px'}}>Iniciar sesion</button>
@@ -211,8 +214,7 @@ const handleResetPassword = async () => {
             <img 
               src={google} 
               alt="Google logo" 
-              style={{ width: '15px', height: '15px', marginRight: '10px'}}
-            />
+              style={{ width: '15px', height: '15px', marginRight: '10px'}}/>
             Iniciar sesión con Google
           </button>
           </div>
@@ -224,9 +226,18 @@ const handleResetPassword = async () => {
           </p>
           <p
             onClick={() => setShowModal(true)}
-            style={{ color: 'blue', cursor: 'pointer' }}>
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setShowModal(true);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            style={{ color: 'blue', cursor: 'pointer' }}
+          >
             Recuperar contraseña
           </p>
+
 
         </form>
 

@@ -87,12 +87,12 @@ function App() {
     <div className='area'>
       <h1>
         <h2>
-          <div class="movimiento" style={{ fontfamily: 'Judson'}  }>
-          NURSE&nbsp;&nbsp;
-            <img src={logo} alt="Robot" className="robot" style={{minWidth: "30px" ,width: "3%", height: "auto" }} />
+          <div className="movimiento" style={{ fontfamily: 'Judson'}  }>
+          NURSE{'  '}
+            <img src={logo} alt="Robot" className="robot" style={{minWidth: "30px", width: "3%", height: "auto" }} />
           </div>
           
-          <div class="span">
+          <div className="span">
             in the pocket
           </div>
         </h2>

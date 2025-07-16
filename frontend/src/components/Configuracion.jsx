@@ -15,7 +15,6 @@ const Configuracion = () => {
     const [fechnacimiento, setFechNacimiento] = useState("");
     const [error, setError] = useState("");
     const [, setSuccess] = useState("");
-    const [, setEditableField] = useState(null); // Estado para controlar qué campo es editable
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     const mensaje = `¿Desea modificar algún dato personal?`;
     const [showModal, setShowModal] = useState(false);
@@ -55,7 +54,7 @@ const Configuracion = () => {
             </svg>
         ) },
         { path: "/configuracion",label: "Ajustes de usuario", nombre: "Editar datos personales", icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="3" />
                 <path d="M19.4 15a2 2 0 0 0 .5 2.1l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a2 2 0 0 0-2.1-.5 2 2 0 0 0-1.2 1.8V22a2 2 0 0 1-4 0v-.5a2 2 0 0 0-1.2-1.8 2 2 0 0 0-2.1.5l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a2 2 0 0 0 .5-2.1 2 2 0 0 0-1.8-1.2H2a2 2 0 0 1 0-4h.5a2 2 0 0 0 1.8-1.2 2 2 0 0 0-.5-2.1l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a2 2 0 0 0 2.1.5 2 2 0 0 0 1.2-1.8V2a2 2 0 0 1 4 0v.5a2 2 0 0 0 1.2 1.8 2 2 0 0 0 2.1-.5l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a2 2 0 0 0-.5 2.1 2 2 0 0 0 1.8 1.2H22a2 2 0 0 1 0 4h-.5a2 2 0 0 0-1.8 1.2z" />
             </svg>
@@ -355,7 +354,7 @@ const Configuracion = () => {
                 <form onSubmit={handleSubmit} style={{marginBottom: "100px", backgroundColor: "transparent", fontSize: "18px"}}>
                     <h3 style={{marginTop: "-10px", marginBottom: "10px", backgroundColor: "transparent"}}>Datos personales</h3>
                     <div>
-                        <label>Correo:</label><br />
+                        <label>Correo:<br />
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <input
                                 style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%" }}
@@ -365,111 +364,118 @@ const Configuracion = () => {
                                 onChange={(e) => handleInputChange("correo", e.target.value)}
                                 disabled
                             />
-                            
                         </div>
+                        </label>
                     </div>
                     <div>
-                        <label>Nombre:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
-                                type="text"
-                                placeholder="Ingrese su nombre"
-                                value={nombre}
-                                onChange={(e) => handleInputChange("nombre", e.target.value)}
-                            />
-                    </div>
-                    </div>
-                    <div>
-                        <label>Primer apellido:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
-                                type="text"
-                                placeholder="Ingrese su primer apellido"
-                                value={apellido1}
-                                onChange={(e) => handleInputChange("apellido1", e.target.value)}
-                                />
-                        </div>
-                    </div>
-                    <div>
-                        <label>Segundo apellido:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
-                                type="text"
-                                placeholder="Ingrese su segundo apellido"
-                                value={apellido2}
-                                onChange={(e) => handleInputChange("apellido2", e.target.value)}
-                                />
-                        </div>
-                    </div>
-                    <div>
-                        <label>Centro:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
-                                type="text"
-                                placeholder="Ingrese su centro médico"
-                                value={centro}
-                                onChange={(e) => handleInputChange("centro", e.target.value)}
-                                disabled
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label>Altura:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                           <div style={{ position: "relative", width: "90%" }}>
+                        <label>Nombre:<br />
+                            <div style={{ display: "flex", alignItems: "center" }}>
                                 <input
-                                    style={{
-                                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                                    width: "100%",
-                                    paddingRight: "8%",
-                                    }}
+                                    style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
                                     type="text"
-                                    placeholder="Ingrese altura"
-                                    value={altura}
-                                    onChange={(e) => handleInputChange("altura", e.target.value)}
+                                    placeholder="Ingrese su nombre"
+                                    value={nombre}
+                                    onChange={(e) => handleInputChange("nombre", e.target.value)}
                                 />
-                                <span
-                                    style={{
-                                    position: "absolute",
-                                    right: "10px",
-                                    top: "50%",
-                                    transform: "translateY(-50%)",
-                                    color: "black",
-                                    pointerEvents: "none"
-                                    }}
-                                >
-                                    cms
-                                </span>
-                                </div>
-                        </div>
+                            </div>
+                        </label>
                     </div>
                     <div>
-                        <label>Hábitos tóxicos:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%"  }}
-                                type="text"
-                                placeholder="Ingrese hábitos tóxicos"
-                                value={habitos_toxicos}
-                                onChange={(e) => handleInputChange("habito_toxicos", e.target.value)}
-                            />
-                        </div>
+                        <label>Primer apellido:<br />
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <input
+                                    style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
+                                    type="text"
+                                    placeholder="Ingrese su primer apellido"
+                                    value={apellido1}
+                                    onChange={(e) => handleInputChange("apellido1", e.target.value)}
+                                    />
+                            </div>
+                        </label>
                     </div>
                     <div>
-                        <label>Fecha Nacimiento:</label><br />
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <input
-                                style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%"  }}
-                                type="text"
-                                placeholder="Ingrese su fecha de nacimiento"
-                                value={formatDate(fechnacimiento)}
-                                disabled
-                            />
-                        </div>
+                        <label>Segundo apellido:<br />
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <input
+                                    style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
+                                    type="text"
+                                    placeholder="Ingrese su segundo apellido"
+                                    value={apellido2}
+                                    onChange={(e) => handleInputChange("apellido2", e.target.value)}
+                                    />
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        <label>Centro:<br />
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <input
+                                    style={{ backgroundColor: "rgba(255, 255, 255, 0.9)", width: "100%"  }}
+                                    type="text"
+                                    placeholder="Ingrese su centro médico"
+                                    value={centro}
+                                    onChange={(e) => handleInputChange("centro", e.target.value)}
+                                    disabled
+                                />
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        <label>Altura:<br />
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                            <div style={{ position: "relative", width: "90%" }}>
+                                    <input
+                                        style={{
+                                        backgroundColor: "rgba(255, 255, 255, 0.9)",
+                                        width: "100%",
+                                        paddingRight: "8%",
+                                        }}
+                                        type="text"
+                                        placeholder="Ingrese altura"
+                                        value={altura}
+                                        onChange={(e) => handleInputChange("altura", e.target.value)}
+                                    />
+                                    <span
+                                        style={{
+                                        position: "absolute",
+                                        right: "10px",
+                                        top: "50%",
+                                        transform: "translateY(-50%)",
+                                        color: "black",
+                                        pointerEvents: "none"
+                                        }}
+                                    >
+                                        cms
+                                    </span>
+                                    </div>
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        <label>Hábitos tóxicos:<br />
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <input
+                                    style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%"  }}
+                                    type="text"
+                                    placeholder="Ingrese hábitos tóxicos"
+                                    value={habitos_toxicos}
+                                    onChange={(e) => handleInputChange("habito_toxicos", e.target.value)}
+                                />
+                            </div>
+                        </label>
+                    </div>
+                    <div>
+                        <label>Fecha Nacimiento:<br />
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <input
+                                    style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%"  }}
+                                    type="text"
+                                    placeholder="Ingrese su fecha de nacimiento"
+                                    value={formatDate(fechnacimiento)}
+                                    disabled
+                                />
+                            </div>
+                        </label>
                     </div>
                     <button type="button" onClick={() => setShowModal(true)}>
                         Guardar cambios

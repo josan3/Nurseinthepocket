@@ -61,42 +61,46 @@ const Datos = () => {
         
         <form onSubmit={handleSubmit}>
           <div style={{marginBottom:"2%"}}>
-            <label>Altura:</label><br />
-            <input
-              type="number"
-              placeholder="Ingrese su altura en cms"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-            />
+            <label>Altura:<br />
+              <input
+                type="number"
+                placeholder="Ingrese su altura en cms"
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
+              />
+            </label>
             </div>
 
             <div className="gender-container">
-              <label>Género:</label><br />
-              <select className="custom-select" value={gender} onChange={(e) => setGender(e.target.value)}>
-                <option value="1">Masculino</option>
-                <option value="2">Femenino</option>
-                <option value="3">Otro</option>
-              </select>
+              <label>Género:<br />
+                <select className="custom-select" value={gender} onChange={(e) => setGender(e.target.value)}>
+                  <option value="1">Masculino</option>
+                  <option value="2">Femenino</option>
+                  <option value="3">Otro</option>
+                </select>
+              </label>
             </div>
 
             <div style={{marginBottom:"2%"}}>
-              <label>Habitos toxicos:</label><br />
-              <input
-                type="text"
-                placeholder="Indicame si tiene habitos toxicos (fuma, alchol,...)"
-                value={toxichabits}
-                onChange={(e) => setToxichab(e.target.value)}
-              />
+              <label>Habitos toxicos:<br />
+                <input
+                  type="text"
+                  placeholder="Indicame si tiene habitos toxicos (fuma, alchol,...)"
+                  value={toxichabits}
+                  onChange={(e) => setToxichab(e.target.value)}
+                />
+              </label>
             </div>
 
             <div style={{marginBottom:"3%"}}>
-              <label>Fecha de nacimiento:</label><br />
-              <input
-                type="date"
-                placeholder="Indica su fecha de nacimiento"
-                value={birthdate}
-                onChange={(e) => setBirthdate(e.target.value)}
-              />
+              <label>Fecha de nacimiento:<br />
+                <input
+                  type="date"
+                  placeholder="Indica su fecha de nacimiento"
+                  value={birthdate}
+                  onChange={(e) => setBirthdate(e.target.value)}
+                />
+              </label>
             </div>
 
             <button type="submit">

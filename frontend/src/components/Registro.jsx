@@ -154,72 +154,77 @@ useEffect(() => {
         <header>Registrarse</header>
         <form onSubmit={handleSubmit} style={{top: '-120px'}}>
           <div >
-            <label>Correo:</label><br />
-            <input
-              type="text"
-              placeholder="Ingrese su correo"
-              value={correo}
-              onChange={(e) => setCorreo(e.target.value)}
-            />
+            <label>Correo:<br />
+              <input
+                type="text"
+                placeholder="Ingrese su correo"
+                value={correo}
+                onChange={(e) => setCorreo(e.target.value)}
+              />
+            </label>
           </div>
           <div>
-            <label>Contraseña:</label><br />
-            <input
-              type="password"
-              placeholder="Cree una contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <label>Contraseña:<br />
+              <input
+                type="password"
+                placeholder="Cree una contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
           </div>
           <div>
-            <label>Nombre:</label><br />
-            <input
-              type="text"
-              placeholder="Ingrese su nombre"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-            />
+            <label>Nombre:<br />
+              <input
+                type="text"
+                placeholder="Ingrese su nombre"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+              />
+            </label>
           </div>
           <div>
-            <label>Primer apellido:</label><br />
-            <input
-              type="text"
-              placeholder="Ingrese su primer apellido"
-              value={apellido1}
-              onChange={(e) => setApellido1(e.target.value)}
-            />
+            <label>Primer apellido:<br />
+              <input
+                type="text"
+                placeholder="Ingrese su primer apellido"
+                value={apellido1}
+                onChange={(e) => setApellido1(e.target.value)}
+              />
+            </label>
           </div>
           <div>
-            <label>Segundo apellido:</label><br />
-            <input
-              type="text"
-              placeholder="Ingrese su segundo apellido"
-              value={apellido2}
-              onChange={(e) => setApellido2(e.target.value)}
-            />
+            <label>Segundo apellido:<br />
+              <input
+                type="text"
+                placeholder="Ingrese su segundo apellido"
+                value={apellido2}
+                onChange={(e) => setApellido2(e.target.value)}
+              />
+            </label>
           </div>
           <div>
-            <label>Hospital:</label><br />
-            <select
-              value={centro}
-              onChange={(e) => setCentro(e.target.value)}
-              style={{ padding: "6px", borderRadius: "4px", border: "1px solid #ccc", width: "100%", marginBottom: "10px" }}
-            >
-              <option value="">Seleccione un hospital</option>
-              {centrosDisponibles.map((c, index) => (
-                <option key={index} value={c.centro}>
-                  {c.centro}
-                </option>
-              ))}
-            </select>
+            <label>Hospital:<br />
+              <select
+                value={centro}
+                onChange={(e) => setCentro(e.target.value)}
+                style={{ padding: "6px", borderRadius: "4px", border: "1px solid #ccc", width: "100%", marginBottom: "10px" }}
+              >
+                <option value="">Seleccione un hospital</option>
+                {centrosDisponibles.map((c, index) => (
+                  <option key={index} value={c.centro}>
+                    {c.centro}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
           <button type="submit" style={{marginRight: '10px' }}>Registrarse</button>
           <button onClick={handleGoogleSignIn}>
             <img 
               src={google} 
               alt="Google logo" 
-              style={{ width: '15px', height: '15px', marginRight: '10px' }}
-            />
+              style={{ width: '15px', height: '15px', marginRight: '10px' }}/>
             Registro con Google</button>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {success && <p style={{ color: "green" }}>{success}</p>}

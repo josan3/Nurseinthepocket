@@ -70,7 +70,19 @@ const BienvenidaGoogle = () => {
         <header>¡Bienvenido!</header>
       </div>
       <div className="container" style={{ top:"10%", maxWidth: "90%",}}>
-        <div className="image-container" onClick={avanzarDialogo} style={{ cursor: "pointer", left:"-10%"}}>
+        <div
+          className="image-container"
+          role="button"
+          tabIndex={0}
+          onClick={avanzarDialogo}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              avanzarDialogo();
+            }
+          }}
+          style={{ cursor: "pointer", left: "-10%" }}
+        >
           <img src={robotsaludando} alt="Robot" className="robot" style={{ width: "20%", height: "auto" }} />
           <div className="speech-bubble" style={{ height:"60%", top: "15%", left:"63%", maxWidth: "100px", minHeight:"50px", maxHeight:"80px"}}>{mensajes[indiceMensaje]}</div>
         </div>
@@ -78,76 +90,88 @@ const BienvenidaGoogle = () => {
 
         <form onSubmit={handleSubmit}>     
           <div>
-            <label>Nombre:</label><br />
-            <input
+            <label>Nombre:
+              <input
               type="text"
               placeholder="Ingrese su nombre"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
             />
+            </label><br />
+            
           </div>
           <div>
-            <label>Primer apellido:</label><br />
-            <input
+            <label>Primer apellido:
+              <input
               type="text"
               placeholder="Ingrese su primer apellido"
               value={apellido1}
               onChange={(e) => setApellido1(e.target.value)}
             />
+            </label><br />
+            
           </div>
           <div>
-            <label>Segundo apellido:</label><br />
-            <input
+            <label>Segundo apellido:
+              <input
               type="text"
               placeholder="Ingrese su segundo apellido"
               value={apellido2}
               onChange={(e) => setApellido2(e.target.value)}
-            />
+            /></label><br />
+            
           </div>
           <div>
-            <label>Hospital:</label><br />
-            <input
+            <label>Hospital: 
+              <input
               type="text"
               placeholder="Ingrese su hospital correspondiente"
               value={centro}
               onChange={(e) => setCentro(e.target.value)}
-            />
+            /></label><br />
+            
           </div>
               <div style={{marginBottom:"2%"}}>
-                <label>Altura:</label><br />
-                <input
+                <label>Altura:
+                  <input
                   type="number"
                   placeholder="Ingrese su altura en cms"
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
-                />
+                /></label><br />
+                
               </div>
               <div className="gender-container">
-                <label>Género:</label><br />
-                <select className="custom-select" value={gender} onChange={(e) => setGender(e.target.value)}>
+                <label>Género:
+                  <select className="custom-select" value={gender} onChange={(e) => setGender(e.target.value)}>
                   <option value="1">Masculino</option>
                   <option value="2">Femenino</option>
                   <option value="3">Otro</option>
                 </select>
+                </label><br />
+                
               </div>
 
               <div style={{marginBottom:"2%"}}>
-                <label>Habitos toxicos:</label><br />
-                <input
+                <label>Habitos toxicos:
+                  <input
                   type="text"
                   placeholder="Indicame si tiene habitos toxicos (fuma, alchol,...)"
                   value={toxichabits}
                   onChange={(e) => setToxichab(e.target.value)}
-                />
+                /></label><br />
+                
               </div>
               <div style={{marginBottom:"3%"}}>
-                  <label>Fecha de nacimiento:</label><br />
-                  <input
+                  <label>Fecha de nacimiento:
+                    <input
                     type="date"
                     placeholder="Indica su fecha de nacimiento"
                     value={birthdate}
                     onChange={(e) => setBirthdate(e.target.value)}
                   />
+                  </label><br />
+                  
               </div>
               <button type="submit">
                 Enviar</button>

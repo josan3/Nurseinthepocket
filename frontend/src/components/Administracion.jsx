@@ -141,7 +141,7 @@ const Administracion = () => {
                     setSuccess("");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor");
+                setError("Error de conexión con el servidor", error);
                 setSuccess("");
             }
         };
@@ -167,7 +167,7 @@ const Administracion = () => {
                     setSuccess("");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor");
+                setError("Error de conexión con el servidor", error);
                 setSuccess("");
             }
         };
@@ -192,7 +192,7 @@ const Administracion = () => {
                 setSuccess("");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor");
+                setError("Error de conexión con el servidor", error);
                 setSuccess("");
             }
         };
@@ -663,7 +663,15 @@ const Administracion = () => {
                                                 .map((paciente, index) => (
                                                     <li
                                                         key={index}
+                                                        role="button"
+                                                        tabIndex={0}
                                                         onClick={() => setNombreSeleccionado(paciente)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                            e.preventDefault();
+                                                            setNombreSeleccionado(paciente);
+                                                            }
+                                                        }}
                                                         style={{
                                                             display: "flex",
                                                             justifyContent: "space-between",
@@ -672,26 +680,25 @@ const Administracion = () => {
                                                             padding: "10px",
                                                             cursor: "pointer",
                                                             color:
-                                                                nombreSeleccionado &&
-                                                                nombreSeleccionado.nombre === paciente.nombre &&
-                                                                nombreSeleccionado.apellido1 === paciente.apellido1 && 
-                                                                nombreSeleccionado.apellido2 === paciente.apellido2 && 
-                                                                nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
-                                                                
-                                                                    ? "#28a745" // Verde
-                                                                    : "#333", // Negro
+                                                            nombreSeleccionado &&
+                                                            nombreSeleccionado.nombre === paciente.nombre &&
+                                                            nombreSeleccionado.apellido1 === paciente.apellido1 && 
+                                                            nombreSeleccionado.apellido2 === paciente.apellido2 && 
+                                                            nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
+                                                                ? "#28a745" // Verde
+                                                                : "#333", // Negro
                                                             backgroundColor:
-                                                                nombreSeleccionado &&
-                                                                nombreSeleccionado.nombre === paciente.nombre &&
-                                                                nombreSeleccionado.apellido1 === paciente.apellido1 && 
-                                                                nombreSeleccionado.apellido2 === paciente.apellido2 && 
-                                                                nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
-                                                                    ? "#e8f5e9" // Fondo verde suave
-                                                                    : "#fff", // Fondo blanco
+                                                            nombreSeleccionado &&
+                                                            nombreSeleccionado.nombre === paciente.nombre &&
+                                                            nombreSeleccionado.apellido1 === paciente.apellido1 && 
+                                                            nombreSeleccionado.apellido2 === paciente.apellido2 && 
+                                                            nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
+                                                                ? "#e8f5e9" // Fondo verde suave
+                                                                : "#fff", // Fondo blanco
                                                             borderRadius: "5px",
                                                             transition: "all 0.3s ease",
                                                         }}
-                                                    >
+                                                        >
                                                         <div style={{ flex: 1, fontWeight: "bold" }}>
                                                             {paciente.nombre}
                                                         </div>
@@ -704,7 +711,9 @@ const Administracion = () => {
                                                         <div style={{ flex: 1, textAlign: "right"}}>
                                                             {formatDate(paciente.fecha_nacimiento)}
                                                         </div>
-                                                    </li>
+                                                        </li>
+
+
                                                 ))}
                                         </ul>
                                     </div>
@@ -1245,15 +1254,23 @@ const Administracion = () => {
                                             .map((medicamento, index) => (
                                                 <li
                                                     key={index}
+                                                    role="button"
+                                                    tabIndex={0}
                                                     onClick={() => setMedicamentoNombre(medicamento.nombre)}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === 'Enter' || e.key === ' ') {
+                                                        e.preventDefault();
+                                                        setMedicamentoNombre(medicamento.nombre);
+                                                        }
+                                                    }}
                                                     style={{
                                                         marginLeft: "20px",
                                                         cursor: "pointer",
                                                         color: medicamentoNombre === medicamento.nombre ? "green" : "black",
                                                     }}
-                                                >
+                                                    >
                                                     {medicamento.nombre}
-                                                </li>
+                                                    </li>
                                             ))}
                                     </ul>
                                 ) : (

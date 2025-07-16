@@ -1397,7 +1397,15 @@ const CuerpoMedico = () => {
                                                 .map((paciente, index) => (
                                                     <li
                                                         key={index}
+                                                        role="button"
+                                                        tabIndex={0}
                                                         onClick={() => setNombreSeleccionado(paciente)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === "Enter" || e.key === " ") {
+                                                            e.preventDefault();
+                                                            setNombreSeleccionado(paciente);
+                                                            }
+                                                        }}
                                                         style={{
                                                             display: "flex",
                                                             justifyContent: "space-between",
