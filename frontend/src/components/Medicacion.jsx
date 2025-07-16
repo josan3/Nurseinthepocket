@@ -391,8 +391,7 @@ const Medicacion = () => {
 
 
     <form style={{ top: "-10%" }}onSubmit={handleSubmit}>
-        <label htmlFor="nombre"></label>
-            Nombre del medicamento:
+        <label htmlFor="nombre">Nombre del medicamento:</label>
             <input
                 id="nombre"
                 type="text"
@@ -457,8 +456,7 @@ const Medicacion = () => {
             </div>
         )}
 
-        <label htmlFor="numero"></label>
-            Número de tomas:
+        <label htmlFor="numero">Número de tomas:</label>
             <input
                 id= "numero"
                 type="number"
