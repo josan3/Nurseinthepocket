@@ -13,7 +13,7 @@ const Administracion = () => {
     const [vista, setVista] = useState(localStorage.getItem('vista') || 'pacientes');
     const [id, setId] = useState([]);
     const [crearNuevo, setCrearNuevo] = useState(false);
-    const [correo, setAntiguoCorreo] = useState("");
+    const [antiguocorreo, setAntiguoCorreo] = useState("");
     const [nuevoMedicamento, setNuevoMedicamento] = useState({ nombre: "" });
     const [nuevoUsuario, setNuevoUsuario] = useState({
         nombre: "",
@@ -361,7 +361,7 @@ const Administracion = () => {
                 },
                 body: JSON.stringify({
                     id: id, 
-                    antiguocorreo: correo,
+                    antiguocorreo: antiguocorreo,
                     updatedData: {
                         nombre: data.paciente[0].nombre,
                         apellido1: data.paciente[0].apellido1,

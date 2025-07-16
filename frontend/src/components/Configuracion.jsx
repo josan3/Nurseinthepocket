@@ -12,7 +12,7 @@ const Configuracion = () => {
     const [correo, setCorreo] = useState("");
     const [centro, setCentro] = useState("");
     const [habitos_toxicos, setHabitos_toxicos] = useState("");
-    const [fechanacimiento, setFechaNacimiento] = useState("");
+    const [fechaNacimiento, setFechaNacimiento] = useState("");
     const [error, setError] = useState("");
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     const mensaje = `¿Desea modificar algún dato personal?`;
@@ -466,7 +466,7 @@ const Configuracion = () => {
                                     style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%"  }}
                                     type="text"
                                     placeholder="Ingrese su fecha de nacimiento"
-                                    value={formatDate(fechanacimiento)}
+                                    value={formatDate(fechaNacimiento)}
                                     disabled
                                 />
                             </div>

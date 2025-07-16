@@ -21,7 +21,7 @@ const CuerpoMedico = () => {
     const [arritmia, setArritmia] = useState([]);
     const [tension, setTension] = useState([]);
     const [peso, setPeso] = useState([]);
-    const [correo, setAntiguoCorreo] = useState("");
+    const [antiguocorreo, setAntiguoCorreo] = useState("");
     const [crearNuevo, setCrearNuevo] = useState(false);
     const centro = localStorage.getItem("centro");
     const [nuevoUsuario, setNuevoUsuario] = useState({
@@ -394,7 +394,7 @@ const CuerpoMedico = () => {
                 },
                 body: JSON.stringify({
                     id: id, 
-                    antiguocorreo: correo,
+                    antiguocorreo: antiguocorreo,
                     updatedData: {
                         nombre: data.paciente[0].nombre,
                         apellido1: data.paciente[0].apellido1,

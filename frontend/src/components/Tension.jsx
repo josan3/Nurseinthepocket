@@ -80,10 +80,10 @@ const Tension = () => {
                 setError("");
                 window.location.reload();
             } else {
-                setError(data.error || "Error al registrar la tensión");console.log
+                setError(data.error || "Error al registrar la tensión");
             }
         } catch (error) {
-          setError("Error de conexión con el servidor", error);v
+          setError("Error de conexión con el servidor", error);
         }
         
     };

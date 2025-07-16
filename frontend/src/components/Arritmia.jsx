@@ -293,9 +293,9 @@ const Arritmia = () => {
                                              height="15"
                                             fill="none"
                                             stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
                                             >
                                             <circle cx="10" cy="6" r="4" />
 

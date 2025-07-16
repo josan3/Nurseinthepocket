@@ -151,22 +151,22 @@ const Frecuencia = () => {
                     }}
                 >
                     <label>Ingresa la nueva frecuencia cardiaca:
-                    <input
-                    type="number"
-                    value={valor}
-                    onChange={(e) => setValor(e.target.value)}
-                    placeholder="Ingreselo aqui"
-                    style={{ marginTop: "10px", display: "block", width: "85%" }}
-                    required
-                    />
-                    <button 
-                    type="submit" 
-                    style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}
-                    >
-                    Enviar
-                    </button>
-                    {error && <p style={{ color: "red" }}>{error}</p>}
+                        <input
+                        type="number"
+                        value={valor}
+                        onChange={(e) => setValor(e.target.value)}
+                        placeholder="Ingreselo aqui"
+                        style={{ marginTop: "10px", display: "block", width: "85%" }}
+                        required
+                        />
                     </label>
+                        <button 
+                        type="submit" 
+                        style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}
+                        >
+                        Enviar
+                        </button>
+                        {error && <p style={{ color: "red" }}>{error}</p>}
                 </form>
                 </div>
             </div>
