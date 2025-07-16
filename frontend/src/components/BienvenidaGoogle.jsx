@@ -90,107 +90,99 @@ const BienvenidaGoogle = () => {
 
         <form onSubmit={handleSubmit}>     
           <div>
-            <label>Nombre:
-              <input
+            <label htmlFor="nombre">Nombre:</label>
+            <input
+              id="nombre"
               type="text"
               placeholder="Ingrese su nombre"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
             />
-            </label><br />
-            
           </div>
+          <br />
           <div>
-            <label>
-              Primer apellido: 
-              <input
-                type="text"
-                placeholder="Ingrese su primer apellido"
-                value={apellido1}
-                onChange={(e) => setApellido1(e.target.value)}
-              />
-            </label>
-            <br />
+            <label htmlFor="apellido1">Primer apellido:</label>
+            <input
+              id="apellido1"
+              type="text"
+              placeholder="Ingrese su primer apellido"
+              value={apellido1}
+              onChange={(e) => setApellido1(e.target.value)}
+            />
           </div>
+          <br />
           <div>
-            <label>
-              Segundo apellido:
-              <input
+            <label htmlFor="apellido2">Segundo apellido:</label>
+            <input
+              id="apellido2"
               type="text"
               placeholder="Ingrese su segundo apellido"
               value={apellido2}
               onChange={(e) => setApellido2(e.target.value)}
-              />
-            </label>
-            <br />
+            />
           </div>
+          <br />
           <div>
-            <label>
-              Hospital: 
-              <input
+            <label htmlFor="hospital">Hospital:</label>
+            <input
+              id="hospital"
               type="text"
               placeholder="Ingrese su hospital correspondiente"
               value={centro}
               onChange={(e) => setCentro(e.target.value)}
-              />
-            </label>
-            <br />
+            />
           </div>
-
-          <div style={{marginBottom:"2%"}}>
-            <label>
-              Altura:
-              <input
+          <br />
+          <div style={{ marginBottom:"2%" }}>
+            <label htmlFor="altura">Altura:</label>
+            <input
+              id="altura"
               type="number"
               placeholder="Ingrese su altura en cms"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              />
-            </label>
-            <br />
+            />
           </div>
-              <div className="gender-container">
-                <label>Género:
-                  <select className="custom-select" value={gender} onChange={(e) => setGender(e.target.value)}>
-                    <option value="1">Masculino</option>
-                    <option value="2">Femenino</option>
-                    <option value="3">Otro</option>
-                  </select>
-                </label>
-                <br />
-              </div>
-
-              <div style={{marginBottom:"2%"}}>
-                <label>
-                  Habitos toxicos:
-                  <input
-                  type="text"
-                  placeholder="Indicame si tiene habitos toxicos (fuma, alchol,...)"
-                  value={toxichabits}
-                  onChange={(e) => setToxichabits(e.target.value)}
-                  />
-                </label>
-                <br />
-              </div>
-              <div style={{marginBottom:"3%"}}>
-                  <label>
-                    Fecha de nacimiento:
-                    <input
-                      type="date"
-                      placeholder="Indica su fecha de nacimiento"
-                      value={birthdate}
-                      onChange={(e) => setBirthdate(e.target.value)}
-                    />
-                  </label>
-                  <br />
-              </div>
-              <button type="submit">
-                Enviar</button>
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                {success && <p style={{ color: "green" }}>{success}</p>}
-      
-            </form>
-      
+          <br />
+          <div className="gender-container">
+            <label htmlFor="genero">Género:</label>
+            <select
+              id="genero"
+              className="custom-select"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <option value="1">Masculino</option>
+              <option value="2">Femenino</option>
+              <option value="3">Otro</option>
+            </select>
+          </div>
+          <br />
+          <div style={{ marginBottom:"2%" }}>
+            <label htmlFor="habitos">Habitos tóxicos:</label>
+            <input
+              id="habitos"
+              type="text"
+              placeholder="Indícame si tiene habitos tóxicos (fuma, alcohol,...)"
+              value={toxichabits}
+              onChange={(e) => setToxichabits(e.target.value)}
+            />
+          </div>
+          <br />
+          <div style={{ marginBottom:"3%" }}>
+            <label htmlFor="fechaNacimiento">Fecha de nacimiento:</label>
+            <input
+              id="fechaNacimiento"
+              type="date"
+              placeholder="Indica su fecha de nacimiento"
+              value={birthdate}
+              onChange={(e) => setBirthdate(e.target.value)}
+            />
+          </div>
+          <button type="submit">Enviar</button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {success && <p style={{ color: "green" }}>{success}</p>}
+        </form>
     </div>
   );
 };

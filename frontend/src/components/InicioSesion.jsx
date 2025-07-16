@@ -208,15 +208,14 @@ const handleResetPassword = async () => {
           </div>
           <div>
           <button type="submit" style={{marginRight: '10px'}}>Iniciar sesion</button>
-         <button style={{marginLeft: '10px' }}
-            onClick={handleGoogleSignIn}
-          >
-            <img
-              src={google} 
-              alt="Google logo" 
-              style={{ width: '15px', height: '15px', marginRight: '10px'}}/>
-              Iniciar sesión con Google
-          </button>
+            <button style={{ marginLeft: '10px' }} onClick={handleGoogleSignIn}>
+              <img
+                src={google}
+                alt="Google logo"
+                style={{ width: '15px', height: '15px', marginRight: '10px' }}
+              />
+              <span>Iniciar sesión con Google</span>
+            </button>
           </div>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {success && <p style={{ color: "green" }}>{success}</p>}

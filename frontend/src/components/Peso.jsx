@@ -139,9 +139,10 @@ const Peso = () => {
                             >
                             <div>{mensaje}</div> 
                         <form onSubmit={handleSubmit} style={{ marginTop: "20px", backgroundColor: "transparent", top: "-30px" }}>
-                            <label>
+                            <label htmlFor="peso"></label>
                                 Ingresa el nuevo peso (decimales separados por punto):
                                 <input 
+                                    id = "peso"
                                     type="number"  
                                     value={valor} 
                                     onChange={(e) => setValor(e.target.value)} 
@@ -153,7 +154,6 @@ const Peso = () => {
                                 <p style={{color:"black"}}>Valor ingresado: 
                                     <div style={{color:"red"}}>{valor }</div>
                                 </p>
-                            </label>
 
                         <button type="submit" style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
                         </form>

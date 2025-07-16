@@ -154,8 +154,9 @@ const Tension = () => {
                        {mensaje}
                         <div style={{ marginTop: "20px" }}>
                         <form onSubmit={handleSubmit} style={{ marginTop: "20px", backgroundColor: "transparent", top: "-30px" }}>
-                            <label>Ingresa la nueva tensión máxima:
+                            <label htmlFor="maximo">Ingresa la nueva tensión máxima:</label>
                                 <input 
+                                    id="maximo"
                                     type="number"  
                                     value={valor_max} 
                                     onChange={(e) => setValorMax(e.target.value)} 
@@ -163,9 +164,9 @@ const Tension = () => {
                                     style={{ marginTop: "10px"}}
                                     required
                                 />
-                            </label>
-                            <label>Ingresa la nueva tensión mínima:
+                            <label htmlFor="minimo">Ingresa la nueva tensión mínima:</label>
                                 <input 
+                                    id="minimo"
                                     type="number"  
                                     value={valor_min} 
                                     onChange={(e) => setValorMin(e.target.value)} 
@@ -173,7 +174,6 @@ const Tension = () => {
                                     style={{ marginTop: "10px"}}
                                     required
                                 />
-                            </label>
 
                         <button type="submit" style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
                         {error && <p style={{ color: "red" }}>{error}</p>}

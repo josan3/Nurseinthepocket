@@ -391,9 +391,10 @@ const Medicacion = () => {
 
 
     <form style={{ top: "-10%" }}onSubmit={handleSubmit}>
-        <label>
+        <label htmlFor="nombre"></label>
             Nombre del medicamento:
             <input
+                id="nombre"
                 type="text"
                 placeholder="Buscar medicamentos..."
                 value={busqueda}
@@ -408,7 +409,6 @@ const Medicacion = () => {
                     marginBottom: "8px"
                 }}
             />
-        </label>
 
         {showMedicamentos && (
             <div style={{
@@ -457,9 +457,10 @@ const Medicacion = () => {
             </div>
         )}
 
-        <label>
+        <label htmlFor="numero"></label>
             Número de tomas:
             <input
+                id= "numero"
                 type="number"
                 value={tomas}
                 onChange={(e) => setTomas(Number(e.target.value))}
@@ -473,7 +474,7 @@ const Medicacion = () => {
                     marginBottom: "10px"
                 }}
             />
-        </label>
+
         <label>Horas de las tomas:
             {Array.from({ length: tomas }).map((_, index) => (
                 <input

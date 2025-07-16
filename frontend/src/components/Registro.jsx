@@ -224,8 +224,10 @@ useEffect(() => {
             <img 
               src={google}
               alt="Google logo"
-              style={{ width: '15px', height: '15px', marginRight: '10px' }}/>
-            Registro con Google</button>
+              style={{ width: '15px', height: '15px', marginRight: '10px' }}
+            />
+            <span>Registro con Google</span>
+          </button>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {success && <p style={{ color: "green" }}>{success}</p>}
 

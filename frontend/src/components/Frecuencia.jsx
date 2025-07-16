@@ -150,9 +150,10 @@ const Frecuencia = () => {
             
                     }}
                 >
-                    <label>
+                    <label htmlFor="frecuencia"></label>
                         Ingresa la nueva frecuencia cardiaca:
                         <input
+                            id="frecuencia" 
                             type="number"
                             value={valor}
                             onChange={(e) => setValor(e.target.value)}
@@ -160,7 +161,6 @@ const Frecuencia = () => {
                             style={{ marginTop: "10px", display: "block", width: "85%" }}
                             required
                         />
-                    </label>
                         <button 
                         type="submit" 
                         style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}
