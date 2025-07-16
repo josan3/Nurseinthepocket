@@ -194,8 +194,8 @@ const Correo = () => {
             <div className="barra3" style={{ top: "426px"}}></div>
             <div className="footer" >
                 
-                {buttons.map((btn, index) => (
-                    <div key={index} className="button-container">
+                {buttons.map((btn) => (
+                    <div key={btn.label} className="button-container">
                         <button
                             onClick={() => {
                                 if (btn.label === "Editar parámetros") {

@@ -799,7 +799,7 @@ const CuerpoMedico = () => {
                                         >
                                             {["Tensión", "Medicación", "Frecuencia", "Arritmia", "Peso"].map((texto, i) => (
                                             <button
-                                                key={i}
+                                                key={texto}
                                                 type="button"
                                                 onClick={() =>
                                                 handleClick(
@@ -1343,8 +1343,8 @@ const CuerpoMedico = () => {
                                             {resultadosFiltrados
                                                 .slice()
                                                 .sort((a, b) => a.nombre.localeCompare(b.nombre))
-                                                .map((paciente, index) => (
-                                                    <li key={index} style={{ listStyle: "none", margin: "10px 0", padding: 0 }}>
+                                                .map((paciente) => (
+                                                    <li key={paciente} style={{ listStyle: "none", margin: "10px 0", padding: 0 }}>
                                                         <button
                                                             onClick={() => setNombreSeleccionado(paciente)}
                                                             onKeyDown={(e) => {

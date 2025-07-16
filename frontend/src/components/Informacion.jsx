@@ -117,8 +117,8 @@ const Informacion = () => {
             <div className="barra3" style={{ top: "426px"}}>.</div>
             <div className="footer" style={{  }}>
                 
-                {buttons.map((btn, index) => (
-                    <div key={index} className="button-container">
+                {buttons.map((btn) => (
+                    <div key={btn.label} className="button-container">
                         <button
                             onClick={() => {
                                 if (btn.label === "Editar parámetros") {
@@ -259,8 +259,8 @@ const Informacion = () => {
      
 
                 <div className="cardcontainer" >
-                    {datos.map((item, index) => (
-                        <React.Fragment key={index}>
+                    {datos.map((item) => (
+                        <React.Fragment key={item}>
                             <div className="card">
                                 <h5>{item.titulo}</h5>
                                 <div className="card-content">

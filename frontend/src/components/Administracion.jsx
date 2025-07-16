@@ -622,8 +622,8 @@ const Administracion = () => {
                                                     const nombreB = b.nombre || "";
                                                     return nombreA.localeCompare(nombreB);
                                                 })
-                                                .map((paciente, index) => (
-                                                    <li key={index} style={{ margin: "10px 0" }}>
+                                                .map((paciente) => (
+                                                    <li key={paciente.id} style={{ margin: "10px 0" }}>
                                                         <button
                                                             type="button"
                                                             onClick={() => setNombreSeleccionado(paciente)}
@@ -1213,8 +1213,8 @@ const Administracion = () => {
                                         {resultadosFiltrados
                                             .slice() // Para no modificar el array original
                                             .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Orden alfabético
-                                            .map((medicamento, index) => (
-                                                <li key={index} style={{ marginLeft: "20px" }}>
+                                            .map((medicamento) => (
+                                                <li key={medicamento.id} style={{ marginLeft: "20px" }}>
                                                     <button
                                                         type="button"
                                                         onClick={() => setMedicamentoNombre(medicamento.nombre)}
@@ -1280,8 +1280,8 @@ const Administracion = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {resultadosFiltrados.map((item, idx) => (
-                            <tr key={idx}>
+                        {resultadosFiltrados.map((item) => (
+                            <tr key={item.id}>
                                 <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.nombre || "-"}</td>
                                 <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.apellido1 || "-"}</td>
                                 <td style={{ padding: "8px", border: "1px solid #ccc" }}>{item.apellido2 || "-"}</td>

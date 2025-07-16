@@ -268,8 +268,8 @@ const Tomas = () => {
             <div className="barra3"></div>
             <div className="footer">
                 
-                {buttons.map((btn, index) => (
-                    <div key={index} className="button-container">
+                {buttons.map((btn) => (
+                    <div key={btn.label} className="button-container">
                         <button
                             onClick={() => {
                                 if (btn.label === "Editar parámetros") {
@@ -468,9 +468,9 @@ const Tomas = () => {
                       <div style={{ flex: 1 }}>
                         <h4>Tomas realizadas hoy:</h4>
                         <ul style={{ listStyleType: "none" }}>
-                          {selectedMeds.map((med, index) => (
+                          {selectedMeds.map((med) => (
                             <li
-                              key={index}
+                              key={`${med.medicamento}-${med.hora}`}
                               style={{
                                 display: "flex",
                                 justifyContent: "space-between",
@@ -500,9 +500,9 @@ const Tomas = () => {
                       <div style={{ flex: 1 }}>
                         <h4>Lista de tomas diarias</h4>
                         <ul style={{ listStyleType: "none", padding: 0 }}>
-                          {listaTomas.map((lt, index) => (
+                          {listaTomas.map((lt) => (
                             <li
-                              key={index}
+                              key={`${lt.medicamento}-${lt.hora}`}
                               style={{
                                 display: "flex",
                                 justifyContent: "space-between",

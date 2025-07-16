@@ -866,6 +866,10 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+
 }
 
 /* Cambia el color de los días de la semana (Lunes, Martes, etc.) */
@@ -900,7 +904,6 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
     background-color: red !important; /* Fondo rojo */
     color: black !important; /* Texto negro */
     font-weight: bold;
-    background-color: #d4f8d4 !important; /* fondo verde claro */
     border-radius: 50%; /* para hacer el círculo */
 
 }
@@ -1118,14 +1121,7 @@ h5 {
     margin-bottom: 1rem;
   }
   
-  .react-calendar__navigation button {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    color: #2e7d32;
-    font-weight: bold;
-    cursor: pointer;
-  }
+
   
   .react-calendar__navigation button:hover {
     background-color: #e8f5e9;

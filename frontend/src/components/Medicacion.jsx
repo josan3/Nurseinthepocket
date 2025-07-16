@@ -135,25 +135,26 @@ const Medicacion = () => {
     const id = localStorage.getItem("id");
 
     useEffect(() => {
-        const fetchData = async () => {
+
+        const getMedicamentos = async () => {
             try {
                 const response = await fetch("http://localhost:8801/getmedicamentos", {
-                    method: "POST",
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
                 });
-    
+
                 const data = await response.json();
-    
+
                 if (response.ok) {
                     setLista(data.data);
-                    console.log("Datos obtenidos"); 
+                    setResultadosFiltrados(data.data);
                 } else {
-                    console.log(data.error || "Error al obtener datos"); 
+                    console.log(data.error || "Error al obtener datos");
                 }
             } catch (error) {
-                console.log("Error de conexión con el servidor", error); 
+                console.log("Error de conexión con el servidor", error);
             }
         };
 
@@ -182,7 +183,7 @@ const Medicacion = () => {
           
        };
     
-        fetchData();
+        getMedicamentos();
         getListaToma();
 
     }, []);
@@ -236,8 +237,8 @@ const Medicacion = () => {
             <div className="barra3"></div>
             <div className="footer">
                 
-                {buttons.map((btn, index) => (
-                    <div key={index} className="button-container">
+                {buttons.map((btn) => (
+                    <div key={btn.label} className="button-container">
                         <button
                             onClick={() => {
                                 if (btn.label === "Editar parámetros") {
@@ -422,8 +423,8 @@ const Medicacion = () => {
             }}>
                 {resultadosFiltrados.length > 0 ? (
                     <ul style={{ listStyle: "none", paddingLeft: 0, margin: 0 }}>
-                        {resultadosFiltrados.map((medicamento, index) => (
-                           <li key={index} style={{ listStyle: "none" }}>
+                        {resultadosFiltrados.map((medicamento) => (
+                           <li key={medicamento.id} style={{ listStyle: "none" }}>
                                 <button
                                     onClick={() => handleMedicamentoSelect(medicamento)}
                                     onKeyDown={(e) => {
@@ -435,7 +436,7 @@ const Medicacion = () => {
                                     style={{
                                     padding: "4px",
                                     cursor: "pointer",
-                                    backgroundColor: medicamentoNombre === medicamento.nombre ? "#d9ffd9" : "transparent",
+                                    backgroundColor: medicamentoNombre === medicamento.nombre ? "black" : "black",
                                     borderRadius: "3px",
                                     border: "none",
                                     width: "100%",
@@ -476,7 +477,7 @@ const Medicacion = () => {
         <label>Horas de las tomas:
             {Array.from({ length: tomas }).map((_, index) => (
                 <input
-                    key={index}
+                    key={horas[index]}
                     type="time"
                     value={horas[index] || ""}
                     onChange={(e) => {
@@ -520,30 +521,30 @@ const Medicacion = () => {
                     listaTomas.reduce((acc, toma) => {
                         const { id, medicamento, hora } = toma;
                         if (!acc[id]) {
-                            acc[id] = { id, medicamento, horas: [] };
+                        acc[id] = { id, medicamento, horas: [] };
                         }
                         acc[id].horas.push(hora);
                         return acc;
                     }, {})
-                ).map((tomaAgrupada, index) => (
-                    <li key={index} style={{ listStyle: "none", marginBottom: "6px" }}>
+                    ).map((tomaAgrupada) => (
+                    <li key={tomaAgrupada.id} style={{ listStyle: "none", marginBottom: "6px" }}>
                         <button
-                            onClick={() => {
-                            setTomaSeleccionada(index);
+                        onClick={() => {
+                            setTomaSeleccionada(tomaAgrupada.id);
                             setIdToma(tomaAgrupada.id);
-                            }}
-                            onKeyDown={(e) => {
+                        }}
+                        onKeyDown={(e) => {
                             if (e.key === "Enter" || e.key === " ") {
-                                e.preventDefault();
-                                setTomaSeleccionada(index);
-                                setIdToma(tomaAgrupada.id);
+                            e.preventDefault();
+                            setTomaSeleccionada(tomaAgrupada.id);
+                            setIdToma(tomaAgrupada.id);
                             }
-                            }}
-                            style={{
+                        }}
+                        style={{
                             padding: "8px",
                             border: "1px solid #ccc",
                             borderRadius: "4px",
-                            backgroundColor: tomaSeleccionada === index ? "#e6ffe6" : "#f5f5f5",
+                            backgroundColor: tomaSeleccionada === tomaAgrupada.id ? "#e6ffe6" : "#f5f5f5",
                             cursor: "pointer",
                             fontSize: "13px",
                             width: "100%",
@@ -551,14 +552,14 @@ const Medicacion = () => {
                             fontFamily: "inherit",
                             fontWeight: "normal",
                             outline: "none",
-                            }}
-                            type="button"
+                        }}
+                        type="button"
                         >
-                            <strong>Medicamento:</strong> {tomaAgrupada.medicamento} <br />
-                            <strong>Horas:</strong> {tomaAgrupada.horas.join(", ")}
+                        <strong>Medicamento:</strong> {tomaAgrupada.medicamento} <br />
+                        <strong>Horas:</strong> {tomaAgrupada.horas.join(", ")}
                         </button>
                     </li>
-                ))}
+                    ))}
             </ul>
         ) : (
             <p style={{ fontSize: "13px", marginLeft: "10%" }}>No hay medicación asociada al paciente.</p>

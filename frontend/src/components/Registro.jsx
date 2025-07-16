@@ -207,8 +207,8 @@ useEffect(() => {
                 style={{ padding: "6px", borderRadius: "4px", border: "1px solid #ccc", width: "100%", marginBottom: "10px" }}
               >
                 <option value="">Seleccione un hospital</option>
-                {centrosDisponibles.map((c, index) => (
-                  <option key={index} value={c.centro}>
+                {centrosDisponibles.map((c) => (
+                  <option key={c.centro} value={c.centro}>
                     {c.centro}
                   </option>
                 ))}
