@@ -1344,59 +1344,59 @@ const CuerpoMedico = () => {
                                                 .slice()
                                                 .sort((a, b) => a.nombre.localeCompare(b.nombre))
                                                 .map((paciente, index) => (
-                                                    <li
-                                                        key={index}
-                                                        role="button"
-                                                        tabIndex={0}
-                                                        onClick={() => setNombreSeleccionado(paciente)}
-                                                        onKeyDown={(e) => {
+                                                    <li key={index} style={{ listStyle: "none", margin: "10px 0", padding: 0 }}>
+                                                        <button
+                                                            onClick={() => setNombreSeleccionado(paciente)}
+                                                            onKeyDown={(e) => {
                                                             if (e.key === "Enter" || e.key === " ") {
-                                                            e.preventDefault();
-                                                            setNombreSeleccionado(paciente);
+                                                                e.preventDefault();
+                                                                setNombreSeleccionado(paciente);
                                                             }
-                                                        }}
-                                                        style={{
+                                                            }}
+                                                            style={{
+                                                            all: "unset", // Resetea estilos del botón
                                                             display: "flex",
                                                             justifyContent: "space-between",
                                                             alignItems: "center",
-                                                            margin: "10px 0",
                                                             padding: "10px",
                                                             cursor: "pointer",
                                                             color:
-                                                              nombreSeleccionado &&
+                                                                nombreSeleccionado &&
                                                                 nombreSeleccionado.nombre === paciente.nombre &&
-                                                                nombreSeleccionado.apellido1 === paciente.apellido1 && 
-                                                                nombreSeleccionado.apellido2 === paciente.apellido2 && 
+                                                                nombreSeleccionado.apellido1 === paciente.apellido1 &&
+                                                                nombreSeleccionado.apellido2 === paciente.apellido2 &&
                                                                 nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
-
-                                                                    ? "#28a745" // Verde
-                                                                    : "#333", // Negro
+                                                                ? "#28a745"
+                                                                : "#333",
                                                             backgroundColor:
                                                                 nombreSeleccionado &&
                                                                 nombreSeleccionado.nombre === paciente.nombre &&
-                                                                nombreSeleccionado.apellido1 === paciente.apellido1 && 
-                                                                nombreSeleccionado.apellido2 === paciente.apellido2 && 
+                                                                nombreSeleccionado.apellido1 === paciente.apellido1 &&
+                                                                nombreSeleccionado.apellido2 === paciente.apellido2 &&
                                                                 nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
-
-                                                                    ? "#e8f5e9" // Fondo verde suave
-                                                                    : "#fff", // Fondo blanco
+                                                                ? "#e8f5e9"
+                                                                : "#fff",
                                                             borderRadius: "5px",
                                                             transition: "all 0.3s ease",
-                                                        }}
-                                                    >
-                                                        <div style={{ flex: 1, fontWeight: "bold" }}>
+                                                            width: "98%",
+                                                            textAlign: "left",
+                                                            }}
+                                                        >
+                                                            <div style={{ flex: 1, fontWeight: "bold" }}>
                                                             {paciente.nombre}
-                                                        </div>
-                                                        <div style={{ flex: 2 }}>
+                                                            </div>
+                                                            <div style={{ flex: 2 }}>
                                                             {paciente.apellido1} {paciente.apellido2}
-                                                        </div>
-                                                        <div style={{ flex: 3 }}>
-                                                            {paciente.cuerpo_medico === 1 ? 'Sí' : 'No'}
-                                                        </div>
-                                                        <div style={{ flex: 1, textAlign: "right"}}>
+                                                            </div>
+                                                            <div style={{ flex: 3 }}>
+                                                            {paciente.cuerpo_medico === 1 ? "Sí" : "No"}
+                                                            </div>
+                                                            <div style={{ flex: 1, textAlign: "right" }}>
                                                             {sumarUnDia(formatDate(paciente.fecha_nacimiento))}
-                                                        </div>
-                                                    </li>
+                                                            </div>
+                                                        </button>
+                                                        </li>
+
                                                 ))}
                                         </ul>
                                     </div>

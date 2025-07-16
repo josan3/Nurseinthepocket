@@ -101,77 +101,88 @@ const BienvenidaGoogle = () => {
             
           </div>
           <div>
-            <label>Primer apellido:
+            <label>
+              Primer apellido: 
               <input
-              type="text"
-              placeholder="Ingrese su primer apellido"
-              value={apellido1}
-              onChange={(e) => setApellido1(e.target.value)}
-            />
-            </label><br />
-            
+                type="text"
+                placeholder="Ingrese su primer apellido"
+                value={apellido1}
+                onChange={(e) => setApellido1(e.target.value)}
+              />
+            </label>
+            <br />
           </div>
           <div>
-            <label>Segundo apellido:
+            <label>
+              Segundo apellido:
               <input
               type="text"
               placeholder="Ingrese su segundo apellido"
               value={apellido2}
               onChange={(e) => setApellido2(e.target.value)}
-            /></label><br />
-            
+              />
+            </label>
+            <br />
           </div>
           <div>
-            <label>Hospital: 
+            <label>
+              Hospital: 
               <input
               type="text"
               placeholder="Ingrese su hospital correspondiente"
               value={centro}
               onChange={(e) => setCentro(e.target.value)}
-            /></label><br />
-            
+              />
+            </label>
+            <br />
           </div>
-              <div style={{marginBottom:"2%"}}>
-                <label>Altura:
-                  <input
-                  type="number"
-                  placeholder="Ingrese su altura en cms"
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                /></label><br />
-                
-              </div>
+
+          <div style={{marginBottom:"2%"}}>
+            <label>
+              Altura:
+              <input
+              type="number"
+              placeholder="Ingrese su altura en cms"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              />
+            </label>
+            <br />
+          </div>
               <div className="gender-container">
                 <label>Género:
                   <select className="custom-select" value={gender} onChange={(e) => setGender(e.target.value)}>
-                  <option value="1">Masculino</option>
-                  <option value="2">Femenino</option>
-                  <option value="3">Otro</option>
-                </select>
-                </label><br />
-                
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                    <option value="3">Otro</option>
+                  </select>
+                </label>
+                <br />
               </div>
 
               <div style={{marginBottom:"2%"}}>
-                <label>Habitos toxicos:
+                <label>
+                  Habitos toxicos:
                   <input
                   type="text"
                   placeholder="Indicame si tiene habitos toxicos (fuma, alchol,...)"
                   value={toxichabits}
                   onChange={(e) => setToxichabits(e.target.value)}
-                /></label><br />
-                
+                  />
+                </label>
+                <br />
               </div>
               <div style={{marginBottom:"3%"}}>
-                  <label>Fecha de nacimiento:
+                  <label>
+                    Fecha de nacimiento:
                     <input
-                    type="date"
-                    placeholder="Indica su fecha de nacimiento"
-                    value={birthdate}
-                    onChange={(e) => setBirthdate(e.target.value)}
-                  />
-                  </label><br />
-                  
+                      type="date"
+                      placeholder="Indica su fecha de nacimiento"
+                      value={birthdate}
+                      onChange={(e) => setBirthdate(e.target.value)}
+                    />
+                  </label>
+                  <br />
               </div>
               <button type="submit">
                 Enviar</button>

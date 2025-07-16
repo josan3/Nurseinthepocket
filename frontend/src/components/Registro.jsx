@@ -222,8 +222,8 @@ useEffect(() => {
           <button type="submit" style={{marginRight: '10px' }}>Registrarse</button>
           <button onClick={handleGoogleSignIn}>
             <img 
-              src={google} 
-              alt="Google logo" 
+              src={google}
+              alt="Google logo"
               style={{ width: '15px', height: '15px', marginRight: '10px' }}/>
             Registro con Google</button>
             {error && <p style={{ color: "red" }}>{error}</p>}

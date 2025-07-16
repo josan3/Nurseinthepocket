@@ -139,7 +139,8 @@ const Peso = () => {
                             >
                             <div>{mensaje}</div> 
                         <form onSubmit={handleSubmit} style={{ marginTop: "20px", backgroundColor: "transparent", top: "-30px" }}>
-                            <label>Ingresa el nuevo peso (decimales separados por punto):
+                            <label>
+                                Ingresa el nuevo peso (decimales separados por punto):
                                 <input 
                                     type="number"  
                                     value={valor} 

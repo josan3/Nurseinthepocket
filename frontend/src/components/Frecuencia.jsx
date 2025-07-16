@@ -150,14 +150,15 @@ const Frecuencia = () => {
             
                     }}
                 >
-                    <label>Ingresa la nueva frecuencia cardiaca:
+                    <label>
+                        Ingresa la nueva frecuencia cardiaca:
                         <input
-                        type="number"
-                        value={valor}
-                        onChange={(e) => setValor(e.target.value)}
-                        placeholder="Ingreselo aqui"
-                        style={{ marginTop: "10px", display: "block", width: "85%" }}
-                        required
+                            type="number"
+                            value={valor}
+                            onChange={(e) => setValor(e.target.value)}
+                            placeholder="Ingreselo aqui"
+                            style={{ marginTop: "10px", display: "block", width: "85%" }}
+                            required
                         />
                     </label>
                         <button 
@@ -239,7 +240,7 @@ const Frecuencia = () => {
                                     &nbsp; &nbsp; Peso
                                 </button>
                                 <button onClick={() => handleOptionClick("/arritmia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" sstrokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
                                     </svg>
                                     &nbsp; &nbsp; Arritmia

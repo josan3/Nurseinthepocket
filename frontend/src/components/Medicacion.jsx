@@ -391,22 +391,23 @@ const Medicacion = () => {
 
 
     <form style={{ top: "-10%" }}onSubmit={handleSubmit}>
-        <label>Nombre del medicamento:
-        <input
-            type="text"
-            placeholder="Buscar medicamentos..."
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            onClick={handleSearchClick}
-            style={{
-                width: "100%",
-                marginTop: "5px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                fontSize: "14px",
-                marginBottom: "8px"
-            }}
-        />
+        <label>
+            Nombre del medicamento:
+            <input
+                type="text"
+                placeholder="Buscar medicamentos..."
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                onClick={handleSearchClick}
+                style={{
+                    width: "100%",
+                    marginTop: "5px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    fontSize: "14px",
+                    marginBottom: "8px"
+                }}
+            />
         </label>
 
         {showMedicamentos && (
@@ -423,25 +424,31 @@ const Medicacion = () => {
                 {resultadosFiltrados.length > 0 ? (
                     <ul style={{ listStyle: "none", paddingLeft: 0, margin: 0 }}>
                         {resultadosFiltrados.map((medicamento, index) => (
-                            <li
-                                key={index}
-                                onClick={() => handleMedicamentoSelect(medicamento)}
-                                onKeyDown={(e) => {
+                           <li key={index} style={{ listStyle: "none" }}>
+                                <button
+                                    onClick={() => handleMedicamentoSelect(medicamento)}
+                                    onKeyDown={(e) => {
                                     if (e.key === "Enter" || e.key === " ") {
-                                    handleMedicamentoSelect(medicamento);
+                                        e.preventDefault();
+                                        handleMedicamentoSelect(medicamento);
                                     }
-                                }}
-                                role="button"
-                                tabIndex={0}
-                                style={{
+                                    }}
+                                    style={{
                                     padding: "4px",
                                     cursor: "pointer",
                                     backgroundColor: medicamentoNombre === medicamento.nombre ? "#d9ffd9" : "transparent",
-                                    borderRadius: "3px"
-                                }}
-                            >
-                                {medicamento.nombre}
-                            </li>
+                                    borderRadius: "3px",
+                                    border: "none",
+                                    width: "100%",
+                                    textAlign: "left",
+                                    font: "inherit",
+                                    }}
+                                    type="button"
+                                >
+                                    {medicamento.nombre}
+                                </button>
+                                </li>
+
                         ))}
                     </ul>
                 ) : (
@@ -450,7 +457,8 @@ const Medicacion = () => {
             </div>
         )}
 
-        <label>Número de tomas:
+        <label>
+            Número de tomas:
             <input
                 type="number"
                 value={tomas}
@@ -519,32 +527,37 @@ const Medicacion = () => {
                         return acc;
                     }, {})
                 ).map((tomaAgrupada, index) => (
-                    <li
-                        key={index}
-                        onClick={() => {
+                    <li key={index} style={{ listStyle: "none", marginBottom: "6px" }}>
+                        <button
+                            onClick={() => {
                             setTomaSeleccionada(index);
                             setIdToma(tomaAgrupada.id);
-                        }}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                            setTomaSeleccionada(index);
-                            setIdToma(tomaAgrupada.id);
+                            }}
+                            onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                setTomaSeleccionada(index);
+                                setIdToma(tomaAgrupada.id);
                             }
-                        }}
-                        role="button"
-                        tabIndex={0}
-                        style={{
+                            }}
+                            style={{
                             padding: "8px",
                             border: "1px solid #ccc",
                             borderRadius: "4px",
-                            marginBottom: "6px",
                             backgroundColor: tomaSeleccionada === index ? "#e6ffe6" : "#f5f5f5",
                             cursor: "pointer",
-                            fontSize: "13px"
-                        }}
-                    >
-                        <strong>Medicamento:</strong> {tomaAgrupada.medicamento} <br />
-                        <strong>Horas:</strong> {tomaAgrupada.horas.join(", ")}
+                            fontSize: "13px",
+                            width: "100%",
+                            textAlign: "left",
+                            fontFamily: "inherit",
+                            fontWeight: "normal",
+                            outline: "none",
+                            }}
+                            type="button"
+                        >
+                            <strong>Medicamento:</strong> {tomaAgrupada.medicamento} <br />
+                            <strong>Horas:</strong> {tomaAgrupada.horas.join(", ")}
+                        </button>
                     </li>
                 ))}
             </ul>

@@ -258,7 +258,7 @@ const Configuracion = () => {
                                 </button>
 
                                 <button onClick={() => handleOptionClick("/peso")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                                     <circle cx="12" cy="10" r="3"/>
                                     <path d="M12 10v2"/>
@@ -266,7 +266,7 @@ const Configuracion = () => {
                                     &nbsp; &nbsp; Peso
                                 </button>
                                 <button onClick={() => handleOptionClick("/arritmia")} style={{ display: "block", marginBottom: "5px", marginLeft: "15px", fontSize: "13px" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
                                     </svg>
                                     &nbsp; &nbsp; Arritmia
@@ -279,9 +279,9 @@ const Configuracion = () => {
                                              height="15"
                                             fill="none"
                                             stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
                                             >
                                             <circle cx="10" cy="6" r="4" />
 
@@ -416,35 +416,36 @@ const Configuracion = () => {
                         </label>
                     </div>
                     <div>
-                        <label>Altura:<br />
+                        <label htmlFor="alturaInput">Altura:</label><br />
                             <div style={{ display: "flex", alignItems: "center" }}>
                             <div style={{ position: "relative", width: "90%" }}>
-                                    <input
-                                        style={{
-                                        backgroundColor: "rgba(255, 255, 255, 0.9)",
-                                        width: "100%",
-                                        paddingRight: "8%",
-                                        }}
-                                        type="text"
-                                        placeholder="Ingrese altura"
-                                        value={altura}
-                                        onChange={(e) => handleInputChange("altura", e.target.value)}
-                                    />
-                                    <span
-                                        style={{
-                                        position: "absolute",
-                                        right: "10px",
-                                        top: "50%",
-                                        transform: "translateY(-50%)",
-                                        color: "black",
-                                        pointerEvents: "none"
-                                        }}
-                                    >
-                                        cms
-                                    </span>
-                                    </div>
+                                <input
+                                id="alturaInput"
+                                style={{
+                                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                                    width: "100%",
+                                    paddingRight: "8%",
+                                }}
+                                type="text"
+                                placeholder="Ingrese altura"
+                                value={altura}
+                                onChange={(e) => handleInputChange("altura", e.target.value)}
+                                />
+                                <span
+                                style={{
+                                    position: "absolute",
+                                    right: "10px",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    color: "black",
+                                    pointerEvents: "none",
+                                }}
+                                >
+                                cms
+                                </span>
                             </div>
-                        </label>
+                            </div>
+
                     </div>
                     <div>
                         <label>Hábitos tóxicos:<br />

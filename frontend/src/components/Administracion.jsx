@@ -623,59 +623,59 @@ const Administracion = () => {
                                                     return nombreA.localeCompare(nombreB);
                                                 })
                                                 .map((paciente, index) => (
-                                                    <li
-                                                        key={index}
-                                                        role="button"
-                                                        tabIndex={0}
-                                                        onClick={() => setNombreSeleccionado(paciente)}
-                                                        onKeyDown={(e) => {
+                                                    <li key={index} style={{ margin: "10px 0" }}>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setNombreSeleccionado(paciente)}
+                                                            onKeyDown={(e) => {
                                                             if (e.key === 'Enter' || e.key === ' ') {
-                                                            e.preventDefault();
-                                                            setNombreSeleccionado(paciente);
+                                                                e.preventDefault();
+                                                                setNombreSeleccionado(paciente);
                                                             }
-                                                        }}
-                                                        style={{
+                                                            }}
+                                                            style={{
+                                                            all: 'unset', // Resetea estilos por defecto del botón
                                                             display: "flex",
                                                             justifyContent: "space-between",
                                                             alignItems: "center",
-                                                            margin: "10px 0",
                                                             padding: "10px",
                                                             cursor: "pointer",
                                                             color:
-                                                            nombreSeleccionado &&
-                                                            nombreSeleccionado.nombre === paciente.nombre &&
-                                                            nombreSeleccionado.apellido1 === paciente.apellido1 && 
-                                                            nombreSeleccionado.apellido2 === paciente.apellido2 && 
-                                                            nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
+                                                                nombreSeleccionado &&
+                                                                nombreSeleccionado.nombre === paciente.nombre &&
+                                                                nombreSeleccionado.apellido1 === paciente.apellido1 &&
+                                                                nombreSeleccionado.apellido2 === paciente.apellido2 &&
+                                                                nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
                                                                 ? "#28a745" // Verde
                                                                 : "#333", // Negro
                                                             backgroundColor:
-                                                            nombreSeleccionado &&
-                                                            nombreSeleccionado.nombre === paciente.nombre &&
-                                                            nombreSeleccionado.apellido1 === paciente.apellido1 && 
-                                                            nombreSeleccionado.apellido2 === paciente.apellido2 && 
-                                                            nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
+                                                                nombreSeleccionado &&
+                                                                nombreSeleccionado.nombre === paciente.nombre &&
+                                                                nombreSeleccionado.apellido1 === paciente.apellido1 &&
+                                                                nombreSeleccionado.apellido2 === paciente.apellido2 &&
+                                                                nombreSeleccionado.fecha_nacimiento === paciente.fecha_nacimiento
                                                                 ? "#e8f5e9" // Fondo verde suave
                                                                 : "#fff", // Fondo blanco
                                                             borderRadius: "5px",
                                                             transition: "all 0.3s ease",
-                                                        }}
+                                                            width: '98%', // para que el botón ocupe todo el ancho del li
+                                                            textAlign: 'left', // para que el texto quede alineado a la izquierda
+                                                            }}
                                                         >
-                                                        <div style={{ flex: 1, fontWeight: "bold" }}>
+                                                            <div style={{ flex: 1, fontWeight: "bold" }}>
                                                             {paciente.nombre}
-                                                        </div>
-                                                        <div style={{ flex: 2 }}>
+                                                            </div>
+                                                            <div style={{ flex: 2 }}>
                                                             {paciente.apellido1} {paciente.apellido2}
-                                                        </div>
-                                                        <div style={{ flex: 3 }}>
+                                                            </div>
+                                                            <div style={{ flex: 3 }}>
                                                             {paciente.cuerpo_medico === 1 ? 'Sí' : 'No'}
-                                                        </div>
-                                                        <div style={{ flex: 1, textAlign: "right"}}>
+                                                            </div>
+                                                            <div style={{ flex: 1, textAlign: "right" }}>
                                                             {formatDate(paciente.fecha_nacimiento)}
-                                                        </div>
-                                                        </li>
-
-
+                                                            </div>
+                                                        </button>
+                                                    </li>
                                                 ))}
                                         </ul>
                                     </div>
@@ -1214,25 +1214,28 @@ const Administracion = () => {
                                             .slice() // Para no modificar el array original
                                             .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Orden alfabético
                                             .map((medicamento, index) => (
-                                                <li
-                                                    key={index}
-                                                    role="button"
-                                                    tabIndex={0}
-                                                    onClick={() => setMedicamentoNombre(medicamento.nombre)}
-                                                    onKeyDown={(e) => {
+                                                <li key={index} style={{ marginLeft: "20px" }}>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setMedicamentoNombre(medicamento.nombre)}
+                                                        onKeyDown={(e) => {
                                                         if (e.key === 'Enter' || e.key === ' ') {
-                                                        e.preventDefault();
-                                                        setMedicamentoNombre(medicamento.nombre);
+                                                            e.preventDefault();
+                                                            setMedicamentoNombre(medicamento.nombre);
                                                         }
-                                                    }}
-                                                    style={{
-                                                        marginLeft: "20px",
+                                                        }}
+                                                        style={{
+                                                        all: 'unset',
                                                         cursor: "pointer",
                                                         color: medicamentoNombre === medicamento.nombre ? "green" : "black",
-                                                    }}
+                                                        width: '100%',
+                                                        textAlign: 'left',
+                                                        display: 'block',
+                                                        }}
                                                     >
-                                                    {medicamento.nombre}
-                                                    </li>
+                                                        {medicamento.nombre}
+                                                    </button>
+                                                </li>
                                             ))}
                                     </ul>
                                 ) : (

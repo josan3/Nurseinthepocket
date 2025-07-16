@@ -211,11 +211,11 @@ const handleResetPassword = async () => {
          <button style={{marginLeft: '10px' }}
             onClick={handleGoogleSignIn}
           >
-            <img 
+            <img
               src={google} 
               alt="Google logo" 
               style={{ width: '15px', height: '15px', marginRight: '10px'}}/>
-            Iniciar sesión con Google
+              Iniciar sesión con Google
           </button>
           </div>
             {error && <p style={{ color: "red" }}>{error}</p>}
@@ -224,21 +224,29 @@ const handleResetPassword = async () => {
           <p>
             ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
           </p>
-          <p
-            onClick={() => setShowModal(true)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                setShowModal(true);
-              }
-            }}
-            role="button"
-            tabIndex={0}
-            style={{ color: 'blue', cursor: 'pointer' }}
-          >
-            Recuperar contraseña
-          </p>
-
-
+            <button
+              type="button"
+              onClick={() => setShowModal(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setShowModal(true);
+                }
+              }}
+              style={{
+                marginTop: '5px',
+                fontSize: '14px',
+                color: 'blue',
+                cursor: 'pointer',
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                font: 'inherit',
+                textDecoration: 'underline',
+              }}
+            >
+              Recuperar contraseña
+            </button>
         </form>
 
         {/* Modal para recuperación de contraseña */}
