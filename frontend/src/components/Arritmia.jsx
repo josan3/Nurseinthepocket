@@ -8,8 +8,6 @@ import cara from "../assets/cara.png";
 const Arritmia = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([false]);  // Estado para almacenar los datos de la API
-    const [, setError] = useState(""); // Estado para manejar errores
-    const [, setSuccess] = useState(""); // Estado para mostrar mensajes de éxito
     const [selectedDate, setSelectedDate] = useState(null);  // Nuevo estado para la fecha seleccionada
     const [showEditOptions, setShowEditOptions] = useState(false); 
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -63,16 +61,13 @@ const Arritmia = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setSuccess("Arritmia eliminada");
-                setError("");
+                console.log("Arritmia eliminada");
                 window.location.reload(); 
             } else {
-                setError(data.error || "Error al eliminar la arritmia");
-                setSuccess("");
+                console.log(data.error || "Error al eliminar la arritmia");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
         setShowDeleteConfirmation(false); 
     };
@@ -116,16 +111,13 @@ const Arritmia = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setSuccess("Arritmia registrada");
-                setError("");
+                console.log("Arritmia registrada");
                 window.location.reload();
             } else {
-                setError(data.error || "Error al registrar la arritmia");
-                setSuccess("");
+                console.log(data.error || "Error al registrar la arritmia");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
 
@@ -143,19 +135,15 @@ const Arritmia = () => {
                 });
 
                 const data = await response.json();
-                console.log("Datos recibidos:", data);
 
                 if (response.ok) {
-                    setData(data.data); // Aquí se actualizan los datos
-                    setSuccess("Datos obtenidos");
-                    setError("");
+                    setData(data.data);
+                    console.log("Datos obtenidos");
                 } else {
-                    setError(data.error || "Error al obtener datos");
-                    setSuccess("");
+                    console.log(data.error || "Error al obtener datos");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor", error);
-                setSuccess("");
+                console.log("Error de conexión con el servidor", error);
             }
         };
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import robot from "../assets/normal.png"; 
-import trebol from "../assets/trebol_de_corazones.jpg";
 import emailjs from "@emailjs/browser";
 
 const Correo = () => {
@@ -10,7 +9,6 @@ const Correo = () => {
 
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
-    const [, setError] = useState("");
     const [success, setSuccess] = useState("");
     
     const handleSubmit = async (e) => {
@@ -76,15 +74,12 @@ const Correo = () => {
     
                     if (response.ok) {
                         setEmail(data.data.correo)
-                        setError("");
                         
                     } else {
-                        setError(data.error || "Error al obtener datos");
-                        setSuccess("");
+                        console.log(data.error || "Error al obtener datos");
                     }
                 } catch (error) {
-                    setError("Error de conexión con el servidor", error);
-                    setSuccess("");
+                    console.log("Error de conexión con el servidor", error);
                 }
             };
     

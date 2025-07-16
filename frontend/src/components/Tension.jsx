@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,  ComposedChart, Bar, Legend, Scatter } from "recharts";
+import { Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,  ComposedChart, Bar, Scatter } from "recharts";
 import robot from "../assets/normal.png"; 
 
 
@@ -9,7 +9,6 @@ const Tension = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);  // Estado para almacenar los datos de la API
     const [error, setError] = useState(""); // Estado para manejar errores
-    const [, setSuccess] = useState(""); // Estado para mostrar mensajes de éxito
     const [valor_max, setValorMax] = useState("");
     const [valor_min, setValorMin] = useState("");
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu tensión`;
@@ -77,16 +76,14 @@ const Tension = () => {
             const data = await response.json();
         
             if (response.ok) {
-                setSuccess("Tensión registrada");
+                console.log("Tensión registrada");
                 setError("");
                 window.location.reload();
             } else {
-                setError(data.error || "Error al registrar la tensión");
-                setSuccess("");
+                setError(data.error || "Error al registrar la tensión");console.log
             }
         } catch (error) {
-          setError("Error de conexión con el servidor", error);
-          setSuccess("");
+          setError("Error de conexión con el servidor", error);v
         }
         
     };
@@ -118,15 +115,13 @@ const Tension = () => {
     
                     console.log("Datos con tension_maxima calculada:", updatedData);
                     setData(updatedData); // Actualiza el estado con los datos modificados
-                    setSuccess("Datos obtenidos"); // Muestra mensaje de éxito
+                    console.log("Datos obtenidos"); // Muestra mensaje de éxito
                     setError(""); // Borra errores previos
                 } else {
-                    setError(data.error || "Error al obtener datos"); // Muestra el error del backend
-                    setSuccess(""); // Borra mensaje de éxito
+                    setError(data.error || "Error al obtener datos"); // Muestra el error del backend 
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor", error);
-                setSuccess("");
+                setError("Error de conexión con el servidor", error); 
             }
         };
 

@@ -11,8 +11,6 @@ const Administracion = () => {
     const [busqueda, setBusqueda] = useState("");
     const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
     const [vista, setVista] = useState(localStorage.getItem('vista') || 'pacientes');
-    const [, setError] = useState([]);
-    const [, setSuccess] = useState([]);
     const [id, setId] = useState([]);
     const [crearNuevo, setCrearNuevo] = useState(false);
     const [correo, setAntiguoCorreo] = useState("");
@@ -134,15 +132,11 @@ const Administracion = () => {
                 if (response.ok) {
                     setLista(data2.data);
                     setResultadosFiltrados(data2.data);
-                    setSuccess("Datos obtenidos");
-                    setError("");
                 } else {
-                    setError(data2.error || "Error al obtener datos");
-                    setSuccess("");
+                    console.log(data2.error || "Error al obtener datos")
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor", error);
-                setSuccess("");
+                console.log("Error de conexión con el servidor", error);
             }
         };
 
@@ -160,15 +154,11 @@ const Administracion = () => {
                 if (response.ok) {
                     setLista(data3.data);
                     setResultadosFiltrados(data3.data);
-                    setSuccess("Datos obtenidos");
-                    setError("");
                 } else {
-                    setError(data3.error || "Error al obtener datos");
-                    setSuccess("");
+                    console.log(data3.error || "Error al obtener datos");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor", error);
-                setSuccess("");
+                console.log("Error de conexión con el servidor", error);
             }
         };
 
@@ -180,20 +170,14 @@ const Administracion = () => {
 
                 const data4 = await response.json();
 
-                console.log("Hola", data4)
-
                 if (response.ok) {
                 setLista(data4.data);
                 setResultadosFiltrados(data4.data);
-                setSuccess("Datos obtenidos");
-                setError("");
                 } else {
-                setError(data4.error || "Error al obtener datos");
-                setSuccess("");
+                    console.log(data4.error || "Error al obtener datos")
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor", error);
-                setSuccess("");
+                    console.log("Error de conexión con el servidor", error);
             }
         };
 
@@ -259,7 +243,7 @@ const Administracion = () => {
 
     const handleEnviarNombre = async () => {
         if (!nombreSeleccionado) {
-            setError("Por favor, selecciona un paciente.");
+            console.log("Por favor, selecciona un paciente.");
             return;
         }
 
@@ -279,7 +263,6 @@ const Administracion = () => {
 
             const data1 = await response.json();
             setId(data1.id);
-            console.log(data1)
 
             setAntiguoCorreo(data1.data.usuario[0].correo);
 
@@ -289,15 +272,11 @@ const Administracion = () => {
 
             if (response.ok) {
                 setData(data1.data);
-                setSuccess("Datos obtenidos con éxito");
-                setError("");
             } else {
-                setError(data1.error || "Error al obtener los datos del paciente");
-                setSuccess("");
+                console.log(data1.error || "Error al obtener los datos del paciente");
             }
         } catch (error) {
-            setError("Error: ", error);
-            setSuccess("");
+            console.log("Error: ", error);
         }
     };
 
@@ -314,7 +293,7 @@ const Administracion = () => {
 
     const handleCrearMedicamento = async () => {
         if (!nuevoMedicamento.nombre.trim()) {
-            setError("Por favor, introduce un medicamento");
+            console.log("Por favor, introduce un medicamento");
             return;
         }
 
@@ -332,23 +311,19 @@ const Administracion = () => {
             const data4 = await response.json();
 
             if (response.ok) {
-                setSuccess("Medicamento creado con éxito");
-                setError("");
                 window.location.reload();
                 setVista('medicamentos');
             } else {
-                setError(data4.error || "Error al crear el medicamento");
-                setSuccess("");
+                console.log(data4.error || "Error al crear el medicamento");
             }
         } catch (error) {
-            setError("Error: ", error);
-            setSuccess("");
+            console.log("Error: ", error);
         }
     };
 
     const handleEliminarMedicamento = async () => {
         if (!medicamentoNombre) {
-            setError("Por favor, introduce un medicamento");
+            console.log("Por favor, introduce un medicamento");
             return;
         }
 
@@ -366,17 +341,14 @@ const Administracion = () => {
             const data4 = await response.json();
 
             if (response.ok) {
-                setSuccess("Medicamento eliminado con éxito");
-                setError("");
+                console.log("Medicamento eliminado con éxito");
                 window.location.reload();
                 setVista('medicamentos');
             } else {
-                setError(data4.error || "Error al eliminar el medicamento");
-                setSuccess("");
+                console.log(data4.error || "Error al eliminar el medicamento");
             }
         } catch (error) {
-            setError("Error: ", error);
-            setSuccess("");
+            console.log("Error: ", error);
         }
     };
 
@@ -409,23 +381,20 @@ const Administracion = () => {
             const result = await response.json();
     
             if (response.ok) {
-                setSuccess("Usuario editado con éxito");
-                setError("");
+                console.log("Usuario editado con éxito");
                 window.location.reload();
             } else {
-                setError(result.error || "Error al editar el usuario");
-                setSuccess("");
+                console.log(result.error || "Error al editar el usuario");
             }
         } catch (error) {
-            setError("Error: ", error);
-            setSuccess("");
+            console.log("Error: ", error);
         }
     };
 
     const handleCrearUsuario = async () => {
 
         if (!nuevoUsuario) {
-            setError("Por favor, introduce un nombre de usuario");
+            console.log("Por favor, introduce un nombre de usuario");
             return;
         }
     
@@ -441,16 +410,14 @@ const Administracion = () => {
             });
     
             if (response.ok) {
-                setSuccess("Usuario creado con éxito");
-                setError("");
+                console.log("Usuario creado con éxito");
                 setCrearNuevo(false);
                 window.location.reload();
             } else {
-                setError(result.error || "No se pudo crear el usuario");
+                console.log(result.error || "No se pudo crear el usuario");
             }
         } catch (error) {
-            setError("Error: ", error);
-            setSuccess("");
+            console.log("Error: ", error);
         }
     };
     
@@ -462,7 +429,7 @@ const Administracion = () => {
 
     if (!id || !correo) {
         console.error("Faltan datos");
-        setError("Por favor, introduce el correo del usuario");
+        console.log("Por favor, introduce el correo del usuario");
         return;
     }
 
@@ -479,21 +446,16 @@ const Administracion = () => {
         });
 
         const resData = await response.json();
-        console.log("RESPUESTA DEL BACKEND:", resData);
 
         if (response.ok) {
-            setSuccess("Usuario eliminado con éxito");
-            setError("");
+            console.log("Usuario eliminado con éxito");
             window.location.reload();
         } else {
-            console.error("Error del backend:", resData);
-            setError(resData.error || "Error al eliminar el usuario");
-            setSuccess("");
+            console.log(resData.error || "Error al eliminar el usuario");
         }
 
     } catch (error) {
-        setError("Error: ", error);
-        setSuccess("");
+        console.log("Error: ", error);
     }
 };
     

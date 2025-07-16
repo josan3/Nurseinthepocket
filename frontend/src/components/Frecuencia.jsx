@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine  } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from "recharts";
 import robot from "../assets/normal.png"; 
 
 const Frecuencia = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);  // Estado para almacenar los datos de la API
     const [error, setError] = useState(""); // Estado para manejar errores
-    const [, setSuccess] = useState(""); // Estado para mostrar mensajes de éxito
     const [valor, setValor] = useState("");
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu frecuencia cardiaca?`;
     const id = localStorage.getItem("id");
@@ -73,16 +72,14 @@ const Frecuencia = () => {
             const data = await response.json();
         
             if (response.ok) {
-                setSuccess("Frecuencia cardiaca registrada");
+                console.log("Frecuencia cardiaca registrada");
                 setError("");
                 window.location.reload();
             } else {
                 setError(data.error || "Error al registrar la frecuencia cardiaca");
-                setSuccess("");
             }
         } catch (error) {
             setError("Error de conexión con el servidor", error);
-            setSuccess("");
         }
     };
 
@@ -109,15 +106,13 @@ const Frecuencia = () => {
 
                 if (response.ok) {
                     setData(data.data); 
-                    setSuccess("Datos obtenidos");
+                    console.log("Datos obtenidos");
                     setError("");
                 } else {
                     setError(data.error || "Error al obtener datos");
-                    setSuccess("");
                 }
             } catch (error) {
                 setError("Error de conexión con el servidor", error);
-                setSuccess("");
             }
         };
 

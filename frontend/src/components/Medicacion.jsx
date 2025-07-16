@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import robot from "../assets/normal.png"; 
-import Calendar from "react-calendar";
+import robot from "../assets/normal.png";
 import "react-calendar/dist/Calendar.css";
-import cara from "../assets/cara.png"; 
 
 const Medicacion = () => {
     const navigate = useNavigate();
@@ -15,11 +13,9 @@ const Medicacion = () => {
     const [busqueda, setBusqueda] = useState("");
     const [tomas, setTomas] = useState(1); 
     const [horas, setHoras] = useState([]);
-    const [, setError] = useState([]);
-    const [, setSuccess] = useState([]);
     const [showMedicamentos, setShowMedicamentos] = useState(false);
     const [tomaSeleccionada, setTomaSeleccionada] = useState(null); 
-    const [id_toma, setIdToma] = useState(null);
+    const [idtoma, setIdToma] = useState(null);
 
     const mensaje = (
         <>
@@ -62,23 +58,20 @@ const Medicacion = () => {
             const data = await response.json();
         
             if (response.ok) {
-                setSuccess("Medicacion registrada");
-                setError("");
+                console.log("Medicacion registrada");
                 window.location.reload();
             } else {
-                setError(data.error || "Error al registrar la medicacion");
-                setSuccess("");
+                console.log(data.error || "Error al registrar la medicacion");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
 
     const handleEliminarToma = async (e) => {
         e.preventDefault();
 
-        console.log("ID de la toma a eliminar:", id_toma); // Verifica el ID de la toma
+        console.log("ID de la toma a eliminar:", idtoma); // Verifica el ID de la toma
 
         try {
             const response = await fetch("http://localhost:8801/deletetoma", {
@@ -86,24 +79,19 @@ const Medicacion = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({id_toma}),
+                body: JSON.stringify({idtoma}),
             });
         
             const data = await response.json();
         
             if (response.ok) {
-                setSuccess("Medicacion eliminada");
-                setError("");
-                console.log("llega");
+                console.log("Medicacion eliminada"); 
                 window.location.reload();
             } else {
-                console.log("no llega");
-                setError(data.error || "Error al registrar la medicacion");
-                setSuccess("");
+                console.log(data.error || "Error al registrar la medicacion"); 
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error); 
         }
     };
 
@@ -160,15 +148,12 @@ const Medicacion = () => {
     
                 if (response.ok) {
                     setLista(data.data);
-                    setSuccess("Datos obtenidos");
-                    setError("");
+                    console.log("Datos obtenidos"); 
                 } else {
-                    setError(data.error || "Error al obtener datos");
-                    setSuccess("");
+                    console.log(data.error || "Error al obtener datos"); 
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor", error);
-                setSuccess("");
+                console.log("Error de conexión con el servidor", error); 
             }
         };
 
@@ -189,10 +174,10 @@ const Medicacion = () => {
                 if (response.ok) {
                   setlistaTomas(data2.data)
                 } else {
-                  setError("Error de conexión ");
+                  console.log("Error de conexión ");
                 }
               } catch (error) {
-                  setError("Error de conexión con el servidor", error);
+                  console.log("Error de conexión con el servidor", error);
             }
           
        };

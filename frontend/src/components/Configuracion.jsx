@@ -12,9 +12,8 @@ const Configuracion = () => {
     const [correo, setCorreo] = useState("");
     const [centro, setCentro] = useState("");
     const [habitos_toxicos, setHabitos_toxicos] = useState("");
-    const [fechnacimiento, setFechNacimiento] = useState("");
+    const [fechanacimiento, setFechaNacimiento] = useState("");
     const [error, setError] = useState("");
-    const [, setSuccess] = useState("");
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     const mensaje = `¿Desea modificar algún dato personal?`;
     const [showModal, setShowModal] = useState(false);
@@ -77,16 +76,14 @@ const Configuracion = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setSuccess("Datos registrados");
+                console.log("Datos registrados");
                 setError("");
                 window.location.reload();
             } else {
                 setError(data.error || "Error al registrar los datos");
-                setSuccess("");
             }
         } catch (error) {
             setError("Error de conexión con el servidor", error);
-            setSuccess("");
         }
     };
 
@@ -112,17 +109,15 @@ const Configuracion = () => {
                     setApellido2(data.data.usuario.apellido2);
                     setAltura(data.data.paciente.altura);
                     setHabitos_toxicos(data.data.paciente.habitos_toxicos);
-                    setFechNacimiento(data.data.paciente.fecha_nacimiento)
-                    setSuccess("Datos obtenidos");
+                    setFechaNacimiento(data.data.paciente.fecha_nacimiento)
+                    console.log("Datos obtenidos");
                     setError("");
                     
                 } else {
                     setError(data.error || "Error al obtener datos");
-                    setSuccess("");
                 }
             } catch (error) {
                 setError("Error de conexión con el servidor", error);
-                setSuccess("");
             }
         };
 
@@ -143,7 +138,7 @@ const Configuracion = () => {
         if (field === "apellido2") setApellido2(value);
         if (field === "altura") setAltura(value);
         if (field === "habito_toxicos") setHabitos_toxicos(value);
-        if (field === "fecha_nacimiento") setFechNacimiento(value);
+        if (field === "fecha_nacimiento") setFechaNacimiento(value);
         if (field === "correo") setCorre(value);
         if (field === "centro") setCentro(value);
     };
@@ -471,7 +466,7 @@ const Configuracion = () => {
                                     style={{ backgroundColor: "rgba(255, 255, 255, 0.8)", width: "100%"  }}
                                     type="text"
                                     placeholder="Ingrese su fecha de nacimiento"
-                                    value={formatDate(fechnacimiento)}
+                                    value={formatDate(fechanacimiento)}
                                     disabled
                                 />
                             </div>

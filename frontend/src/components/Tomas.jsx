@@ -8,14 +8,12 @@ import cara from "../assets/cara.png";
 const Tomas = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
-    const [showEditOptions, setShowEditOptions] = useState(false); 
-    const [, setError] = useState([]);
+    const [showEditOptions, setShowEditOptions] = useState(false);
     const [selectedMeds, setSelectedMeds] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const markedDates = data.map((item) => new Date(item.fecha));
     const [listaTomas, setlistaTomas] = useState([]);
-    const [, setSuccess] = useState([]);
 
     
     const mensaje = (
@@ -116,10 +114,10 @@ const Tomas = () => {
           if (response.ok) {
             window.location.reload();
           } else {
-            setError("Error de conexión")
+            console.log("Error de conexión")
           }
         } catch (error) {
-            setError("Error de conexión con el servidor", error)
+            console.log("Error de conexión con el servidor", error)
         }
     };
 
@@ -142,7 +140,7 @@ const Tomas = () => {
           const data1 = await response1.json();
       
           if (!response1.ok) {
-            setError("Error al obtener id_toma");
+            console.log("Error al obtener id_toma");
             return;
           }
 
@@ -166,11 +164,11 @@ const Tomas = () => {
           if (response2.ok) {
             window.location.reload(); // actualizar vista
           } else {
-            setError("Error al guardar toma");
+            console.log("Error al guardar toma");
           }
       
         } catch (error) {
-          setError("Error de conexión con el servidor", error);
+          console.log("Error de conexión con el servidor", error);
         }
       };
       
@@ -198,10 +196,10 @@ const Tomas = () => {
           if (response.ok) {
             setlistaTomas(data2.data)
           } else {
-            setError("Error de conexión ");
+            console.log("Error de conexión ");
           }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
+            console.log("Error de conexión con el servidor", error);
         }
     };
 
@@ -221,15 +219,12 @@ const Tomas = () => {
     
                     if (response.ok) {
                         setData(data.data); // Aquí se actualizan los datos
-                        setSuccess("Datos obtenidos");
-                        setError("");
+                        console.log("Datos obtenidos");
                     } else {
-                        setError(data.error || "Error al obtener datos");
-                        setSuccess("");
+                        console.log(data.error || "Error al obtener datos"); 
                     }
                 } catch (error) {
-                    setError("Error de conexión con el servidor", error);
-                    setSuccess("");
+                    console.log("Error de conexión con el servidor", error); 
                 }
             };
     

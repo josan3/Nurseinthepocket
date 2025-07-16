@@ -7,8 +7,6 @@ import robot from "../assets/normal.png";
 const Peso = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);  // Estado para almacenar los datos de la API
-    const [, setError] = useState(""); // Estado para manejar errores
-    const [, setSuccess] = useState(""); // Estado para mostrar mensajes de éxito
     const [valor, setValor] = useState("");
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu peso?`;
     const id = localStorage.getItem("id");
@@ -75,16 +73,13 @@ const Peso = () => {
             const data = await response.json();
         
             if (response.ok) {
-                setSuccess("Peso registrado");
-                setError("");
+                console.log("Peso registrado"); 
                 window.location.reload();
             } else {
-                setError(data.error || "Error al registrar peso");
-                setSuccess("");
+                console.log(data.error || "Error al registrar peso"); 
             }
         } catch (error) {
-          setError("Error de conexión con el servidor", error);
-          setSuccess("");
+          console.log("Error de conexión con el servidor", error); 
         }
         
     };
@@ -108,15 +103,12 @@ const Peso = () => {
 
                 if (response.ok) {
                     setData(data.data); // Aquí se actualizan los datos
-                    setSuccess("Datos obtenidos"); // Muestra mensaje de éxito
-                    setError(""); // Borra errores previos
+                    console.log("Datos obtenidos");  
                 } else {
-                    setError(data.error || "Error al obtener datos"); // Muestra el error del backend
-                    setSuccess(""); // Borra mensaje de éxito
+                    console.log(data.error || "Error al obtener datos"); 
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor", error);
-                setSuccess("");
+                console.log("Error de conexión con el servidor", error); 
             }
         };
 

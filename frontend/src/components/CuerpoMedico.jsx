@@ -13,8 +13,6 @@ const CuerpoMedico = () => {
     const [busqueda, setBusqueda] = useState("");
     const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
     const [vista] = useState(localStorage.getItem('vista') || 'pacientes');
-    const [, setError] = useState([]);
-    const [, setSuccess] = useState([]);
     const [paciente, setPaciente] = useState([]);
     const [graficaMostrada, setGraficaMostrada] = useState(null);
     const [id, setId] = useState([]);
@@ -102,12 +100,9 @@ const CuerpoMedico = () => {
           try {
             await obtenerTension(id); // ← le pasas el id
             setGraficaMostrada("tension"); // ← mostramos esta gráfica
-            setSuccess("Datos de tensión obtenidos");
-            setError("");
+            console.log("Datos de tensión obtenidos");
           } catch (err) {
             console.error("Error al obtener tensión:", err);
-            setError("No se pudieron obtener los datos");
-            setSuccess("");
           }
         }
 
@@ -115,12 +110,9 @@ const CuerpoMedico = () => {
             try {
               await obtenerMedicacion(id); 
               setGraficaMostrada("medicacion"); 
-              setSuccess("Datos de tensión obtenidos");
-              setError("");
+              console.log("Datos de tensión obtenidos");
             } catch (err) {
               console.error("Error al obtener medicacion:", err);
-              setError("No se pudieron obtener los datos");
-              setSuccess("");
             }
           }
       
@@ -128,36 +120,27 @@ const CuerpoMedico = () => {
           try {
             await obtenerFrecuencia(id); // ← le pasas el id
             setGraficaMostrada("frecuencia"); // ← mostramos esta gráfica
-            setSuccess("Datos de frecuencia obtenidos");
-            setError("");
+            console.log("Datos de frecuencia obtenidos");
           } catch (err) {
             console.error("Error al obtener frecuencia:", err);
-            setError("No se pudieron obtener los datos");
-            setSuccess("");
           }
         }
         if (index === 3) {
             try {
               await obtenerArritmia(id); 
               setGraficaMostrada("arritmia"); 
-              setSuccess("Datos de arritmia obtenidos");
-              setError("");
+              console.log("Datos de arritmia obtenidos");
             } catch (err) {
               console.error("Error al obtener arritmias:", err);
-              setError("No se pudieron obtener los datos");
-              setSuccess("");
             }
         }
         if (index === 4) {
             try {
               await obtenerPeso(id); 
               setGraficaMostrada("peso"); 
-              setSuccess("Datos de peso obtenidos");
-              setError("");
+              console.log("Datos de peso obtenidos");
             } catch (err) {
               console.error("Error al obtener el peso:", err);
-              setError("No se pudieron obtener los datos");
-              setSuccess("");
             }
         }
       };
@@ -185,15 +168,12 @@ const CuerpoMedico = () => {
                 }));
 
                 setTension(updatedData); // Actualiza el estado con los datos modificados
-                setSuccess("Datos obtenidos"); // Muestra mensaje de éxito
-                setError(""); // Borra errores previos
+                console.log("Datos obtenidos"); 
             } else {
-                setError(data.error || "Error al obtener datos"); // Muestra el error del backend
-                setSuccess(""); // Borra mensaje de éxito
+                console.log(data.error || "Error al obtener datos"); 
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
 
@@ -214,15 +194,12 @@ const CuerpoMedico = () => {
 
             if (response.ok) {
                 setMedicacion(data.data); // Aquí se actualizan los datos
-                setSuccess("Datos obtenidos");
-                setError("");
+                console.log("Datos obtenidos");
             } else {
-                setError(data.error || "Error al obtener datos");
-                setSuccess("");
+                console.log(data.error || "Error al obtener datos");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
 
@@ -241,15 +218,12 @@ const CuerpoMedico = () => {
 
             if (response.ok) {
                 setArritmia(data.data); // Aquí se actualizan los datos
-                setSuccess("Datos obtenidos");
-                setError("");
+                console.log("Datos obtenidos");
             } else {
-                setError(data.error || "Error al obtener datos");
-                setSuccess("");
+                console.log(data.error || "Error al obtener datos");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
       
@@ -265,19 +239,15 @@ const CuerpoMedico = () => {
           });
       
           const data = await response.json();
-          console.log("Datos recibidos:", data);
       
           if (response.ok) {
             setFrecuencia(data.data);
-            setSuccess("Datos obtenidos");
-            setError("");
+            console.log("Datos obtenidos");
           } else {
-            setError(data.error || "Error al obtener datos");
-            setSuccess("");
+            console.log(data.error || "Error al obtener datos");
           }
         } catch (error) {
-          setError("Error de conexión con el servidor", error);
-          setSuccess("");
+          console.log("Error de conexión con el servidor", error);
         }
     };
 
@@ -295,15 +265,12 @@ const CuerpoMedico = () => {
 
             if (response.ok) {
                 setPeso(data.data); // Aquí se actualizan los datos
-                setSuccess("Datos obtenidos"); // Muestra mensaje de éxito
-                setError(""); // Borra errores previos
+                console.log("Datos obtenidos"); 
             } else {
-                setError(data.error || "Error al obtener datos"); // Muestra el error del backend
-                setSuccess(""); // Borra mensaje de éxito
+                console.log(data.error || "Error al obtener datos");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
       
@@ -326,9 +293,6 @@ const CuerpoMedico = () => {
                 });
 
                 const data2 = await response.json();
-                
-
-                console.log(data2)
 
                 if (response.ok) {
                     
@@ -338,15 +302,12 @@ const CuerpoMedico = () => {
 
                 setLista(usuariosFiltrados);
                 setResultadosFiltrados(usuariosFiltrados);
-                    setSuccess("Datos obtenidos");
-                    setError("");
+                    console.log("Datos obtenidos");
                 } else {
-                    setError(data2.error || "Error al obtener datos");
-                    setSuccess("");
+                    console.log(data2.error || "Error al obtener datos");
                 }
             } catch (error) {
-                setError("Error de conexión con el servidor", error);
-                setSuccess("");
+                console.log("Error de conexión con el servidor", error);
             }
         };
 
@@ -375,7 +336,7 @@ const CuerpoMedico = () => {
 
     const handleEnviarNombre = async () => {
         if (!nombreSeleccionado) {
-            setError("Por favor, selecciona un paciente.");
+            console.log("Por favor, selecciona un paciente.");
             return;
         }
 
@@ -404,15 +365,12 @@ const CuerpoMedico = () => {
 
             if (response.ok) {
                 setData(data1.data);
-                setSuccess("Datos obtenidos con éxito");
-                setError("");
+                console.log("Datos obtenidos con éxito");
             } else {
-                setError(data1.error || "Error al obtener los datos del paciente");
-                setSuccess("");
+                console.log(data1.error || "Error al obtener los datos del paciente");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
 
@@ -456,23 +414,19 @@ const CuerpoMedico = () => {
             const result = await response.json();
     
             if (response.ok) {
-                setSuccess("Usuario editado con éxito");
-                setError("");
+                console.log("Usuario editado con éxito");
                 window.location.reload();
             } else {
-                console.log(result.error)
-                setError(result.error || "Error al editar el usuario");
-                setSuccess("");
+                console.log(result.error || "Error al editar el usuario");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
 
     const handleCrearUsuario = async () => {
         if (!nuevoUsuario) {
-            setError("Por favor, introduce un nombre de usuario");
+            console.log("Por favor, introduce un nombre de usuario");
             return;
         }
     
@@ -489,23 +443,21 @@ const CuerpoMedico = () => {
     
     
             if (response.ok) {
-                setSuccess("Usuario creado con éxito");
-                setError("");
+                console.log("Usuario creado con éxito");
                 setCrearNuevo(false);
                 window.location.reload();
             } else {
-                setError(result.error || "No se pudo crear el usuario");
+                console.log(result.error || "No se pudo crear el usuario");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
     
 
     const handleEliminarUsuario = async () => {
         if (!id) {
-            setError("Por favor, introduce el correo del usuario");
+            console.log("Por favor, introduce el correo del usuario");
             return;
         }
     
@@ -523,16 +475,13 @@ const CuerpoMedico = () => {
             const data = await response.json();
     
             if (response.ok) {
-                setSuccess("Usuario eliminado con éxito");
-                setError("");
+                console.log("Usuario eliminado con éxito");
                 window.location.reload();
             } else {
-                setError(data.error || "Error al eliminar el usuario");
-                setSuccess("");
+                console.log(data.error || "Error al eliminar el usuario");
             }
         } catch (error) {
-            setError("Error de conexión con el servidor", error);
-            setSuccess("");
+            console.log("Error de conexión con el servidor", error);
         }
     };
     

@@ -10,7 +10,7 @@ const BienvenidaGoogle = () => {
   const [centro, setCentro] = useState("");
   const [height, setHeight] = useState("");
   const [gender, setGender] = useState("1");
-  const [toxichabits, setToxichab] = useState("");
+  const [toxichabits, setToxichabits] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -158,7 +158,7 @@ const BienvenidaGoogle = () => {
                   type="text"
                   placeholder="Indicame si tiene habitos toxicos (fuma, alchol,...)"
                   value={toxichabits}
-                  onChange={(e) => setToxichab(e.target.value)}
+                  onChange={(e) => setToxichabits(e.target.value)}
                 /></label><br />
                 
               </div>
