@@ -53,41 +53,45 @@ const eliminarMedicamentoporNombre = (nombre, callback) => {
 
 const setTomaMedicamento = (id_paciente, medicamento, numero_tomas, horas_tomas, callback) => {
   const sql = "SELECT id FROM medicamento WHERE nombre = ?";
-  db.query(sql, [medicamento], (err, result) => {
-    if (err) {
-      return callback(err, null);
-    }
 
-    const id_medicamento = result[0]?.id; // Accede al id de la fila
+  // Función para ejecutar query con promesa
+  const queryAsync = (sql, params) =>
+    new Promise((resolve, reject) => {
+      db.query(sql, params, (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    });
 
+  (async () => {
+    try {
+      const result = await queryAsync(sql, [medicamento]);
+      const id_medicamento = result[0]?.id;
+      if (!id_medicamento) throw new Error('Medicamento no encontrado');
 
-    const sql2 = "INSERT INTO toma_medicamento (id_medicamento, id_paciente, numero_tomas) VALUES (?, ?, ?)";
-    db.query(sql2, [id_medicamento, id_paciente, numero_tomas], (err, result1) => {
-      if (err) {
-        return callback(err, null);
-      }
+      const sql2 = "INSERT INTO toma_medicamento (id_medicamento, id_paciente, numero_tomas) VALUES (?, ?, ?)";
+      const result1 = await queryAsync(sql2, [id_medicamento, id_paciente, numero_tomas]);
 
       const sql3 = "SELECT id FROM toma_medicamento WHERE id_medicamento = ? AND id_paciente = ? AND numero_tomas = ?";
-      db.query(sql3, [id_medicamento, id_paciente, numero_tomas], (err, result2) => {
-        if (err) {
-          return callback(err, null);
-        }
-        const id_toma = result2[0]?.id;
+      const result2 = await queryAsync(sql3, [id_medicamento, id_paciente, numero_tomas]);
 
-        horas_tomas.forEach((hora) => {
-          const sql4 = "INSERT INTO toma_horas (id_toma, hora) VALUES (?, ?)";
-          db.query(sql4, [id_toma, hora], (err, result3) => {
-            if (err) {
-              return callback(err, null);
-            }
-          });
-        });
-      
-      return callback(null, { result: result1});
-    })
-    });
-  });
+      const id_toma = result2[0]?.id;
+      if (!id_toma) throw new Error('Toma no encontrada');
+
+      const sql4 = "INSERT INTO toma_horas (id_toma, hora) VALUES (?, ?)";
+
+      // Insertar todas las horas con promesas
+      await Promise.all(
+        horas_tomas.map((hora) => queryAsync(sql4, [id_toma, hora]))
+      );
+
+      callback(null, { result: result1 });
+    } catch (error) {
+      callback(error, null);
+    }
+  })();
 };
+
 
 const setTomaporDia = (id_toma, fecha,hora, callback) => {
 
@@ -106,28 +110,34 @@ const setTomaporDia = (id_toma, fecha,hora, callback) => {
 }
 
 const getTomaporIdPaciente = (id_paciente, callback) => {
-  const sql1 = `
-    SELECT 
-        ht.id_toma,
-        ht.fecha,
-        ht.hora
-    FROM 
-        historial_toma ht
-    JOIN 
-        toma_medicamento tm ON ht.id_toma = tm.id
-    WHERE 
-        tm.id_paciente = ?
-    ORDER BY 
-        ht.id_toma,
-        ht.fecha,
-        ht.hora;`;
+  const queryAsync = (sql, params) =>
+    new Promise((resolve, reject) => {
+      db.query(sql, params, (err, results) => {
+        if (err) reject(err);
+        else resolve(results);
+      });
+    });
 
-  db.query(sql1, [id_paciente], (err, results1) => {
-    if (err) { 
-      return callback(err, null);
-    }
+  (async () => {
+    try {
+      const sql1 = `
+        SELECT 
+            ht.id_toma,
+            ht.fecha,
+            ht.hora
+        FROM 
+            historial_toma ht
+        JOIN 
+            toma_medicamento tm ON ht.id_toma = tm.id
+        WHERE 
+            tm.id_paciente = ?
+        ORDER BY 
+            ht.id_toma,
+            ht.fecha,
+            ht.hora;
+      `;
+      const results1 = await queryAsync(sql1, [id_paciente]);
 
-    const promises = results1.map(result1 => {
       const sql2 = `
         SELECT 
             m.nombre AS medicamento
@@ -139,25 +149,25 @@ const getTomaporIdPaciente = (id_paciente, callback) => {
             medicamento m ON tm.id_medicamento = m.id
         WHERE 
             tm.id = ? AND ht.fecha = ?
-        LIMIT 1;`;
+        LIMIT 1;
+      `;
 
-      return new Promise((resolve, reject) => {
-        db.query(sql2, [result1.id_toma, result1.fecha], (err, results2) => {
-          if (err) return reject(err);
-          resolve({
-            id_toma: result1.id_toma, // Aquí agregamos el id_toma
-            medicamento: results2[0]?.medicamento || "Desconocido",
-            fecha: result1.fecha,
-            hora: result1.hora
-          });
-        });
+      const promises = results1.map(async (result1) => {
+        const results2 = await queryAsync(sql2, [result1.id_toma, result1.fecha]);
+        return {
+          id_toma: result1.id_toma,
+          medicamento: results2[0]?.medicamento || "Desconocido",
+          fecha: result1.fecha,
+          hora: result1.hora,
+        };
       });
-    });
 
-    Promise.all(promises)
-      .then(results => callback(null, results)) // Retorna los resultados con el id_toma
-      .catch(err => callback(err, null));
-  });
+      const results = await Promise.all(promises);
+      callback(null, results);
+    } catch (err) {
+      callback(err, null);
+    }
+  })();
 };
 
 

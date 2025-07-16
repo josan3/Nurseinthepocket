@@ -41,46 +41,41 @@ const Bienvenida = () => {
 
         <div className="cuerpo">
           <div className="container">
-            <div className="robot-container"   style={{ maxHeight: "100px", cursor: "pointer" }}
-              role="button"
-              tabIndex={0}
-              onClick={avanzarDialogo}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  avanzarDialogo();
-                }
+            <button
+              className="robot-container"
+              style={{
+                maxHeight: "100px",
+                cursor: "pointer",
+                background: "none",
+                border: "none",
+                padding: 0,
+                textAlign: "left" // opcional, según tu diseño
               }}
+              onClick={avanzarDialogo}
             >
               <img src={robotsaludando} alt="Robot" className="robot" />
               <div className="speech-bubble" style={{ maxHeight:"100px"}}>{mensajes[indiceMensaje]}</div>
-            </div>
+            </button>
           </div>
-        
 
-          <div
+          <button
             className="button2"
-            role="button"
-            tabIndex={0}
             onClick={() => {
               setTimeout(() => {
                 localStorage.setItem("id", id);
                 navigate("/data");
               }, 1000);
             }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                setTimeout(() => {
-                  localStorage.setItem("id", id);
-                  navigate("/data");
-                }, 1000);
-              }
+            style={{
+              cursor: "pointer",
+              background: "none",      // si no quieres estilos predeterminados
+              border: "none",          // elimina bordes si es necesario
+              padding: 0,              // opcional, depende del diseño
+              textAlign: "left"        // opcional
             }}
-            style={{ cursor: "pointer" }}
           >
             Continuar
-          </div>
+          </button>
         </div>
         
 

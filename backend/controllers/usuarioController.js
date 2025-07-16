@@ -163,16 +163,17 @@ const actualizarUsuario = (req, res) => {
  * @postcondición Si los datos son válidos, se actualizan los datos del usuario en la base de datos y se retorna un mensaje de éxito. Si ocurre un error, se devuelve el código de error correspondiente.
  */
 const actualizarUsuarioGoogle = (req, res) => {
-  const { id, nombre, apellido1, apellido2, centro, altura, genero, habitos_toxicos, fecha_nacimiento } = req.body;
+  const { id, datos } = req.body;
 
-  if (!nombre || !apellido1 || !apellido2 || !centro || !altura || !genero || !habitos_toxicos || !fecha_nacimiento) {
+  const { nombre, apellido1, apellido2, centro, altura, genero, habitos_toxicos, fecha_nacimiento } = datos;
+  if (!id || !nombre || !apellido1 || !apellido2 || !centro || !altura || !genero || !habitos_toxicos || !fecha_nacimiento) {
     return res.status(400).json({ error: "Aporta todos los datos para actualizar el usuario (si no tiene hábitos tóxicos indique nada)" });
   }
   if (!id){
     return res.status(400).json({ error: "Problemas encontrando el usuario" });
   }
 
-  actualizarGoogle( id, nombre, apellido1, apellido2, centro, altura, genero, habitos_toxicos, fecha_nacimiento, (err, result) => {
+  actualizarGoogle( id, datos, (err, result) => {
     if (err) {
       return res.status(500).json({ error: 'Error al acceder a la base de datos' });
     }

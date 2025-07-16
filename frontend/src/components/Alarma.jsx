@@ -10,7 +10,7 @@ import logo from "../assets/logo.png";
 const Alarma = () => {
   const [mensaje, setMensaje] = useState(null);
   const [permisoNotificacion, setPermisoNotificacion] = useState(Notification.permission);
-  const [id_toma, setId_Toma] = useState(null);
+  const [id_Toma, setId_Toma] = useState(null);
   const [hora, setHora] = useState(null);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ const Alarma = () => {
    * @returns {void}
    */
   const registrarToma = async () => {
-    console.log(id_toma)
+    console.log(id_Toma)
     try {
       const today = new Date().toLocaleDateString("fr-CA");
       const response = await fetch("http://localhost:8801/toma", {
@@ -31,7 +31,7 @@ const Alarma = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id_toma, fecha: today, hora }),
+        body: JSON.stringify({ id_Toma, fecha: today, hora }),
       });
 
       const data = await response.json();

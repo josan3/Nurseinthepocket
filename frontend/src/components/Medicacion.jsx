@@ -15,7 +15,7 @@ const Medicacion = () => {
     const [horas, setHoras] = useState([]);
     const [showMedicamentos, setShowMedicamentos] = useState(false);
     const [tomaSeleccionada, setTomaSeleccionada] = useState(null); 
-    const [idtoma, setIdToma] = useState(null);
+    const [idToma, setIdToma] = useState(null);
 
     const mensaje = (
         <>
@@ -71,7 +71,7 @@ const Medicacion = () => {
     const handleEliminarToma = async (e) => {
         e.preventDefault();
 
-        console.log("ID de la toma a eliminar:", idtoma); // Verifica el ID de la toma
+        console.log("ID de la toma a eliminar:", idToma); // Verifica el ID de la toma
 
         try {
             const response = await fetch("http://localhost:8801/deletetoma", {
@@ -79,7 +79,7 @@ const Medicacion = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({idtoma}),
+                body: JSON.stringify({idToma}),
             });
         
             const data = await response.json();

@@ -13,7 +13,7 @@ const Administracion = () => {
     const [vista, setVista] = useState(localStorage.getItem('vista') || 'pacientes');
     const [id, setId] = useState([]);
     const [crearNuevo, setCrearNuevo] = useState(false);
-    const [antiguocorreo, setAntiguoCorreo] = useState("");
+    const [antiguoCorreo, setAntiguoCorreo] = useState("");
     const [nuevoMedicamento, setNuevoMedicamento] = useState({ nombre: "" });
     const [nuevoUsuario, setNuevoUsuario] = useState({
         nombre: "",
@@ -361,7 +361,7 @@ const Administracion = () => {
                 },
                 body: JSON.stringify({
                     id: id, 
-                    antiguocorreo: antiguocorreo,
+                    antiguocorreo: antiguoCorreo,
                     updatedData: {
                         nombre: data.paciente[0].nombre,
                         apellido1: data.paciente[0].apellido1,
@@ -658,7 +658,7 @@ const Administracion = () => {
                                                                 : "#fff", // Fondo blanco
                                                             borderRadius: "5px",
                                                             transition: "all 0.3s ease",
-                                                            width: '98%', // para que el botón ocupe todo el ancho del li
+                                                            width: '98%', 
                                                             textAlign: 'left', // para que el texto quede alineado a la izquierda
                                                             }}
                                                         >

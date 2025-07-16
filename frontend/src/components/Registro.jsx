@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js"
 import { auth } from "../firebase.js";
 import google from "../assets/google.png"; 
 
 const Registro = () => {
-  const [, setId] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [nombre, setNombre] = useState("");
@@ -78,7 +76,6 @@ useEffect(() => {
         console.log ("data", data);
 
         if (response.ok) {
-          setId(data.result)
           setSuccess("Registro exitoso");
           setError("");
           setTimeout(() => {
@@ -125,7 +122,6 @@ useEffect(() => {
         console.log ("data", data.result.id);
 
         if (response.ok) {
-          setId(data.result)
           setSuccess("Registro exitoso");
           setError("");
           setTimeout(() => {

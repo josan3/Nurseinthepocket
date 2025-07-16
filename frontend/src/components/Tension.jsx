@@ -9,8 +9,8 @@ const Tension = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);  // Estado para almacenar los datos de la API
     const [error, setError] = useState(""); // Estado para manejar errores
-    const [valor_max, setValorMax] = useState("");
-    const [valor_min, setValorMin] = useState("");
+    const [valorMax, setValorMax] = useState("");
+    const [valorMin, setValorMin] = useState("");
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu tensión`;
     const id = localStorage.getItem("id");
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
@@ -70,7 +70,7 @@ const Tension = () => {
                 headers: {
                 "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ id, tension_max: valor_max, tension_min: valor_min }),
+                body: JSON.stringify({ id, tension_max: valorMax, tension_min: valorMin }),
             });
             
             const data = await response.json();
@@ -158,7 +158,7 @@ const Tension = () => {
                                 <input 
                                     id="maximo"
                                     type="number"  
-                                    value={valor_max} 
+                                    value={valorMax} 
                                     onChange={(e) => setValorMax(e.target.value)} 
                                     placeholder="Ingreselo aqui"
                                     style={{ marginTop: "10px"}}
@@ -168,7 +168,7 @@ const Tension = () => {
                                 <input 
                                     id="minimo"
                                     type="number"  
-                                    value={valor_min} 
+                                    value={valorMin} 
                                     onChange={(e) => setValorMin(e.target.value)} 
                                     placeholder="Ingreselo aqui"
                                     style={{ marginTop: "10px"}}

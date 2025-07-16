@@ -178,7 +178,7 @@ button:hover {
     height: 80px;
     overflow: hidden;
     background-color: #2fa831;
-    animation: pulsocardiacoLinea 30s linear infinite;;
+    animation: pulsocardiacoLinea 30s linear infinite;
 
 }
 
@@ -190,7 +190,7 @@ button:hover {
     height: 80px;
     overflow: hidden;
     background-color: #2fa831;
-    animation: pulsocardiacoLinea2 30s linear infinite;;
+    animation: pulsocardiacoLinea2 30s linear infinite;
 
 }
 .pulsocardiaco-container3 {
@@ -201,7 +201,7 @@ button:hover {
     height: 80px;
     overflow: hidden;
     background-color: #2fa831;
-    animation: pulsocardiacoLinea3 30s linear infinite;;
+    animation: pulsocardiacoLinea3 30s linear infinite;
 
 }
 /* Línea continua pulso cardiaco */
@@ -647,7 +647,7 @@ p{
     }
     /*Estilo botones*/
     .button2 {
-        background-color:rgba(255, 255, 255, 0.7);;
+        background-color:rgba(255, 255, 255, 0.7);
         color: #2fa831;
         font-size: 16px;
         border: none;
@@ -851,13 +851,21 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
     max-width: 90%;           /* Evita que sea demasiado grande en pantallas pequeñas */
     font-size: 1.2rem;        /* Aumenta el tamaño del texto*/
     background-color: white !important; 
-    
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Evita el desbordamiento */
 }
 
 /* Cambia el color del mes y año en la cabecera */
 .react-calendar__navigation button {
     color: black !important;
+    text-align: center;
+    text-transform: uppercase;
     font-weight: bold;
+    font-size: 0.75rem;
 }
 
 /* Cambia el color de los días de la semana (Lunes, Martes, etc.) */
@@ -870,26 +878,31 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
 .react-calendar__tile {
     color: black !important;
     font-weight: bold;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 50%;
+
 }
-
-
 
 .react-calendar__month-view__days__day {
     color: black !important;
     font-weight: bold;
 }
 
-/* Días normales del calendario */
-.react-calendar__tile {
-    color: black !important;
-    font-weight: bold;
-}
 
 /* Días con arritmia: fondo rojo y texto negro */
 .marked-date {
     background-color: red !important; /* Fondo rojo */
     color: black !important; /* Texto negro */
     font-weight: bold;
+    background-color: #d4f8d4 !important; /* fondo verde claro */
+    border-radius: 50%; /* para hacer el círculo */
+
 }
 
 /* Ajuste para que el texto "Arritmia registrada este día" también sea negro */
@@ -1097,19 +1110,6 @@ h5 {
 .card a:hover {
     background-color: #248b26;
 }
-
-/* Estilo para calendario */
-.react-calendar {
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    overflow: hidden; /* Evita el desbordamiento */
-  }
   
   /* Título del mes y año */
   .react-calendar__navigation {
@@ -1131,26 +1131,9 @@ h5 {
     background-color: #e8f5e9;
     border-radius: 10px;
   }
+
   
-  /* Días del calendario */
-  .react-calendar__month-view__weekdays {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #555;
-    font-size: 0.75rem;
-  }
-  
-  .react-calendar__tile {
-    padding: 10px 0;
-    background: none;
-    border: none;
-    outline: none;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    border-radius: 50%;
-  }
+
   
   .react-calendar__tile:enabled:hover {
     background-color: #f0f0f0;
@@ -1186,17 +1169,6 @@ h5 {
       padding: 10px;
     }
   }
-  
-
-.marked-date {
-    background-color: #d4f8d4 !important; /* fondo verde claro */
-    border-radius: 50%; /* para hacer el círculo */
-    color: green !important; /* texto en verde */
-    font-weight: bold;
-  }
-  
-
-
 
 .confirmation-modal {
     position: fixed;

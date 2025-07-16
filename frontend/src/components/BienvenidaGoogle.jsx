@@ -35,18 +35,27 @@ const BienvenidaGoogle = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Evita que la página se recargue
 
+    const datos = {
+    nombre,
+    apellido1,
+    apellido2,
+    centro,
+    altura: height,
+    genero: gender,
+    habitos_toxicos: toxichabits,
+    fecha_nacimiento: birthdate,
+  };
+
     try {
       const response = await fetch("http://localhost:8801/dataGoogle", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({id, nombre, apellido1, apellido2, centro, altura: height, genero: gender, habitos_toxicos: toxichabits,fecha_nacimiento: birthdate }),
+        body: JSON.stringify({id, datos}),
       });
 
       const data = await response.json();
-
-      console.log("id, ",id, height, gender, toxichabits, birthdate, data);
 
       if (response.ok) {
         setSuccess("Datos guardados"); // Muestra mensaje de éxito
@@ -70,22 +79,20 @@ const BienvenidaGoogle = () => {
         <header>¡Bienvenido!</header>
       </div>
       <div className="container" style={{ top:"10%", maxWidth: "90%",}}>
-        <div
+        <button
           className="image-container"
-          role="button"
-          tabIndex={0}
           onClick={avanzarDialogo}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              avanzarDialogo();
-            }
+          style={{
+            cursor: "pointer",
+            left: "-10%",
+            background: "none",
+            border: "none",
+            padding: 0,
           }}
-          style={{ cursor: "pointer", left: "-10%" }}
         >
           <img src={robotsaludando} alt="Robot" className="robot" style={{ width: "20%", height: "auto" }} />
           <div className="speech-bubble" style={{ height:"60%", top: "15%", left:"63%", maxWidth: "100px", minHeight:"50px", maxHeight:"80px"}}>{mensajes[indiceMensaje]}</div>
-        </div>
+        </button>
       </div>
 
         <form onSubmit={handleSubmit}>     

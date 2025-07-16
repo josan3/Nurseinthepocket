@@ -15,21 +15,7 @@ const suscripciones = []; // Array con las suscripciones de los usuarios
  * @precondición El parámetro `userId` debe existir y ser válido. El `titulo` y el `mensaje` deben ser cadenas no vacías.
  * @postcondición Si se encuentra la suscripción del usuario, se envía la notificación push con el título y el mensaje. Si ocurre un error, se maneja e imprime en consola.
  */
-/*const enviarNotificacionPush = async (userId, titulo, mensaje) => {
-  const payload = JSON.stringify({ title: titulo, body: mensaje });
 
-  // Filtrar la suscripción para el usuario específico
-  const suscripcion = suscripciones.find((sub) => sub.userId === userId);
-
-  if (suscripcion) {
-    try {
-      await webPush.sendNotification(suscripcion.subscription, payload);
-      console.log('Notificación enviada');
-    } catch (error) {
-      console.error("Error al enviar la notificación:", error);
-    }
-  }
-};*/
 const enviarNotificacionPush = async (userId, titulo, mensaje) => {
   const payload = JSON.stringify({ title: titulo, body: mensaje });
 

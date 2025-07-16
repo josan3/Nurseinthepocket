@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js"
 import { auth } from "../firebase.js";
 import google from "../assets/google.png"; 
 
 const InicioSesion = () => {
-  const [, setId] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -81,7 +79,6 @@ const handleGoogleSignIn = async (e) => {
 
     if (response.ok) {
       // Guarda datos útiles
-      setId(data.result.id);
       setSuccess("Login exitoso");
       setError("");
 
@@ -134,7 +131,6 @@ const handleGoogleSignIn = async (e) => {
 
     if (response.ok) {
       // Guarda datos útiles
-      setId(data.result.id);
       setSuccess("Login exitoso");
       setError("");
 

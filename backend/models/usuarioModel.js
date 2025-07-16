@@ -35,36 +35,49 @@ db.connect((err) => {
  * @param {string} centro - Hospital del usuario.
  * @param {function} callback - Función callback que recibe error o resultado.
  */
-const crearUsuario = (correo, nombre, password, apellido1, apellido2, centro, callback) => {
-  
-  bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
-    if (err) return callback(err, null);
-
-    const insertSql = "INSERT INTO usuario (correo, password, nombre, apellido1, apellido2, centro) VALUES (?, ?, ?, ?, ?, ?)";
-    db.query(insertSql, [correo, hashedPassword, nombre, apellido1, apellido2, centro], (err, result1) => {
-      if (err) return callback(err, null);
-
-      const sql1 = "SELECT id FROM usuario WHERE correo = ?";
-      db.query(sql1, [correo], (err, result2) => {
-        if (err) return callback(err, null);
-
-        // Verificar que se haya encontrado el usuario
-        if (result2.length === 0) {
-          return callback(new Error('Usuario no encontrado'), null);
-        }
-
-        const sql2 = "INSERT INTO paciente (id) VALUES (?)";
-        db.query(sql2, [result2[0].id], (err, result3) => {
-          if (err) return callback(err, null);
-
-         
-          // Devolver el resultado esperado
-          return callback(null, { id: result2[0].id });
-        });
+const crearUsuario = async (correo, nombre, password, apellido1, apellido2, centro, callback) => {
+  try {
+    const hashedPassword = await new Promise((resolve, reject) => {
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) reject(err);
+        else resolve(hash);
       });
     });
-  });
+
+    const insertSql = "INSERT INTO usuario (correo, password, nombre, apellido1, apellido2, centro) VALUES (?, ?, ?, ?, ?, ?)";
+    await new Promise((resolve, reject) => {
+      db.query(insertSql, [correo, hashedPassword, nombre, apellido1, apellido2, centro], (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    });
+
+    const sql1 = "SELECT id FROM usuario WHERE correo = ?";
+    const result2 = await new Promise((resolve, reject) => {
+      db.query(sql1, [correo], (err, results) => {
+        if (err) reject(err);
+        else resolve(results);
+      });
+    });
+
+    if (result2.length === 0) {
+      return callback(new Error('Usuario no encontrado'), null);
+    }
+
+    const sql2 = "INSERT INTO paciente (id) VALUES (?)";
+    await new Promise((resolve, reject) => {
+      db.query(sql2, [result2[0].id], (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    });
+
+    return callback(null, { id: result2[0].id });
+  } catch (error) {
+    return callback(error, null);
+  }
 };
+
 
 /**
  * Crea un nuevo usuario y lo registra como paciente en la base de datos.
@@ -187,21 +200,21 @@ const actualizar = (id, altura, genero, habitos_toxicos, fecha_nacimiento, callb
  * @param {string} fecha_nacimiento - Fecha de nacimiento (YYYY-MM-DD).
  * @param {function} callback - Callback que retorna el resultado.
  */
-const actualizarGoogle = (id, nombre, apellido1, apellido2, centro, altura, genero, habitos_toxicos, fecha_nacimiento, callback) => {
+const actualizarGoogle = (id, datos, callback) => {
+  const { nombre, apellido1, apellido2, centro, altura, genero, habitos_toxicos, fecha_nacimiento } = datos;
+
   const sql1 = `UPDATE usuario SET nombre = ?, apellido1 = ?, apellido2 = ?, centro = ? WHERE id = ?`;
   db.query(sql1, [nombre, apellido1, apellido2, centro, id], (err, result) => {
     if (err) return callback(err, null);
 
-  
-    else{
-      const sql2 = `UPDATE paciente SET altura = ?, genero = ?, habitos_toxicos = ?, fecha_nacimiento = ? WHERE id = ?`;
-      db.query(sql2, [altura, genero, habitos_toxicos, fecha_nacimiento, id], (err, result) => {
-        if (err) return callback(err, null);
-        return callback(null, result);
-      });
-    }
-   });
+    const sql2 = `UPDATE paciente SET altura = ?, genero = ?, habitos_toxicos = ?, fecha_nacimiento = ? WHERE id = ?`;
+    db.query(sql2, [altura, genero, habitos_toxicos, fecha_nacimiento, id], (err, result) => {
+      if (err) return callback(err, null);
+      return callback(null, result);
+    });
+  });
 };
+
 
 
 /**
