@@ -323,7 +323,7 @@ const eliminarMedicamentoPaciente = (req, res) => {
   const {id_toma} = req.body;
 
   if (!id_toma) {
-    return res.status(400).json({ error: "Error al obtener los datos" });
+    return res.status(400).json({ error: "Error al obtener los datos de la base de datos" });
   }
   eliminarMedicamentoPorIdToma(id_toma, (err, result) => {
     if (err) {
