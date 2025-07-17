@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // Importa los estilos del calendario
@@ -14,19 +14,22 @@ const Arritmia = () => {
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const id = localStorage.getItem("id");
     const [dia, setDia] = useState(false);
+        // Convierte las fechas de arritmia en formato Date
+    const markedDates = data.map(entry => new Date(entry.fecha));
 
     const renderTileContent = useCallback(({ date }) => {
-    const isMarked = arritmia.some(a => new Date(a.fecha).toDateString() === date.toDateString());
-    if (!isMarked) return null;
+        const isMarked = markedDates.some(d => d.toDateString() === date.toDateString());
+        if (!isMarked) return null;
 
-    return (
+        return (
         <div className="calendar-note" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z" />
             </svg>
         </div>
-    );
-}, [arritmia]);
+        );
+    }, [markedDates]);
+
 
     
     const handleEditClick = () => {
@@ -163,8 +166,7 @@ const Arritmia = () => {
         fetchData();
     }, []);
 
-    // Convierte las fechas de arritmia en formato Date
-    const markedDates = data.map(entry => new Date(entry.fecha));
+
             
     const buttons = [
         { path: "/informacion", label: "Obtener información", nombre: "Obtener información", icon: (
@@ -382,10 +384,10 @@ const Arritmia = () => {
                         : null
                     }
                     tileContent={renderTileContent}
-                    
-                    onClick={() => {}} // Deshabilita la selección de días
-                    selectRange={false} // Evita la selección de un rango de fechas
-                />
+        onClick={() => {}} // Deshabilita la selección de días
+        selectRange={false} // Evita la selección de un rango de fechas
+      />
+
             </div>
 
             {/* Modal de confirmación */}
