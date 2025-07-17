@@ -901,10 +901,10 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator {
 
 /* Días con arritmia: fondo rojo y texto negro */
 .marked-date {
-    background-color: red !important; /* Fondo rojo */
-    color: black !important; /* Texto negro */
+    background-color: #c8e6c9 !important;
+    color: #1b5e20 !important;
+    border-radius: 50%;
     font-weight: bold;
-    border-radius: 50%; /* para hacer el círculo */
 
 }
 
@@ -1143,13 +1143,7 @@ h5 {
     color: #2e7d32;
   }
   
-  /* Día marcado (con arritmia) */
-  .marked-date {
-    background-color: #c8e6c9 !important;
-    color: #1b5e20 !important;
-    border-radius: 50%;
-    font-weight: bold;
-  }
+
   
   /* Desactivar rangos y selección */
   .react-calendar__tile--rangeStart,
