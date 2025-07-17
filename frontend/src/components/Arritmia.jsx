@@ -15,6 +15,22 @@ const Arritmia = () => {
     const id = localStorage.getItem("id");
     const [dia, setDia] = useState(false);
 
+    // Fuera del componente principal
+    const CalendarTileContent = ({ date, markedDates }) => {
+        const isMarked = markedDates.some(d => d.toDateString() === date.toDateString());
+
+        if (!isMarked) return null;
+
+        return (
+            <div className="calendar-note" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+                </svg>
+            </div>
+        );
+    };
+
+
     
     const handleEditClick = () => {
         setShowEditOptions(!showEditOptions); // Alterna la visibilidad de las opciones de editar
@@ -362,24 +378,17 @@ const Arritmia = () => {
             {/* Calendario con días marcados */}
             <div className="calendar-container">
                 <Calendar
-                    onClickDay={handleDateClick} // Llamamos a la función handleDateClick al hacer clic en un día
-                    tileClassName={({ date }) => 
+                    onClickDay={handleDateClick}
+                    tileClassName={({ date }) =>
                         markedDates.some(d => d.toDateString() === date.toDateString()) 
                         ? "marked-date" 
                         : null
                     }
-                    tileContent={({ date }) =>
-                        markedDates.some(d => d.toDateString() === date.toDateString()) ? (
-                            <div className="calendar-note" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
-                                </svg>
-                            </div>
-                        ) : null
-                    }
-                    
-                    onClick={() => {}} // Deshabilita la selección de días
-                    selectRange={false} // Evita la selección de un rango de fechas
+                    tileContent={({ date }) => (
+                        <CalendarTileContent date={date} markedDates={markedDates} />
+                    )}
+                    onClick={() => {}}
+                    selectRange={false}
                 />
             </div>
 

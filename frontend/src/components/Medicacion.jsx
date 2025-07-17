@@ -436,7 +436,7 @@ const Medicacion = () => {
                                     style={{
                                     padding: "4px",
                                     cursor: "pointer",
-                                    backgroundColor: medicamentoNombre === medicamento.nombre ? "black" : "black",
+                                    backgroundColor: "black",
                                     borderRadius: "3px",
                                     border: "none",
                                     width: "100%",
