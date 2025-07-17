@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Bar, Scatter   } from "recharts";
 import Calendar from "react-calendar";
@@ -42,6 +42,55 @@ const CuerpoMedico = () => {
     const cancelar = () => {
         window.location.reload();
     }
+
+    const renderTileContent = useCallback(({ date }) => {
+        const isMarked = medicacion.some(m => new Date(m.fecha).toDateString() === date.toDateString());
+        if (!isMarked) return null;
+
+        // Aquí el JSX del icono dentro de la función, no inline en el prop
+        return (
+        <div className="calendar-note" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            >
+            <rect x="3" y="8" width="18" height="8" rx="4" transform="rotate(-45 12 12)" />
+            <line x1="10" y1="10" x2="14" y2="15" />
+            <rect x="8" y="12" width="7" height="8" rx="2" transform="rotate(45 12 12)" fill="currentColor" />
+            </svg>
+        </div>
+        );
+    }, [medicacion]);
+
+    const renderTileContentdos = useCallback(({ date }) => {
+    const isMarked = arritmia.some(a => new Date(a.fecha).toDateString() === date.toDateString());
+    if (!isMarked) return null;
+
+    return (
+      <div className="calendar-note" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+        </svg>
+      </div>
+    );
+  }, [arritmia]);
 
     const icons = [
         `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -920,30 +969,7 @@ const CuerpoMedico = () => {
                                                     ? "marked-date"
                                                     : null
                                                 }
-                                                tileContent={({ date }) =>
-                                                    medicacion.some((m) => new Date(m.fecha).toDateString() === date.toDateString()) ? (
-                                                    <div
-                                                        className="calendar-note"
-                                                        style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-                                                    >
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 24 24"
-                                                            width="24"
-                                                            height="24"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            strokeWidth="2"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                        >
-                                                            <rect x="3" y="8" width="18" height="8" rx="4" transform="rotate(-45 12 12)" />
-                                                            <line x1="10" y1="10" x2="14" y2="15" />
-                                                            <rect x="8" y="12" width="7" height="8" rx="2" transform="rotate(45 12 12)" fill="currentColor"/>
-                                                        </svg>
-                                                    </div>
-                                                    ) : null
-                                                }
+                                                tileContent={renderTileContent}
                                                 selectRange={false}
                                                 />
                                             </div>
@@ -1055,18 +1081,7 @@ const CuerpoMedico = () => {
                                         ? "marked-date"
                                         : null
                                     }
-                                    tileContent={({ date }) =>
-                                        arritmia.some((a) => new Date(a.fecha).toDateString() === date.toDateString()) ? (
-                                        <div
-                                            className="calendar-note"
-                                            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/>
-                                            </svg>
-                                        </div>
-                                        ) : null
-                                    }
+                                    tileContent={renderTileContentdos}
                                     selectRange={false}
                                     />
                                 </div>
