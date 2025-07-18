@@ -328,8 +328,6 @@ const editarUsuarioporId = (id, updatedData, callback) => {
 };
 
 const eliminarUsuarioporId = (id, callback) => {
-  console.log("Eliminando usuario con ID:", id);
-
   const queryPaciente = `DELETE FROM paciente WHERE id = ?`;
   const queryUsuario = `DELETE FROM usuario WHERE id = ?`;
 
