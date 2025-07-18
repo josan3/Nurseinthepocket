@@ -221,7 +221,7 @@ const getTomasPaciente = (req, res) => {
   const {id_paciente} = req.body;
 
   if (!id_paciente) {
-    return res.status(400).json({ error: "Error al obtener los datos" });
+    return res.status(400).json({ error: "Error al obtener los datos de la base de datos" });
   }
 
   getTomaporIdPaciente(id_paciente, (err, result) => {
