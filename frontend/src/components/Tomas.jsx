@@ -21,13 +21,7 @@ const Tomas = () => {
           Este es tu diario para registrar tu toma de medicacion.
           <br />
           <br />
-          <br />
           Acuerdate que si pulsas las notificaciones que te salen por pantalla sobre los recordatorios de las tomas, se te guardará automaticamente la toma de hoy en el calendario.
-          <br />
-          <br />
-          <br />
-          Por otra parte, podrás añadir y eliminar las tomas directamente señalando el día del calendario.
-          <br />
           <br />
           <br />
           ¡Recuerda que el consumo de los medicamentos es primordial para tu salud!
@@ -430,8 +424,8 @@ const Tomas = () => {
                     </div>
                 ))}
             </div>
-              <div className="calendar-container" style={{marginTop: "280px", width: "100%" , marginBottom: "10px", position: "relative", zIndex: "100" }}>
-              <Calendar
+              <div className="calendar-container">
+                <Calendar
                 onClickDay={handleDateClick}
                 tileClassName={({ date }) =>
                   markedDates.some((d) => d.toDateString() === date.toDateString())

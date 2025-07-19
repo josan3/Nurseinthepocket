@@ -214,7 +214,7 @@ const Medicacion = () => {
 
             <div className="cuerpo">
                 <div className="container">
-                    <div className="robothablando-container" style={{ marginBottom: "1000px" }}>
+                    <div className="robothablando-container" >
                         <img src={robot} alt="Robot" className="robotquieto" />
                         <div 
                         className="speech-bubble" 
@@ -377,21 +377,10 @@ const Medicacion = () => {
             </div>
 
 
-    <div style={{
-    marginTop: "20%",
-    right: "5%",
-    left: "20%",
-    width: "78%",
-    height: "650px",
-    backgroundColor: "white",
-    borderRadius: "20px",
-    zIndex: 100,
-    position: "relative"
-}}>
-    <h3 style={{marginBottom: "10px", width: "70%", left: "15%", top: "5%" }}>Crear Toma</h3>
+    <div className="medicacion" >
+    <h3 style={{position: "relative", top: "20px", backgroundColor: "transparent" }}>Crear Toma</h3>
 
-
-    <form style={{ top: "-10%" }}onSubmit={handleSubmit}>
+    <form style={{ position: "relative", top: "-85px",width: "60%" }}onSubmit={handleSubmit}>
         <label htmlFor="nombre">Nombre del medicamento:</label>
             <input
                 id="nombre"
@@ -416,7 +405,6 @@ const Medicacion = () => {
                 backgroundColor: "#f9f9f9",
                 padding: "6px",
                 maxHeight: "120px",
-                overflowY: "auto",
                 border: "1px solid #ccc",
                 borderRadius: "4px",
                 marginBottom: "8px"
@@ -436,12 +424,12 @@ const Medicacion = () => {
                                     style={{
                                     padding: "4px",
                                     cursor: "pointer",
-                                    backgroundColor: "black",
+                                    backgroundColor: "white",
                                     borderRadius: "3px",
                                     border: "none",
                                     width: "100%",
                                     textAlign: "left",
-                                    font: "inherit",
+                                    color: "black",
                                     }}
                                     type="button"
                                 >
@@ -514,7 +502,7 @@ const Medicacion = () => {
     </form>
 
     <div style={{ marginTop: "-180px" }}>
-        <h4 style={{ marginBottom: "8px" }}>Lista de Medicación</h4>
+        <h4 style={{ marginBottom: "8px", backgroundColor: "transparent" }}>Lista de Medicación</h4>
         {listaTomas.length > 0 ? (
             <ul style={{ listStyle: "none", padding: 0, margin: 0, left: "20%" }}>
                 {Object.values(
@@ -547,11 +535,11 @@ const Medicacion = () => {
                             backgroundColor: tomaSeleccionada === tomaAgrupada.id ? "#e6ffe6" : "#f5f5f5",
                             cursor: "pointer",
                             fontSize: "13px",
-                            width: "100%",
+                            marginLeft: "25%",
+                            width: "50%",
                             textAlign: "left",
-                            fontFamily: "inherit",
                             fontWeight: "normal",
-                            outline: "none",
+                            color: tomaSeleccionada === tomaAgrupada.id ? "#2fa831" : "black" ,
                         }}
                         type="button"
                         >
@@ -569,7 +557,8 @@ const Medicacion = () => {
             onClick={handleEliminarToma}
             disabled={tomaSeleccionada === null}
             style={{
-                marginLeft: "10%",
+                marginLeft: "37%",
+                width: "25%",
                 padding: "8px 14px",
                 marginTop: "8px",
                 backgroundColor: tomaSeleccionada !== null ? "#dc3545" : "#ccc",
@@ -586,10 +575,8 @@ const Medicacion = () => {
 
     </div>
 
-
-
-
             </div>
+        <div style={{height: "70px"}}></div>
         </div>
     );
 };

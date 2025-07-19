@@ -1074,17 +1074,17 @@ const CuerpoMedico = () => {
                                                 className="calendar-container"
                                                 style={{ marginBottom: "100px", position: "relative", zIndex: "100", marginTop: "-10px", transform: "scale(0.9)",  }}
                                             >
-                                    <Calendar
-                                    tileDisabled={() => true}
-                                    tileClassName={({ date }) =>
-                                        arritmia.some((a) => new Date(a.fecha).toDateString() === date.toDateString())
-                                        ? "marked-date"
-                                        : null
-                                    }
-                                    tileContent={renderTileContentdos}
-                                    selectRange={false}
-                                    />
-                                </div>
+                                            <Calendar
+                                                tileDisabled={() => true}
+                                                tileClassName={({ date }) =>
+                                                    arritmia.some((a) => new Date(a.fecha).toDateString() === date.toDateString())
+                                                    ? "marked-date"
+                                                    : null
+                                                }
+                                                tileContent={renderTileContentdos}
+                                                selectRange={false}
+                                                />
+                                            </div>
                                             <button
                                                 onClick={() => setGraficaMostrada(null)}
                                                 style={{

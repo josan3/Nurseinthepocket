@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from "recharts";
 import robot from "../assets/normal.png"; 
+import cara from "../assets/cara.png"; 
 
 const Frecuencia = () => {
     const navigate = useNavigate();
@@ -11,7 +12,20 @@ const Frecuencia = () => {
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu frecuencia cardiaca?`;
     const id = localStorage.getItem("id");
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
+    const mostrarModal = () => {
+        setShowConfirmation(true);
+    }
+    
+    const confirmarFrecuencia = () => {
+        handleSubmit();
+        setShowConfirmation(false); // Cierra el modal de confirmación
+    };
+
+    const cancelarFrecuencia = () => {
+        setShowConfirmation(false); // Cierra el modal si se cancela
+    };
     
     const handleOptionClick = (path) => {
         navigate(path); // Redirige a la ruta seleccionada
@@ -58,7 +72,6 @@ const Frecuencia = () => {
     ];
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Evita que la página se recargue
 
         try {
             const response = await fetch("http://localhost:8801/frecuencia", {
@@ -141,11 +154,10 @@ const Frecuencia = () => {
                 >
                 <div>{mensaje}</div> 
                 
-                <form 
-                    onSubmit={handleSubmit} 
+                <div
                     style={{  
                     backgroundColor: "transparent", 
-                    marginTop: "-20px",
+                    marginTop: "0px",
                     marginLeft: "-5px"
             
                     }}
@@ -163,13 +175,13 @@ const Frecuencia = () => {
                     required
                     />
                     <button 
-                    type="submit" 
+                    onClick={mostrarModal}
                     style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}
                     >
                     Enviar
                     </button>
                     {error && <p style={{ color: "red" }}>{error}</p>}
-                </form>
+                </div>
                 </div>
             </div>
             </div>
@@ -335,7 +347,24 @@ const Frecuencia = () => {
                 
             
             </div>
+                {/* Modal de confirmación */}
+                {showConfirmation && (
+                <div className="confirmation-modal">
+                    <div className="modal-content">
+                    <img src={cara} alt="Robot" className="robot" style={{ width: "10%", height: "auto" }} />
+                    
+                    <p>
+                        ¿Quieres registrar la frecuencia con valor <strong>{valor}</strong>? 
+                    </p>
+                    
+                    <button onClick={confirmarFrecuencia}>Sí</button>
+                    <button onClick={cancelarFrecuencia}>No</button>
+                    </div>
+                </div>
+                )}
         </div>
+
+        
     );
 };
 

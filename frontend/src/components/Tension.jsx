@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,  ComposedChart, Bar, Scatter } from "recharts";
 import robot from "../assets/normal.png"; 
-
-
+import cara from "../assets/cara.png"; 
 
 const Tension = () => {
     const navigate = useNavigate();
@@ -13,8 +12,27 @@ const Tension = () => {
     const [valorMin, setValorMin] = useState("");
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu tensión`;
     const id = localStorage.getItem("id");
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     
+    const fechaCorrecta = (item) => {
+        const [year, month, day] = item.fecha.split("-");
+
+        return `${day}-${month}-${year}`;
+    };
+
+    const mostrarModal = () => {
+        setShowConfirmation(true);
+    }
+    
+    const confirmarTension = () => {
+        handleSubmit();
+        setShowConfirmation(false); // Cierra el modal de confirmación
+    };
+
+    const cancelarTension = () => {
+        setShowConfirmation(false); // Cierra el modal si se cancela
+    };
 
     const handleOptionClick = (path) => {
         navigate(path); // Redirige a la ruta seleccionada
@@ -62,7 +80,6 @@ const Tension = () => {
 
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Evita que la página se recargue
 
         try {
             const response = await fetch("http://localhost:8801/tension", {
@@ -103,17 +120,17 @@ const Tension = () => {
                 });
 
                 const data = await response.json();
-                console.log("Datos recibidos:", data);
+                console.log(data);
 
                 if (response.ok) {
                     // Calcula la frecuencia media y añade el campo `frecuencia_med` a cada objeto
                     const updatedData = data.data.map((item) => ({
                         ...item,
+                        fecha: fechaCorrecta(item),
                         tension_med: (item.tension_max + item.tension_min) / 2, // Calcula la media
                         tension_maxima: item.tension_max - item.tension_min, // Suma tension_max y tension_min
+
                     }));
-    
-                    console.log("Datos con tension_maxima calculada:", updatedData);
                     setData(updatedData); // Actualiza el estado con los datos modificados
                     console.log("Datos obtenidos"); // Muestra mensaje de éxito
                     setError(""); // Borra errores previos
@@ -153,7 +170,7 @@ const Tension = () => {
                         >
                        {mensaje}
                         <div style={{ marginTop: "20px" }}>
-                        <form onSubmit={handleSubmit} style={{ marginTop: "20px", backgroundColor: "transparent", top: "-30px" }}>
+                        <div  style={{ marginTop: "20px", backgroundColor: "transparent", top: "-30px" }}>
                             <label htmlFor="maximo">Ingresa la nueva tensión máxima:</label>
                                 <input 
                                     id="maximo"
@@ -164,6 +181,7 @@ const Tension = () => {
                                     style={{ marginTop: "10px"}}
                                     required
                                 />
+                            <br />
                             <label htmlFor="minimo">Ingresa la nueva tensión mínima:</label>
                                 <input 
                                     id="minimo"
@@ -175,9 +193,9 @@ const Tension = () => {
                                     required
                                 />
 
-                        <button type="submit" style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
+                        <button onClick={mostrarModal} style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
                         {error && <p style={{ color: "red" }}>{error}</p>}
-                        </form>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -328,9 +346,9 @@ const Tension = () => {
             </div>
             
 
-            <div style={{ backgroundColor: "white", position: "relative", zIndex: "100", width: "75%", left: "19%", borderRadius: "10px"  }}>
+            <div className="fondograficas" >
                 <div className="graficas" style={{ marginTop: "280px"}}>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={400}>
                     <ComposedChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis stroke="#2fa831" dataKey="fecha" tick={{ fontSize: 16, fontWeight: 'bold' }} />
@@ -346,6 +364,9 @@ const Tension = () => {
                             dataKey="tension_max" 
                             fill="blue" // Color de los puntos
                             name="Tensión Máxima"
+                            shape={(props) => (
+                                <circle cx={props.cx - 1} cy={props.cy} r={6} fill="blue" />
+                            )}
                         />
                         
                         {/* Punto en tensión mínima */}
@@ -353,6 +374,9 @@ const Tension = () => {
                             dataKey="tension_min" 
                             fill="blue" // Color de los puntos
                             name="Tensión Mínima"
+                            shape={(props) => (
+                                <circle cx={props.cx - 1} cy={props.cy} r={6} fill="blue" />
+                            )}
                         />
 
                         {/* Línea de tensión media */}
@@ -370,6 +394,23 @@ const Tension = () => {
             </div>
             </div>
             </div>
+
+            {/* Modal de confirmación */}
+            {showConfirmation && (
+                <div className="confirmation-modal">
+                    <div className="modal-content">
+                    <img src={cara} alt="Robot" className="robot" style={{ width: "10%", height: "auto" }} />
+                    
+                    <p>
+                        ¿Quieres registrar la tension con valor máximo <strong>{valorMax}</strong> y con valor mínimo <strong>{valorMin}</strong>?
+                    </p>
+                    
+                    <button onClick={confirmarTension}>Sí</button>
+                    <button onClick={cancelarTension}>No</button>
+                    </div>
+                </div>
+                )}
+            
         </div>
     );
 };

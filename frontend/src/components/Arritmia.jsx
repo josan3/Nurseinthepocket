@@ -384,10 +384,9 @@ const Arritmia = () => {
                         : null
                     }
                     tileContent={renderTileContent}
-        onClick={() => {}} // Deshabilita la selección de días
-        selectRange={false} // Evita la selección de un rango de fechas
-      />
-
+                    onClick={() => {}} // Deshabilita la selección de días
+                    selectRange={false} // Evita la selección de un rango de fechas
+                />
             </div>
 
             {/* Modal de confirmación */}

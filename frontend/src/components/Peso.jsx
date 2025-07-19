@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import robot from "../assets/normal.png"; 
+import cara from "../assets/cara.png"; 
 
 
 const Peso = () => {
@@ -10,8 +11,27 @@ const Peso = () => {
     const [valor, setValor] = useState("");
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu peso?`;
     const id = localStorage.getItem("id");
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     
+    const fechaCorrecta = (item) => {
+        const [year, month, day] = item.fecha.split("-");
+
+        return `${day}-${month}-${year}`;
+    };
+
+    const mostrarModal = () => {
+        setShowConfirmation(true);
+    }
+    
+    const confirmarPeso = () => {
+        handleSubmit();
+        setShowConfirmation(false); // Cierra el modal de confirmación
+    };
+
+    const cancelarPeso = () => {
+        setShowConfirmation(false); // Cierra el modal si se cancela
+    };
 
     const handleOptionClick = (path) => {
             navigate(path); // Redirige a la ruta seleccionada
@@ -59,7 +79,6 @@ const Peso = () => {
     ];
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Evita que la página se recargue
 
         try {
             const response = await fetch("http://localhost:8801/peso", {
@@ -100,10 +119,14 @@ const Peso = () => {
 
                 const data = await response.json();
                 console.log("Datos recibidos:", data);
-
+                
                 if (response.ok) {
-                    setData(data.data); // Aquí se actualizan los datos
-                    console.log("Datos obtenidos");  
+                    const updatedData = data.data.map((item) => ({
+                        ...item,
+                        fecha: fechaCorrecta(item),
+                    }));
+
+                    setData(updatedData);
                 } else {
                     console.log(data.error || "Error al obtener datos"); 
                 }
@@ -138,7 +161,7 @@ const Peso = () => {
                             }}
                             >
                             <div>{mensaje}</div> 
-                        <form onSubmit={handleSubmit} style={{ marginTop: "20px", backgroundColor: "transparent", top: "-30px" }}>
+                        <div  style={{ marginTop: "20px", backgroundColor: "transparent", top: "-30px" }}>
                             <label htmlFor="peso">Ingresa el nuevo peso (decimales separados por punto):</label>
                                 <input 
                                     id = "peso"
@@ -154,8 +177,8 @@ const Peso = () => {
                                     <div style={{color:"red"}}>{valor }</div>
                                 </p>
 
-                        <button type="submit" style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
-                        </form>
+                        <button onClick={mostrarModal} style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -305,7 +328,7 @@ const Peso = () => {
                 ))}
             </div>
 
-             <div className="fondograficas" >
+            <div className="fondograficas" >
                 <div className="graficas" style={{ marginTop: "280px"}}>
                 <ResponsiveContainer width="100%" height={400}>
                     <LineChart data={data}> 
@@ -332,6 +355,22 @@ const Peso = () => {
                 </ResponsiveContainer>
             </div>
             </div>
+
+            {/* Modal de confirmación */}
+                        {showConfirmation && (
+                            <div className="confirmation-modal">
+                                <div className="modal-content">
+                                <img src={cara} alt="Robot" className="robot" style={{ width: "10%", height: "auto" }} />
+                                
+                                <p>
+                                    ¿Quieres registrar el peso con valor <strong>{valor}</strong>?
+                                </p>
+                                
+                                <button onClick={confirmarPeso}>Sí</button>
+                                <button onClick={cancelarPeso}>No</button>
+                                </div>
+                            </div>
+                            )}
 
             <div style={{height: "40px"}}></div>
           
