@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,  ComposedChart, Bar, Scatter } from "recharts";
-import robot from "../assets/normal.png"; 
-import cara from "../assets/cara.png"; 
+import robot from "../assets/normal.png";
 
 const Tension = () => {
     const navigate = useNavigate();
@@ -11,7 +10,6 @@ const Tension = () => {
     const [valorMax, setValorMax] = useState("");
     const [valorMin, setValorMin] = useState("");
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu tensión`;
-    const id = localStorage.getItem("id");
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     
     
@@ -150,7 +148,7 @@ const Tension = () => {
                                     required
                                 />
 
-                        <button  style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
+                        <button style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
                         {error && <p style={{ color: "red" }}>{error}</p>}
                         </div>
                         </div>
