@@ -25,14 +25,7 @@ const Tension = () => {
         setShowConfirmation(true);
     }
     
-    const confirmarTension = () => {
-        handleSubmit();
-        setShowConfirmation(false); // Cierra el modal de confirmación
-    };
-
-    const cancelarTension = () => {
-        setShowConfirmation(false); // Cierra el modal si se cancela
-    };
+    
 
     const handleOptionClick = (path) => {
         navigate(path); // Redirige a la ruta seleccionada
@@ -364,9 +357,7 @@ const Tension = () => {
                             dataKey="tension_max" 
                             fill="blue" // Color de los puntos
                             name="Tensión Máxima"
-                            shape={(props) => (
-                                <circle cx={props.cx - 1} cy={props.cy} r={6} fill="blue" />
-                            )}
+                            
                         />
                         
                         {/* Punto en tensión mínima */}
@@ -374,9 +365,7 @@ const Tension = () => {
                             dataKey="tension_min" 
                             fill="blue" // Color de los puntos
                             name="Tensión Mínima"
-                            shape={(props) => (
-                                <circle cx={props.cx - 1} cy={props.cy} r={6} fill="blue" />
-                            )}
+                            
                         />
 
                         {/* Línea de tensión media */}
@@ -404,9 +393,6 @@ const Tension = () => {
                     <p>
                         ¿Quieres registrar la tension con valor máximo <strong>{valorMax}</strong> y con valor mínimo <strong>{valorMin}</strong>?
                     </p>
-                    
-                    <button onClick={confirmarTension}>Sí</button>
-                    <button onClick={cancelarTension}>No</button>
                     </div>
                 </div>
                 )}
