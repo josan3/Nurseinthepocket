@@ -9,7 +9,7 @@ const Tension = () => {
     const [error, setError] = useState(""); // Estado para manejar errores
     const [valorMax, setValorMax] = useState("");
     const [valorMin, setValorMin] = useState("");
-    const mensaje = `¿Quieres añadir un nuevo dato sobre tu tensión`;
+    const mensaje = `¿Quieres registrar un nuevo dato sobre tu tensión`;
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
     
     
