@@ -12,18 +12,7 @@ const Tension = () => {
     const [valorMin, setValorMin] = useState("");
     const mensaje = `¿Quieres añadir un nuevo dato sobre tu tensión`;
     const id = localStorage.getItem("id");
-    const [showConfirmation, setShowConfirmation] = useState(false);
     const [showEditOptions, setShowEditOptions] = useState(false); // Estado para mostrar/ocultar las opciones de editar
-    
-    const fechaCorrecta = (item) => {
-        const [year, month, day] = item.fecha.split("-");
-
-        return `${day}-${month}-${year}`;
-    };
-
-    const mostrarModal = () => {
-        setShowConfirmation(true);
-    }
     
     
 
@@ -72,31 +61,6 @@ const Tension = () => {
     ];
 
 
-    const handleSubmit = async (e) => {
-
-        try {
-            const response = await fetch("http://localhost:8801/tension", {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ id, tension_max: valorMax, tension_min: valorMin }),
-            });
-            
-            const data = await response.json();
-        
-            if (response.ok) {
-                console.log("Tensión registrada");
-                setError("");
-                window.location.reload();
-            } else {
-                setError(data.error || "Error al registrar la tensión");
-            }
-        } catch (error) {
-          setError("Error de conexión con el servidor", error);
-        }
-        
-    };
 
     useEffect(() => {
 
@@ -186,7 +150,7 @@ const Tension = () => {
                                     required
                                 />
 
-                        <button onClick={mostrarModal} style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
+                        <button  style={{ marginTop: "10px", padding: "5px 10px", cursor: "pointer" }}>Enviar</button>
                         {error && <p style={{ color: "red" }}>{error}</p>}
                         </div>
                         </div>
@@ -384,18 +348,7 @@ const Tension = () => {
             </div>
             </div>
 
-            {/* Modal de confirmación */}
-            {showConfirmation && (
-                <div className="confirmation-modal">
-                    <div className="modal-content">
-                    <img src={cara} alt="Robot" className="robot" style={{ width: "10%", height: "auto" }} />
-                    
-                    <p>
-                        ¿Quieres registrar la tension con valor máximo <strong>{valorMax}</strong> y con valor mínimo <strong>{valorMin}</strong>?
-                    </p>
-                    </div>
-                </div>
-                )}
+    
             
         </div>
     );
